@@ -26,9 +26,9 @@ def vorlagen():
 def bot_zentrale():
     return render_template('bot-zentrale.html')
 
-@app.route('/tetris')
-def tetris():
-    return render_template('tetris.html')
+@app.route('/leaderboard')
+def leaderboard():
+    return render_template('leaderboard.html')
 
 @app.route('/jump')
 def jump():
@@ -45,10 +45,6 @@ def racing():
 @app.route('/shooter')
 def shooter():
     return render_template('shooter.html')
-
-@app.route('/io')
-def io_game():
-    return render_template('io.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000, debug=True)
