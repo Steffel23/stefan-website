@@ -6,7 +6,7 @@
     <title>STEFAN | Mod & Community Management</title>
     <style>
         body {
-            background-color: #05070a;
+            background-color: #0d0f12;
             color: #e2e8f0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -15,59 +15,6 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-            /* Erzeugt genau die leicht geschwungenen Neon-Blitze aus deinem Screenshot */
-            background-image: 
-                radial-gradient(circle at 20% 40%, transparent 60%, rgba(0, 240, 255, 0.08) 62%, transparent 65%),
-                radial-gradient(circle at 80% 60%, transparent 50%, rgba(0, 240, 255, 0.08) 52%, transparent 55%),
-                radial-gradient(circle at 50% 20%, transparent 70%, rgba(0, 240, 255, 0.05) 72%, transparent 75%);
-            background-size: 100% 100%;
-        }
-
-        /* ECHTE KORREKTE NEON-BLITZLINIEN AUS DEINEM SCREENSHOT */
-        .neon-lightning-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.6;
-        }
-
-        /* Linker Blitz */
-        .lightning-1 {
-            position: absolute;
-            left: 22%;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent, #00f0ff, transparent);
-            box-shadow: 0 0 10px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.5);
-            transform: skewX(-4deg);
-        }
-
-        /* Mittlerer Blitz */
-        .lightning-2 {
-            position: absolute;
-            left: 45%;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent, #00f0ff, transparent);
-            box-shadow: 0 0 12px #00f0ff, 0 0 25px rgba(0, 240, 255, 0.5);
-            transform: skewX(3deg);
-        }
-
-        /* Rechter Blitz */
-        .lightning-3 {
-            position: absolute;
-            left: 76%;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent, #00f0ff, transparent);
-            box-shadow: 0 0 10px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.5);
-            transform: skewX(-2deg);
         }
 
         /* Fette Cyber-Navbar oben */
@@ -80,8 +27,6 @@
             padding: 25px 40px;
             box-sizing: border-box;
             border-bottom: 2px solid #1e293b;
-            position: relative;
-            z-index: 2;
         }
 
         .logo {
@@ -130,18 +75,15 @@
             width: 100%;
             padding: 40px 20px;
             box-sizing: border-box;
-            position: relative;
-            z-index: 2;
         }
 
         .header-box {
-            background-color: rgba(15, 23, 42, 0.8);
-            border: 2px solid #00d2ff;
+            background-color: #1e293b;
+            border: 2px solid #334155;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
             text-align: center;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
         }
 
         .header-box h1 {
@@ -151,7 +93,7 @@
         }
 
         .header-box p {
-            color: #00d2ff;
+            color: #3b82f6;
             font-weight: bold;
             margin: 0;
             text-transform: uppercase;
@@ -167,24 +109,22 @@
         }
 
         .stat-card {
-            background-color: rgba(17, 24, 39, 0.85);
+            background-color: #111827;
             border: 2px solid #1e293b;
             border-radius: 12px;
             padding: 25px;
             text-align: center;
-            transition: all 0.2s;
+            transition: border-color 0.2s;
         }
 
         .stat-card:hover {
-            border-color: #00d2ff;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-            transform: translateY(-2px);
+            border-color: #3b82f6;
         }
 
         .stat-number {
             font-size: 2.5rem;
             font-weight: 800;
-            color: #00d2ff;
+            color: #3b82f6;
             margin-bottom: 5px;
         }
 
@@ -203,8 +143,8 @@
 
         /* Job-Beschreibung */
         .info-section {
-            background-color: rgba(15, 23, 42, 0.8);
-            border: 2px solid #1e293b;
+            background-color: #1e293b;
+            border: 2px solid #334155;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
@@ -225,8 +165,8 @@
 
         /* Feste Kontakt-Zentrale */
         .contact-section {
-            background-color: rgba(15, 23, 42, 0.8);
-            border: 2px solid #1e293b;
+            background-color: #1e293b;
+            border: 2px solid #334155;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
@@ -288,13 +228,6 @@
 </head>
 <body>
 
-    <!-- Die originalen Blitzlinien im Hintergrund -->
-    <div class="neon-lightning-container">
-        <div class="lightning-1"></div>
-        <div class="lightning-2"></div>
-        <div class="lightning-3"></div>
-    </div>
-
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
         <div class="nav-links">
@@ -331,3 +264,34 @@
 
         <div class="info-section">
             <h2>Gute Server brauchen Struktur 🛠️</h2>
+            <p>Als erfahrener Community-Moderator sorge ich für ein sicheres, aktives und toxizitätsfreies Umfeld. Meine Kernkompetenzen umfassen:</p>
+            <ul>
+                <li><strong>Konfliktmanagement:</strong> Deeskalation bei Streitigkeiten zwischen Usern.</li>
+                <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung die Community-Richtlinien.</li>
+                <li><strong>Event-Planung:</strong> Organisation von Community-Turnieren und Spiele-Abenden.</li>
+                <li><strong>Bot-Konfiguration:</strong> Einrichtung von Moderations- und Log-Systemen zur Serverabsicherung.</li>
+            </ul>
+        </div>
+
+        <div class="contact-section">
+            <h2>Projektanfragen &amp; Kontakt ✉️</h2>
+            <p style="color: #94a3b8;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
+            
+            <div class="contact-grid">
+                <div class="contact-method">
+                    <span>💬</span> Discord: Steffel_07
+                </div>
+                <div class="contact-method">
+                    <span>📧</span> E-Mail: stefan.prasch@gmx.net
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <p style="color: #94a3b8; margin-bottom: 15px;">Lust auf eine Pause? Besuche meine Arcade-Sammlung:</p>
+            <a href="/spiele-hub" class="cta-link">Direkt zum Spiele-Hub 🎮</a>
+        </div>
+    </div>
+
+</body>
+</html>
