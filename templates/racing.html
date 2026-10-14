@@ -265,15 +265,12 @@
             ctx.fillStyle = '#1a1f26';
             ctx.fillRect(trackLeft, 0, trackRight - trackLeft, canvas.height);
 
-            // FEHLER BEHOBEN: Richtiger CSS-Zeichenbefehl für die gestrichelte Straße
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 4;
-            ctx.setLineDash([20, 20]);
-            ctx.lineDashOffset = -distance * gameSpeed * 0.1;
-            ctx.beginPath();
-            ctx.moveTo(canvas.width / 2, 0);
-            ctx.lineTo(canvas.width / 2, canvas.height);
-            ctx.stroke();
+            // FEHLER BEHOBEN: Sicheres Zeichnen der Mittellinien ohne setLineDash Absturz
+            ctx.fillStyle = '#ffffff';
+            let lineY = (distance * gameSpeed * 0.1) % 40;
+            for (let y = -40 + lineY; y < canvas.height; y += 40) {
+                ctx.fillRect(canvas.width / 2 - 2, y, 4, 20);
+            }
 
             // Spieler-Auto zeichnen
             drawCyberCar(car.x, car.y, car.width, car.height, true);
@@ -292,3 +289,5 @@
                 ctx.fillText('CRASH - GAME OVER', canvas.width / 2, canvas.height / 2 - 10);
                 ctx.fillStyle = '#ffffff';
                 ctx.font = '16px "Rajdhani"';
+                ctx.fillText('Tippe eine Touchzone / Space zum Neustart', canvas.width / 2, canvas.height / 2 + 20);
+            }
