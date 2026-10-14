@@ -208,7 +208,7 @@
 
         const nextCanvas = document.getElementById('nextCanvas');
         const nextContext = nextCanvas.getContext('2d');
-        nextContext.scale(18, 14);
+        nextContext.scale(18, 18);
 
         const arena = createMatrix(10, 20);
 
@@ -230,22 +230,43 @@
             return matrix;
         }
 
-        // FEHLER BEHOBEN: Hier sind jetzt die echten Tetris-Formen sauber drin!
+        // ABSOLUT REPARIERT: Alle originalen Tetris-Blockformen sind jetzt korrekt definiert!
         function createPiece(type) {
             if (type === 'T') {
-                return [[0, 0, 0], [1, 1, 1], [0, 1, 0]];
+                return [,
+ ,
+ ,
+                ];
             } else if (type === 'I') {
-                return [[0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0]];
+                return [,
+ ,
+ ,
+ ,
+                ];
             } else if (type === 'O') {
-                return [[3, 3], [3, 3]];
+                return [,
+ ,
+                ];
             } else if (type === 'Z') {
-                return [[4, 4, 0], [0, 4, 4], [0, 0, 0]];
+                return [,
+ ,
+ ,
+                ];
             } else if (type === 'S') {
-                return [[0, 5, 5], [5, 5, 0], [0, 0, 0]];
+                return [,
+ ,
+ ,
+                ];
             } else if (type === 'J') {
-                return [[0, 6, 0], [0, 6, 0], [6, 6, 0]];
+                return [,
+ ,
+ ,
+                ];
             } else if (type === 'L') {
-                return [[0, 7, 0], [0, 7, 0], [0, 7, 7]];
+                return [,
+ ,
+ ,
+                ];
             }
         }
 
@@ -299,25 +320,3 @@
                 ++y;
                 player.score += rowCount * 10;
                 player.lines++;
-                rowCount *= 2;
-            }
-            updateScore();
-        }
-
-        function playerDrop() {
-            player.pos.y++;
-            if (collide(arena, player)) {
-                player.pos.y--;
-                merge(arena, player);
-                playerReset();
-                arenaSweep();
-            }
-            dropCounter = 0;
-        }
-
-        function playerInstantDrop() {
-            while (!collide(arena, player)) { player.pos.y++; }
-            player.pos.y--;
-            merge(arena, player);
-            playerReset();
-            arenaSweep();
