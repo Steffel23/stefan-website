@@ -8,7 +8,7 @@
         body {
             background-color: #05070a;
             color: #ffffff;
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             margin: 0;
             padding: 10px;
             text-align: center;
@@ -96,145 +96,147 @@
     <a href="/spiele-hub" class="back-btn">⬅ Zum Hub</a>
 
     <script>
-        const canvas = document.getElementById('game-canvas');
-        const ctx = canvas.getContext('2d');
+        window.onload = function() {
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
 
-        let distance = 0;
-        let gameOver = false;
-        let gameSpeed = 5;
+            let distance = 0;
+            let gameOver = false;
+            let gameSpeed = 5;
 
-        const car = {
-            x: 200 - 18,
-            y: 500 - 90,
-            width: 36,
-            height: 70,
-            speed: 7,
-            movingLeft: false,
-            movingRight: false
-        };
+            const car = {
+                x: 182,
+                y: 410,
+                width: 36,
+                height: 70,
+                speed: 7,
+                movingLeft: false,
+                movingRight: false
+            };
 
-        let obstacles = [];
-        let obstacleTimer = 0;
+            let obstacles = [];
+            let obstacleTimer = 0;
 
-        const trackLeft = 60;
-        const trackRight = 400 - 60;
+            const trackLeft = 60;
+            const trackRight = 340;
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' || e.key === 'a') car.movingLeft = true;
-            if (e.key === 'ArrowRight' || e.key === 'd') car.movingRight = true;
-            if (e.key === ' ' && gameOver) resetGame();
-        });
-
-        document.addEventListener('keyup', (e) => {
-            if (e.key === 'ArrowLeft' || e.key === 'a') car.movingLeft = false;
-            if (e.key === 'ArrowRight' || e.key === 'd') car.movingRight = false;
-        });
-
-        const leftZone = document.getElementById('left-zone');
-        const rightZone = document.getElementById('right-zone');
-
-        leftZone.addEventListener('touchstart', (e) => { e.preventDefault(); if(gameOver){resetGame(); return;} car.movingLeft = true; });
-        leftZone.addEventListener('touchend', () => car.movingLeft = false);
-        rightZone.addEventListener('touchstart', (e) => { e.preventDefault(); if(gameOver){resetGame(); return;} car.movingRight = true; });
-        rightZone.addEventListener('touchend', () => car.movingRight = false);
-
-        function spawnObstacle() {
-            obstacleTimer++;
-            if (obstacleTimer > 35) {
-                const width = 36;
-                const height = 70;
-                const x = Math.random() * (trackRight - trackLeft - width) + trackLeft;
-                obstacles.push({ x: x, y: -height, width: width, height: height, speed: gameSpeed });
-                obstacleTimer = 0;
-            }
-        }
-
-        function checkCollision(rect1, rect2) {
-            return rect1.x < rect2.x + rect2.width &&
-                   rect1.x + rect1.width > rect2.x &&
-                   rect1.y < rect2.y + rect2.height &&
-                   rect1.y + rect1.height > rect2.y;
-        }
-
-        function resetGame() {
-            distance = 0;
-            obstacles = [];
-            gameOver = false;
-            gameSpeed = 5;
-            car.x = 200 - 18;
-            document.getElementById('score').innerText = "Strecke: " + distance + "m";
-        }
-
-        function drawCyberCar(x, y, w, h, isPlayer) {
-            const mainColor = isPlayer ? '#00d2ff' : '#ff0055';
-            ctx.fillStyle = mainColor;
-            ctx.fillRect(x, y, w, h);
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(x + 6, y + 15, w - 12, 15);
-        }
-
-        function update() {
-            if (gameOver) return;
-
-            distance += 1;
-            document.getElementById('score').innerText = "Strecke: " + distance + "m";
-
-            if (distance % 300 === 0) gameSpeed += 0.5;
-
-            if (car.movingLeft && car.x > trackLeft) car.x -= car.speed;
-            if (car.movingRight && car.x < trackRight - car.width) car.x += car.speed;
-
-            spawnObstacle();
-            obstacles.forEach((obs, index) => {
-                obs.y += obs.speed;
-                if (obs.y > 500) obstacles.splice(index, 1);
-                if (checkCollision(car, obs)) gameOver = true;
-            });
-        }
-
-        function draw() {
-            ctx.clearRect(0, 0, 400, 500);
-
-            ctx.fillStyle = '#061006';
-            ctx.fillRect(0, 0, trackLeft, 500);
-            ctx.fillRect(trackRight, 0, trackLeft, 500);
-
-            ctx.fillStyle = '#1a1f26';
-            ctx.fillRect(trackLeft, 0, trackRight - trackLeft, 500);
-
-            ctx.fillStyle = '#ffffff';
-            let lineY = (distance * gameSpeed * 0.1) % 40;
-            for (let y = -40 + lineY; y < 500; y += 40) {
-                ctx.fillRect(200 - 2, y, 4, 20);
-            }
-
-            drawCyberCar(car.x, car.y, car.width, car.height, true);
-
-            obstacles.forEach(obs => {
-                drawCyberCar(obs.x, obs.y, obs.width, obs.height, false);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'a') car.movingLeft = true;
+                if (e.key === 'ArrowRight' || e.key === 'd') car.movingRight = true;
+                if (e.key === ' ' && gameOver) resetGame();
             });
 
-            if (gameOver) {
-                ctx.fillStyle = 'rgba(5, 7, 10, 0.85)';
-                ctx.fillRect(0, 0, 400, 500);
-                ctx.fillStyle = '#ff0055';
-                ctx.font = '20px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('CRASH - GAME OVER', 200, 240);
+            document.addEventListener('keyup', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'a') car.movingLeft = false;
+                if (e.key === 'ArrowRight' || e.key === 'd') car.movingRight = false;
+            });
+
+            const leftZone = document.getElementById('left-zone');
+            const rightZone = document.getElementById('right-zone');
+
+            leftZone.addEventListener('touchstart', (e) => { e.preventDefault(); if(gameOver){resetGame(); return;} car.movingLeft = true; });
+            leftZone.addEventListener('touchend', () => car.movingLeft = false);
+            rightZone.addEventListener('touchstart', (e) => { e.preventDefault(); if(gameOver){resetGame(); return;} car.movingRight = true; });
+            rightZone.addEventListener('touchend', () => car.movingRight = false);
+
+            function spawnObstacle() {
+                obstacleTimer++;
+                if (obstacleTimer > 35) {
+                    const width = 36;
+                    const height = 70;
+                    const x = Math.random() * (trackRight - trackLeft - width) + trackLeft;
+                    obstacles.push({ x: x, y: -height, width: width, height: height, speed: gameSpeed });
+                    obstacleTimer = 0;
+                }
+            }
+
+            function checkCollision(rect1, rect2) {
+                return rect1.x < rect2.x + rect2.width &&
+                       rect1.x + rect1.width > rect2.x &&
+                       rect1.y < rect2.y + rect2.height &&
+                       rect1.y + rect1.height > rect2.y;
+            }
+
+            function resetGame() {
+                distance = 0;
+                obstacles = [];
+                gameOver = false;
+                gameSpeed = 5;
+                car.x = 182;
+                document.getElementById('score').innerText = "Strecke: " + distance + "m";
+            }
+
+            function drawCyberCar(x, y, w, h, isPlayer) {
+                const mainColor = isPlayer ? '#00d2ff' : '#ff0055';
+                ctx.fillStyle = mainColor;
+                ctx.fillRect(x, y, w, h);
                 ctx.fillStyle = '#ffffff';
-                ctx.font = '14px Arial';
-                ctx.fillText('Tippe eine Zone / Space zum Neustart', 200, 280);
+                ctx.fillRect(x + 6, y + 15, w - 12, 15);
             }
-        }
 
-        function loop() {
-            update();
-            draw();
-            requestAnimationFrame(loop);
-        }
+            function update() {
+                if (gameOver) return;
 
-        resetGame();
-        loop();
+                distance += 1;
+                document.getElementById('score').innerText = "Strecke: " + distance + "m";
+
+                if (distance % 300 === 0) gameSpeed += 0.5;
+
+                if (car.movingLeft && car.x > trackLeft) car.x -= car.speed;
+                if (car.movingRight && car.x < trackRight - car.width) car.x += car.speed;
+
+                spawnObstacle();
+                obstacles.forEach((obs, index) => {
+                    obs.y += obs.speed;
+                    if (obs.y > 500) obstacles.splice(index, 1);
+                    if (checkCollision(car, obs)) gameOver = true;
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, 400, 500);
+
+                ctx.fillStyle = '#061006';
+                ctx.fillRect(0, 0, trackLeft, 500);
+                ctx.fillRect(trackRight, 0, trackLeft, 500);
+
+                ctx.fillStyle = '#1a1f26';
+                ctx.fillRect(trackLeft, 0, trackRight - trackLeft, 500);
+
+                ctx.fillStyle = '#ffffff';
+                let lineOffset = Math.floor(distance * 3) % 40;
+                for (let y = -40 + lineOffset; y < 500; y += 40) {
+                    ctx.fillRect(198, y, 4, 20);
+                }
+
+                drawCyberCar(car.x, car.y, car.width, car.height, true);
+
+                obstacles.forEach(obs => {
+                    drawCyberCar(obs.x, obs.y, obs.width, obs.height, false);
+                });
+
+                if (gameOver) {
+                    ctx.fillStyle = 'rgba(5, 7, 10, 0.85)';
+                    ctx.fillRect(0, 0, 400, 500);
+                    ctx.fillStyle = '#ff0055';
+                    ctx.font = '20px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('CRASH - GAME OVER', 200, 240);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '14px Arial';
+                    ctx.fillText('Tippe eine Zone / Space zum Neustart', 200, 280);
+                }
+            }
+
+            function loop() {
+                update();
+                draw();
+                requestAnimationFrame(loop);
+            }
+
+            resetGame();
+            loop();
+        };
     </script>
 </body>
 </html>
