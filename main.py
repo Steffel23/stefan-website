@@ -7,14 +7,14 @@ app = Flask(__name__)
 def custom_avatar():
     if os.path.exists('avatar.png'):
         return send_from_directory('.', 'avatar.png')
+    elif os.path.exists('templates/avatar.png'):
+        return send_from_directory('templates', 'avatar.png')
     return send_from_directory('.', 'avatar.png')
 
 @app.route('/')
 def home():
-    # Zwingt den Server, die neue index.html von der Hauptebene zu laden
-    if os.path.exists('index.html'):
-        return send_from_directory('.', 'index.html')
-    return "Startseite lädt... Bitte aktualisieren!"
+    # Lädt die Startseite sauber aus dem templates-Ordner
+    return render_template('index.html')
 
 @app.route('/spiele-hub')
 def spiele_hub():
