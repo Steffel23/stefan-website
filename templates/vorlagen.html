@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEFAN | Community-Vorlagen 📥</title>
+    <style>
+        body {
+            background-color: #0d0f12;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Fette Cyber-Navbar oben */
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            box-sizing: border-box;
+            border-bottom: 2px solid #1e293b;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        /* Spiele-Hub Button */
+        .hub-btn {
+            background-color: #3b82f6;
+            color: #ffffff !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            transition: transform 0.2s, background-color 0.2s !important;
+        }
+
+        .hub-btn:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* Hauptbereich */
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .header-box {
+            background-color: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .header-box h1 {
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            font-size: 2.3rem;
+        }
+
+        .header-box p {
+            color: #3b82f6;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Vorlagen-Sektionen */
+        .template-section {
+            background-color: #111827;
+            border: 2px solid #1e293b;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .template-section h2 {
+            color: #ffffff;
+            margin-top: 0;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Kopierbarer Code-Block */
+        .code-block {
+            background-color: #0d0f12;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #cbd5e1;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            user-select: text;
+        }
+
+        /* Zurück-Button unten */
+        .back-box {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid #334155;
+        }
+
+        .back-btn:hover {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menüleiste mit dem neuen Button -->
+    <nav class="navbar">
+        <a href="/" class="logo">✦ STEFAN</a>
+        <div class="nav-links">
+            <a href="/">Startseite</a>
+            <a href="/ueber-mich">Über mich</a>
+            <a href="/regelwerk">Regelwerk</a>
+            <a href="/vorlagen" style="color: #3b82f6;">Vorlagen</a>
+            <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-box">
+            <h1>Community-Vorlagen &amp; Templates</h1>
+            <p>Fertige Texte &amp; Strukturen für deinen Server zum Mitnehmen</p>
+        </div>
+
+        <!-- Discord Willkommensnachricht -->
+        <div class="template-section">
+            <h2><span>👋</span> Discord Willkommens-Template</h2>
+            <div class="code-block">╔════════════════════════════════════════╗
+  Herzlich willkommen auf unserem Server, {user}! 🎉
+╚════════════════════════════════════════╝
+
+Schön, dass du den Weg in unsere Community gefunden hast! 
+Damit du dich schnell zurechtfindest, befolge kurz diese Schritte:
+
+📌 📑-regelwerk : Lies dir die Serverregeln aufmerksam durch.
+📌 🎭-rollen    : Wähle deine Gaming-Rollen aus, um Kanäle freizuschalten.
+📌 💬-allgemein : Schmeiß ein freundliches "Moin" in den Chat und lerne das Team kennen!
+
+Wir wünschen dir jede Menge Spaß! 🚀</div>
+        </div>
+
+        <!-- Discord Rollen-Struktur -->
+        <div class="template-section">
+            <h2><span>🛠️</span> Optimierte Discord Rollen-Hierarchie</h2>
+            <div class="code-block">👑 [01] Serverleitung (Administrator-Rechte, höchste Priorität)
+🛠️ [02] Management (Organisatorische Leitung, Event-Planung)
+🛡️ [03] Senior Moderator (Erfahrene Mods, Ticket-Zuständigkeit)
+⚔️ [04] Moderator (Chat-Überwachung, Timeouts & Kicks)
+🤖 [05] Server-Bots (Rolle für Dyno, Mee6 & Co.)
+💎 [06] Server Booster (Spezielle Farbe & extra Rechte)
+🌟 [07] Stammgast (Automatisierte Rolle ab Aktivitäts-Level 10)
+🎮 [08] Community (Standard-Rolle für verifizierte Mitglieder)</div>
+        </div>
+
+        <!-- Twitch Ankündigungstext -->
+        <div class="template-section">
+            <h2><span>📢</span> Twitch Live-Ankündigung (Discord-Ping)</h2>
+            <div class="code-block">@everyone 🚨 LIVE-ALARM! 🚨
+
+Der Streamer ist JETZT live auf Twitch! Schnappt euch eure Snacks, macht es euch gemütlich und kommt in den Chat zum Mitbocken!
+
+🎮 Heute auf dem Zettel: {Game_Name} und jede Menge Community-Games!
+🔗 Stream-Link: https://twitch.tv
+
+Wir sehen uns im Chat! 💜</div>
+        </div>
+
+        <!-- Zurück-Button -->
+        <div class="back-box">
+            <a href="/" class="back-btn">⬅️ Zurück zur Hauptseite</a>
+        </div>
+    </div>
+
+</body>
+</html>
