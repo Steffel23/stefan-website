@@ -6,164 +6,32 @@
     <title>STEFANS SPIELE 🎮</title>
     <style>
         @import url('https://googleapis.com');
-
-        body {
-            background-color: #05070a;
-            color: #ffffff;
-            font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            padding: 40px;
-            text-align: center;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Die permanenten, cleanen blauen Neon-Blitze an den Seiten */
-        body::before, body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background: #00d2ff;
-            box-shadow: 0 0 15px #00d2ff, 0 0 30px #00c8ff, 0 0 45px #00ffff;
-            opacity: 0.8;
-            z-index: 1;
-        }
-        body::before { left: 40px; }
-        body::after { right: 40px; }
-
-        @media (max-width: 768px) {
-            body::before { left: 10px; }
-            body::after { right: 10px; }
-        }
-
-        /* Der originale blaue Kasten oben */
-        .title-box {
-            border: 3px solid #00d2ff;
-            background-color: rgba(15, 22, 36, 0.9);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 650px;
-            margin: 20px auto 60px auto;
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.4), inset 0 0 20px rgba(0, 210, 255, 0.15);
-            position: relative;
-            z-index: 2;
-        }
-
-        .title-box h1 {
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 900;
-            letter-spacing: 3px;
-            color: #00d2ff;
-            text-shadow: 0 0 12px rgba(0, 210, 255, 0.6);
-        }
-
-        .title-box p {
-            margin: 8px 0 0 0;
-            color: #94a3b8;
-            font-size: 0.95rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        /* Das Kachel-Grid (wird automatisch erweitert) */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            max-width: 1100px;
-            margin: 0 auto 60px auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Clean gestaltete, abgerundete Cyber-Karten */
-        .game-card {
-            background-color: #111622;
-            border: 2px solid #1e293b;
-            border-radius: 16px;
-            padding: 40px 20px;
-            text-decoration: none;
-            color: #ffffff;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Leucht-Effekt beim Drüberfahren */
-        .game-card:hover {
-            transform: translateY(-8px);
-            border-color: #00d2ff;
-            box-shadow: 0 12px 25px rgba(0, 210, 255, 0.3);
-        }
-
-        .game-icon {
-            font-size: 3rem;
-            transition: transform 0.2s;
-        }
-
-        .game-card:hover .game-icon {
-            transform: scale(1.1);
-        }
-
-        .game-title {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 1.15rem;
-            letter-spacing: 0.5px;
-        }
-
-        /* Zurück-Button */
-        .back-btn {
-            display: inline-block;
-            background-color: #1e293b;
-            color: #00d2ff;
-            border: 2px solid #00d2ff;
-            font-family: 'Orbitron', sans-serif;
-            text-decoration: none;
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-        }
-
-        .back-btn:hover {
-            background-color: #00d2ff;
-            color: #0b0e14;
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.5);
-            transform: scale(1.03);
-        }
+        body { background-color: #05070a; color: #ffffff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 40px; text-align: center; min-height: 100vh; position: relative; overflow-x: hidden; }
+        body::before, body::after { content: ""; position: fixed; top: 0; width: 4px; height: 100%; background: #00d2ff; box-shadow: 0 0 15px #00d2ff, 0 0 30px #00c8ff, 0 0 45px #00ffff; opacity: 0.8; z-index: 1; }
+        body::before { left: 40px; } body::after { right: 40px; }
+        @media (max-width: 768px) { body::before { left: 10px; } body::after { right: 10px; } }
+        .title-box { border: 3px solid #00d2ff; background-color: rgba(15, 22, 36, 0.9); border-radius: 20px; padding: 30px; max-width: 650px; margin: 20px auto 60px auto; box-shadow: 0 0 25px rgba(0, 210, 255, 0.4), inset 0 0 20px rgba(0, 210, 255, 0.15); position: relative; z-index: 2; }
+        .title-box h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: 3px; color: #00d2ff; text-shadow: 0 0 12px rgba(0, 210, 255, 0.6); }
+        .title-box p { margin: 8px 0 0 0; color: #94a3b8; font-size: 0.95rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto 60px auto; position: relative; z-index: 2; }
+        .game-card { background-color: #111622; border: 2px solid #1e293b; border-radius: 16px; padding: 40px 20px; text-decoration: none; color: #ffffff; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+        .game-card:hover { transform: translateY(-8px); border-color: #00d2ff; box-shadow: 0 12px 25px rgba(0, 210, 255, 0.3); }
+        .game-icon { font-size: 3rem; transition: transform 0.2s; }
+        .game-card:hover .game-icon { transform: scale(1.1); }
+        .game-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 0.5px; }
+        .back-btn { display: inline-block; background-color: #1e293b; color: #00d2ff; border: 2px solid #00d2ff; font-family: 'Orbitron', sans-serif; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-weight: 700; letter-spacing: 1px; transition: all 0.2s; position: relative; z-index: 2; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
+        .back-btn:hover { background-color: #00d2ff; color: #0b0e14; box-shadow: 0 0 25px rgba(0, 210, 255, 0.5); transform: scale(1.03); }
     </style>
 </head>
 <body>
-
     <div class="title-box">
         <h1>STEFANS SPIELE</h1>
         <p>Premium Game Collection</p>
     </div>
-
-    <!-- Das erweiterte Grid inklusive Cyber-Tetris -->
     <div class="games-grid">
-        <a href="/tetris" class="game-card">
-            <span class="game-icon">🧱</span>
-            <span class="game-title">Cyber-Tetris</span>
-        </a>
-        <a href="/clicker" class="game-card">
-            <span class="game-icon">⚔️</span>
-            <span class="game-title">Monster Clicker</span>
+        <a href="/labyrinth" class="game-card">
+            <span class="game-icon">🛡️</span>
+            <span class="game-title">Raid Defense</span>
         </a>
         <a href="/shooter" class="game-card">
             <span class="game-icon">🚀</span>
@@ -178,9 +46,8 @@
             <span class="game-title">Infinite Jump</span>
         </a>
     </div>
-
     <br>
     <a href="/" class="back-btn">⬅️ Zurück zur Startseite</a>
-
 </body>
 </html>
+
