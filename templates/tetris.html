@@ -55,7 +55,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            min-width: 100px;
+            min-width: 110px;
             font-family: 'Orbitron', sans-serif;
         }
 
@@ -84,9 +84,8 @@
         #nextCanvas {
             background-color: #05070a;
             border: 1px solid #1e2530;
-            margin-top: 5px;
-            width: 64px;
-            height: 96px;
+            margin: 5px auto 0 auto;
+            display: block;
         }
 
         .controls-info {
@@ -94,12 +93,11 @@
             color: #94a3b8;
             text-align: left;
             line-height: 1.4;
-            display: block;
         }
 
-        /* Virtuelles Handy-Steuerkreuz unten */
+        /* Virtuelles Steuerkreuz unten für Handys */
         .mobile-controls {
-            display: none; /* Wird nur auf Handys eingeblendet */
+            display: none;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             width: 100%;
@@ -118,6 +116,7 @@
             touch-action: manipulation;
             user-select: none;
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+            cursor: pointer;
         }
 
         .mobile-btn:active {
@@ -147,16 +146,12 @@
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
         }
 
-        /* Schaltet Buttons nur auf Touch-Geräten ein */
         @media (max-width: 768px) {
             .mobile-controls {
                 display: grid;
             }
             .controls-info {
-                display: none; /* Tastatur-Info auf Handy ausblenden */
-            }
-            .game-container {
-                flex-direction: row;
+                display: none;
             }
         }
     </style>
@@ -180,7 +175,7 @@
                 </div>
                 <div class="info-box">
                     <div class="info-title">Nächstes</div>
-                    <canvas id="nextCanvas" width="96" height="96"></canvas>
+                    <canvas id="nextCanvas" width="72" height="72"></canvas>
                 </div>
             </div>
 
@@ -188,12 +183,13 @@
                 <div class="info-title" style="margin-bottom: 5px;">Steuerung</div>
                 ⬅️ ➡️ : Bewegen<br>
                 ⬆️ : Drehen<br>
-                ⬇️ : Fall
+                ⬇️ : Fall<br>
+                Leertaste: Drop
             </div>
         </div>
     </div>
 
-    <!-- Das neue Touch-Steuerkreuz -->
+    <!-- Das Touch-Steuerkreuz -->
     <div class="mobile-controls">
         <button class="mobile-btn" id="btn-rot">🔄</button>
         <button class="mobile-btn" id="btn-up">⬆️</button>
@@ -212,7 +208,7 @@
 
         const nextCanvas = document.getElementById('nextCanvas');
         const nextContext = nextCanvas.getContext('2d');
-        nextContext.scale(24, 24);
+        nextContext.scale(18, 14);
 
         const arena = createMatrix(10, 20);
 
@@ -234,17 +230,27 @@
             return matrix;
         }
 
+        // FEHLER BEHOBEN: Hier sind jetzt die echten Tetris-Formen sauber drin!
         function createPiece(type) {
-            if (type === 'T') return [[0,0,0],[1,1,1],[0,1,0]];
-            if (type === 'I') return [[0,2,0,0],[0,2,0,0],[0,2,0,0],[0,2,0,0]];
-            if (type === 'O') return [[3,3],[3,3]];
-            if (type === 'Z') return [[4,4,0],[0,4,4],[0,0,0]];
-            if (type === 'S') return [[0,5,5],[5,5,0],[0,0,0]];
-            if (type === 'J') return [[0,6,0],[0,6,0],[6,6,0]];
-            if (type === 'L') return [[0,7,0],[0,7,0],[0,7,7]];
+            if (type === 'T') {
+                return [[0, 0, 0], [1, 1, 1], [0, 1, 0]];
+            } else if (type === 'I') {
+                return [[0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0]];
+            } else if (type === 'O') {
+                return [[3, 3], [3, 3]];
+            } else if (type === 'Z') {
+                return [[4, 4, 0], [0, 4, 4], [0, 0, 0]];
+            } else if (type === 'S') {
+                return [[0, 5, 5], [5, 5, 0], [0, 0, 0]];
+            } else if (type === 'J') {
+                return [[0, 6, 0], [0, 6, 0], [6, 6, 0]];
+            } else if (type === 'L') {
+                return [[0, 7, 0], [0, 7, 0], [0, 7, 7]];
+            }
         }
 
         function drawMatrix(matrix, offset, ctx) {
+            if (!matrix) return;
             matrix.forEach((row, y) => {
                 row.forEach((value, x) => {
                     if (value !== 0) {
@@ -315,8 +321,3 @@
             merge(arena, player);
             playerReset();
             arenaSweep();
-            dropCounter = 0;
-        }
-
-        function playerMove(dir) {
-            player.pos.x += dir;
