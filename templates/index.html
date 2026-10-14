@@ -19,15 +19,55 @@
             overflow-x: hidden;
         }
 
-        /* Der Hintergrund-Kasten für die echten Blitze */
-        #lightning-canvas {
+        /* DIE ECHTEN, DYNAMISCH FLACKERNDEN BLITZE LINKS UND RECHTS */
+        .cyber-lightning-left, .cyber-lightning-right {
             position: fixed;
             top: 0;
-            left: 0;
-            width: 100%;
+            width: 6px;
             height: 100%;
-            pointer-events: none;
+            background: #00d2ff;
+            opacity: 0.7;
             z-index: 1;
+            /* Das unregelmäßige, heftige Gewitter-Flackern */
+            animation: lightning-strike 4s infinite linear;
+        }
+
+        .cyber-lightning-left {
+            left: 40px;
+            box-shadow: 0 0 20px #00d2ff, 0 0 40px #00ffff;
+        }
+
+        .cyber-lightning-right {
+            right: 40px;
+            box-shadow: 0 0 20px #00d2ff, 0 0 40px #00ffff;
+        }
+
+        /* Generiert die unregelmäßigen Zacken-Bewegungen und Blitzeinschläge */
+        @keyframes lightning-strike {
+            0%, 12%, 24%, 36%, 100% {
+                opacity: 0.8;
+                transform: skewX(-1deg) scaleX(1);
+                filter: drop-shadow(0 0 15px #00d2ff);
+            }
+            5%, 15%, 28% {
+                opacity: 0.2;
+                transform: skewX(2deg) scaleX(0.5);
+                filter: drop-shadow(0 0 5px #00c8ff);
+            }
+            10%, 30% {
+                opacity: 1;
+                transform: skewX(-3deg) scaleX(1.8);
+                filter: drop-shadow(0 0 35px #00ffff);
+            }
+            50%, 75% {
+                opacity: 0.6;
+                transform: skewX(1deg) scaleX(0.9);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cyber-lightning-left { left: 10px; }
+            .cyber-lightning-right { right: 10px; }
         }
 
         /* Fette Cyber-Navbar oben */
@@ -95,21 +135,19 @@
         }
 
         .header-box {
-            background-color: rgba(30, 41, 59, 0.75);
+            background-color: rgba(30, 41, 59, 0.85);
             border: 2px solid #00d2ff;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
             text-align: center;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2), inset 0 0 15px rgba(0, 210, 255, 0.05);
-            backdrop-filter: blur(5px);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
         }
 
         .header-box h1 {
             color: #ffffff;
             margin: 0 0 10px 0;
             font-size: 2.3rem;
-            text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
         }
 
         .header-box p {
@@ -129,13 +167,12 @@
         }
 
         .stat-card {
-            background-color: rgba(17, 24, 39, 0.85);
+            background-color: rgba(17, 24, 39, 0.9);
             border: 2px solid #1e293b;
             border-radius: 12px;
             padding: 25px;
             text-align: center;
             transition: all 0.2s;
-            backdrop-filter: blur(5px);
         }
 
         .stat-card:hover {
@@ -149,7 +186,6 @@
             font-weight: 800;
             color: #00d2ff;
             margin-bottom: 5px;
-            text-shadow: 0 0 8px rgba(0, 210, 255, 0.3);
         }
 
         .stat-title {
@@ -167,12 +203,11 @@
 
         /* Job-Beschreibung */
         .info-section {
-            background-color: rgba(30, 41, 59, 0.75);
+            background-color: rgba(30, 41, 59, 0.85);
             border: 2px solid #1e293b;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
-            backdrop-filter: blur(5px);
         }
 
         .info-section h2 {
@@ -190,13 +225,12 @@
 
         /* Feste Kontakt-Zentrale */
         .contact-section {
-            background-color: rgba(30, 41, 59, 0.75);
+            background-color: rgba(30, 41, 59, 0.85);
             border: 2px solid #1e293b;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
             text-align: center;
-            backdrop-filter: blur(5px);
         }
 
         .contact-section h2 {
@@ -254,8 +288,9 @@
 </head>
 <body>
 
-    <!-- Leinwand für die echten, unregelmäßigen Blitze -->
-    <canvas id="lightning-canvas"></canvas>
+    <!-- Die beiden flackernden Cyber-Blitze -->
+    <div class="cyber-lightning-left"></div>
+    <div class="cyber-lightning-right"></div>
 
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
@@ -297,28 +332,3 @@
             <ul>
                 <li><strong>Konfliktmanagement:</strong> Deeskalation bei Streitigkeiten zwischen Usern.</li>
                 <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung der Community-Richtlinien.</li>
-                <li><strong>Event-Planung:</strong> Organisation von Community-Turnieren und Spiele-Abenden.</li>
-                <li><strong>Bot-Konfiguration:</strong> Einrichtung von Moderations- und Log-Systemen zur Serverabsicherung.</li>
-            </ul>
-        </div>
-
-        <div class="contact-section">
-            <h2>Projektanfragen &amp; Kontakt ✉️</h2>
-            <p style="color: #94a3b8;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
-            
-            <div class="contact-grid">
-                <div class="contact-method">
-                    <span>💬</span> Discord: Steffel_07
-                </div>
-                <div class="contact-method">
-                    <span>📧</span> E-Mail: stefan.prasch@gmx.net
-                </div>
-            </div>
-        </div>
-
-        <div class="cta-box">
-            <p style="color: #94a3b8; margin-bottom: 15px;">Lust auf eine Pause? Besuche meine Arcade-Sammlung:</p>
-            <a href="/spiele-hub" class="cta-link">Direkt zum Spiele-Hub 🎮</a>
-        </div>
-    </div>
-
