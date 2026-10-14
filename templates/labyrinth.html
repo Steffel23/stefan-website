@@ -6,101 +6,14 @@
     <title>STEFANS SPIELE | Server Raid Defense 🛡️</title>
     <style>
         @import url('https://googleapis.com');
-
-        body {
-            background-color: #05070a;
-            color: #ffffff;
-            font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            padding: 10px;
-            text-align: center;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            color: #00d2ff;
-            margin: 5px 0;
-            text-shadow: 0 0 15px #00d2ff;
-            text-transform: uppercase;
-            font-size: 1.8rem;
-        }
-
-        .hud {
-            display: flex;
-            gap: 20px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            color: #00d2ff;
-            margin: 8px 0;
-            text-shadow: 0 0 5px rgba(0, 210, 255, 0.5);
-        }
-
-        #game-canvas {
-            background-color: #0b0f17;
-            border: 2px solid #00d2ff;
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
-            border-radius: 12px;
-            max-width: 100%;
-            max-height: 55vh;
-            cursor: pointer;
-        }
-
-        /* Komplett blaue Cyber-Shop-Buttons */
-        .shop {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 10px;
-        }
-
-        .shop-btn {
-            flex: 1;
-            background-color: #0d111a;
-            border: 2px solid #0055ff;
-            color: #00d2ff;
-            border-radius: 12px;
-            padding: 12px;
-            font-size: 0.95rem;
-            font-weight: bold;
-            font-family: 'Orbitron', sans-serif;
-            cursor: pointer;
-            touch-action: manipulation;
-            transition: all 0.2s;
-            box-shadow: 0 0 10px rgba(0, 85, 255, 0.2);
-        }
-
-        .shop-btn.active {
-            background-color: #0055ff;
-            color: #ffffff;
-            border-color: #00ffff;
-            box-shadow: 0 0 20px #0055ff, 0 0 30px #00ffff;
-            text-shadow: 0 0 5px #ffffff;
-        }
-
-        .back-btn {
-            margin-top: 15px;
-            display: inline-block;
-            background-color: #1e293b;
-            color: #00d2ff;
-            border: 2px solid #00d2ff;
-            text-decoration: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-family: 'Orbitron', sans-serif;
-        }
-        .back-btn:hover {
-            background-color: #00d2ff;
-            color: #05070a;
-            box-shadow: 0 0 15px #00d2ff;
-        }
+        body { background-color: #05070a; color: #ffffff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 10px; text-align: center; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; box-sizing: border-box; }
+        h1 { font-family: 'Orbitron', sans-serif; color: #00d2ff; margin: 5px 0; text-shadow: 0 0 15px #00d2ff; text-transform: uppercase; font-size: 1.8rem; }
+        .hud { display: flex; gap: 20px; font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: #00d2ff; margin: 8px 0; text-shadow: 0 0 5px rgba(0, 210, 255, 0.5); }
+        #game-canvas { background-color: #0b0f17; border: 2px solid #00d2ff; box-shadow: 0 0 25px rgba(0, 210, 255, 0.4); border-radius: 12px; max-width: 100%; max-height: 55vh; cursor: pointer; }
+        .shop { display: flex; gap: 10px; width: 100%; max-width: 400px; margin-top: 10px; }
+        .shop-btn { flex: 1; background-color: #0d111a; border: 2px solid #0055ff; color: #00d2ff; border-radius: 12px; padding: 12px; font-size: 0.95rem; font-weight: bold; font-family: 'Orbitron', sans-serif; cursor: pointer; touch-action: manipulation; transition: all 0.2s; box-shadow: 0 0 10px rgba(0, 85, 255, 0.2); }
+        .shop-btn.active { background-color: #0055ff; color: #ffffff; border-color: #00ffff; box-shadow: 0 0 20px #0055ff, 0 0 30px #00ffff; text-shadow: 0 0 5px #ffffff; }
+        .back-btn { margin-top: 15px; display: inline-block; background-color: #1e293b; color: #00d2ff; border: 2px solid #00d2ff; text-decoration: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-family: 'Orbitron', sans-serif; }
     </style>
 </head>
 <body>
@@ -125,166 +38,106 @@
         window.onload = function() {
             const canvas = document.getElementById('game-canvas');
             const ctx = canvas.getContext('2d');
-
-            let money = 150;
-            let hp = 10;
-            let wave = 1;
-            let gameOver = false;
-
+            let money = 150; let hp = 10; let wave = 1; let gameOver = false;
             let selectedTowerType = 'firewall';
+            const path = [{x: 0, y: 200}, {x: 150, y: 200}, {x: 150, y: 70}, {x: 350, y: 70}, {x: 350, y: 320}, {x: 500, y: 320}, {x: 500, y: 200}, {x: 600, y: 200}];
+            let enemies = []; let towers = []; let projectiles = []; let spawnTimer = 0; let waveTimer = 0; let enemiesToSpawn = 5;
 
-            const path = [
-                {x: 0, y: 200}, {x: 150, y: 200}, {x: 150, y: 70}, 
-                {x: 350, y: 70}, {x: 350, y: 320}, {x: 500, y: 320}, {x: 500, y: 200}, {x: 600, y: 200}
-            ];
-
-            let enemies = [];
-            let towers = [];
-            let projectiles = [];
-            let spawnTimer = 0;
-            let waveTimer = 0;
-            let enemiesToSpawn = 5;
-
-            document.getElementById('btn-fw').addEventListener('click', function() {
-                selectedTowerType = 'firewall';
-                this.classList.add('active');
-                document.getElementById('btn-am').classList.remove('active');
-            });
-            document.getElementById('btn-am').addEventListener('click', function() {
-                selectedTowerType = 'automod';
-                this.classList.add('active');
-                document.getElementById('btn-fw').classList.remove('active');
-            });
+            document.getElementById('btn-fw').addEventListener('click', function() { selectedTowerType = 'firewall'; this.classList.add('active'); document.getElementById('btn-am').classList.remove('active'); });
+            document.getElementById('btn-am').addEventListener('click', function() { selectedTowerType = 'automod'; this.classList.add('active'); document.getElementById('btn-fw').classList.remove('active'); });
 
             canvas.addEventListener('click', function(e) {
                 if (gameOver) { resetGame(); return; }
-                
                 const rect = canvas.getBoundingClientRect();
-                const scaleX = canvas.width / rect.width;
-                const scaleY = canvas.height / rect.height;
-                const clickX = (e.clientX - rect.left) * scaleX;
-                const clickY = (e.clientY - rect.top) * scaleY;
-
+                const clickX = (e.clientX - rect.left) * (600 / rect.width);
+                const clickY = (e.clientY - rect.top) * (400 / rect.height);
                 let cost = selectedTowerType === 'firewall' ? 50 : 90;
                 if (money >= cost) {
-                    towers.push({
-                        x: clickX,
-                        y: clickY,
-                        type: selectedTowerType,
-                        range: selectedTowerType === 'firewall' ? 100 : 140,
-                        cooldown: 0,
-                        maxCooldown: selectedTowerType === 'firewall' ? 25 : 12
-                    });
-                    money -= cost;
-                    updateHUD();
+                    towers.push({ x: clickX, y: clickY, type: selectedTowerType, range: selectedTowerType === 'firewall' ? 100 : 140, cooldown: 0, maxCooldown: selectedTowerType === 'firewall' ? 25 : 12 });
+                    money -= cost; updateHUD();
                 }
             });
 
-            function updateHUD() {
-                document.getElementById('money').innerText = "Data-Packs: " + money;
-                document.getElementById('hp').innerText = "Mainframe-HP: " + hp;
-                document.getElementById('wave').innerText = "Welle: " + wave;
-            }
+            function updateHUD() { document.getElementById('money').innerText = "Data-Packs: " + money; document.getElementById('hp').innerText = "Mainframe-HP: " + hp; document.getElementById('wave').innerText = "Welle: " + wave; }
 
             function spawnEnemy() {
                 if (enemiesToSpawn > 0) {
                     spawnTimer++;
                     if (spawnTimer > 50) {
-                        enemies.push({
-                            pathIndex: 0,
-                            x: path[0].x,
-                            y: path[0].y,
-                            speed: 1.4 + (wave * 0.12),
-                            hp: 20 + (wave * 18),
-                            maxHp: 20 + (wave * 18),
-                            size: 14
-                        });
-                        enemiesToSpawn--;
-                        spawnTimer = 0;
+                        enemies.push({ pathIndex: 0, x: path[0].x, y: path[0].y, speed: 1.4 + (wave * 0.12), hp: 20 + (wave * 18), maxHp: 20 + (wave * 18), size: 14 });
+                        enemiesToSpawn--; spawnTimer = 0;
                     }
                 } else if (enemies.length === 0) {
                     waveTimer++;
-                    if (waveTimer > 150) {
-                        wave++;
-                        enemiesToSpawn = 5 + wave;
-                        waveTimer = 0;
-                        updateHUD();
-                    }
+                    if (waveTimer > 150) { wave++; enemiesToSpawn = 5 + wave; waveTimer = 0; updateHUD(); }
                 }
             }
 
-            function resetGame() {
-                money = 150;
-                hp = 10;
-                wave = 1;
-                gameOver = false;
-                enemies = [];
-                towers = [];
-                projectiles = [];
-                enemiesToSpawn = 5;
-                updateHUD();
-            }
+            function resetGame() { money = 150; hp = 10; wave = 1; gameOver = false; enemies = []; towers = []; projectiles = []; enemiesToSpawn = 5; updateHUD(); }
 
             function update() {
                 if (gameOver) return;
-
                 spawnEnemy();
-
                 enemies.forEach((enemy, eIndex) => {
                     const target = path[enemy.pathIndex + 1];
-                    const dx = target.x - enemy.x;
-                    const dy = target.y - enemy.y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-
+                    const dx = target.x - enemy.x; const dy = target.y - enemy.y; const dist = Math.sqrt(dx*dx + dy*dy);
                     if (dist < enemy.speed) {
                         enemy.pathIndex++;
-                        if (enemy.pathIndex >= path.length - 1) {
-                            hp--;
-                            enemies.splice(eIndex, 1);
-                            updateHUD();
-                            if (hp <= 0) gameOver = true;
-                            return;
-                        }
-                    } else {
-                        enemy.x += (dx / dist) * enemy.speed;
-                        enemy.y += (dy / dist) * enemy.speed;
-                    }
+                        if (enemy.pathIndex >= path.length - 1) { hp--; enemies.splice(eIndex, 1); updateHUD(); if (hp <= 0) gameOver = true; return; }
+                    } else { enemy.x += (dx / dist) * enemy.speed; enemy.y += (dy / dist) * enemy.speed; }
                 });
 
                 towers.forEach(tower => {
                     if (tower.cooldown > 0) tower.cooldown--;
-
                     if (tower.cooldown === 0) {
-                        let target = null;
-                        let bestDist = tower.range;
-
+                        let target = null; let bestDist = tower.range;
                         enemies.forEach(enemy => {
-                            const tdx = enemy.x - tower.x;
-                            const tdy = enemy.y - tower.y;
-                            const tdist = Math.sqrt(tdx*tdx + tdy*tdy);
-                            if (tdist < bestDist) {
-                                bestDist = tdist;
-                                target = enemy;
-                            }
+                            const tdist = Math.sqrt((enemy.x - tower.x)**2 + (enemy.y - tower.y)**2);
+                            if (tdist < bestDist) { bestDist = tdist; target = enemy; }
                         });
-
-                        if (target) {
-                            projectiles.push({
-                                x: tower.x,
-                                y: tower.y,
-                                target: target,
-                                speed: 7,
-                                damage: tower.type === 'firewall' ? 12 : 6,
-                                type: tower.type
-                            });
-                            tower.cooldown = tower.maxCooldown;
-                        }
+                        if (target) { projectiles.push({ x: tower.x, y: tower.y, target: target, speed: 7, damage: tower.type === 'firewall' ? 12 : 6, type: tower.type }); tower.cooldown = tower.maxCooldown; }
                     }
                 });
 
                 projectiles.forEach((proj, pIndex) => {
-                    if (!enemies.includes(proj.target)) {
-                        projectiles.splice(pIndex, 1);
-                        return;
-                    }
+                    if (!enemies.includes(proj.target)) { projectiles.splice(pIndex, 1); return; }
+                    const dx = proj.target.x - proj.x; const dy = proj.target.y - proj.y; const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < proj.speed) {
+                        proj.target.hp -= proj.damage; projectiles.splice(pIndex, 1);
+                        if (proj.target.hp <= 0) { const eIdx = enemies.indexOf(proj.target); if (eIdx > -1) { enemies.splice(eIdx, 1); money += 20; updateHUD(); } }
+                    } else { proj.x += (dx / dist) * proj.speed; proj.y += (dy / dist) * proj.speed; }
+                });
+            }
 
+            function draw() {
+                ctx.fillStyle = '#05070a'; ctx.fillRect(0, 0, 600, 400);
+                ctx.strokeStyle = 'rgba(0, 85, 255, 0.15)'; ctx.lineWidth = 26; ctx.beginPath(); ctx.moveTo(path[0].x, path[0].y);
+                for(let i=1; i<path.length; i++) ctx.lineTo(path[i].x, path[i].y); ctx.stroke();
+                ctx.strokeStyle = '#00d2ff'; ctx.lineWidth = 3; ctx.stroke();
+
+                towers.forEach(tower => {
+                    ctx.fillStyle = tower.type === 'firewall' ? '#00d2ff' : '#0055ff'; ctx.beginPath(); ctx.arc(tower.x, tower.y, 14, 0, Math.PI*2); ctx.fill();
+                    ctx.strokeStyle = 'rgba(0, 210, 255, 0.1)'; ctx.beginPath(); ctx.arc(tower.x, tower.y, tower.range, 0, Math.PI*2); ctx.stroke();
+                });
+
+                enemies.forEach(enemy => {
+                    ctx.fillStyle = '#ff0055'; ctx.fillRect(enemy.x - enemy.size/2, enemy.y - enemy.size/2, enemy.size, enemy.size);
+                    ctx.fillStyle = '#1e2530'; ctx.fillRect(enemy.x - 12, enemy.y - 14, 24, 4);
+                    ctx.fillStyle = '#00ffff'; ctx.fillRect(enemy.x - 12, enemy.y - 14, (enemy.hp / enemy.maxHp) * 24, 4);
+                });
+
+                projectiles.forEach(proj => { ctx.fillStyle = proj.type === 'firewall' ? '#00ffff' : '#ffffff'; ctx.beginPath(); ctx.arc(proj.x, proj.y, 4, 0, Math.PI*2); ctx.fill(); });
+
+                if (gameOver) {
+                    ctx.fillStyle = 'rgba(5, 7, 10, 0.92)'; ctx.fillRect(0, 0, 600, 400);
+                    ctx.fillStyle = '#ff0055'; ctx.font = '28px "Orbitron"'; ctx.textAlign = 'center'; ctx.fillText('MAINFRAME COMPROMISED', 300, 180);
+                    ctx.fillStyle = '#00d2ff'; ctx.font = '18px "Rajdhani"'; ctx.fillText('Klicke auf das Feld zum Rebooten', 300, 220);
+                }
+            }
+
+            function loop() { update(); draw(); requestAnimationFrame(loop); }
+            resetGame(); loop();
+        };
+    </script>
+</body>
+</html>
