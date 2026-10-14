@@ -3,36 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
-    <title>STEFANS SPIELE | Server Raid Defense 🛡️</title>
+    <title>STEFANS SPIELE | Cyber Space Odyssey 🌌</title>
     <style>
         @import url('https://googleapis.com');
-        body { background-color: #05070a; color: #ffffff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 10px; text-align: center; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; box-sizing: border-box; overflow-x: hidden; }
+        body { background-color: #030508; color: #ffffff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 10px; text-align: center; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; box-sizing: border-box; overflow: hidden; }
         h1 { font-family: 'Orbitron', sans-serif; color: #00d2ff; margin: 5px 0; text-shadow: 0 0 15px #00d2ff; text-transform: uppercase; font-size: 1.6rem; }
-        .hud { display: flex; justify-content: center; gap: 15px; font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #00d2ff; margin: 5px 0; text-shadow: 0 0 5px rgba(0, 210, 255, 0.5); flex-wrap: wrap; }
-        .canvas-container { width: 100%; max-width: 600px; position: relative; }
-        canvas { background-color: #0b0f17; border: 2px solid #00d2ff; box-shadow: 0 0 25px rgba(0, 210, 255, 0.4); border-radius: 12px; width: 100%; height: auto; display: block; touch-action: none; }
-        .shop { display: flex; gap: 10px; width: 100%; max-width: 400px; margin-top: 12px; }
-        .shop-btn { flex: 1; background-color: #0d111a; border: 2px solid #0055ff; color: #00d2ff; border-radius: 12px; padding: 14px 10px; font-size: 0.9rem; font-weight: bold; font-family: 'Orbitron', sans-serif; cursor: pointer; touch-action: manipulation; transition: all 0.2s; user-select: none; }
-        .shop-btn.active { background-color: #0055ff; color: #ffffff; border-color: #00ffff; box-shadow: 0 0 20px #0055ff, 0 0 30px #00ffff; }
+        .interface { display: flex; gap: 15px; font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: #00d2ff; margin-bottom: 8px; text-shadow: 0 0 5px rgba(0, 210, 255, 0.5); flex-wrap: wrap; justify-content: center; }
+        .bar-container { width: 100%; max-width: 500px; height: 6px; background-color: #111622; border: 1px solid #0055ff; border-radius: 3px; margin-bottom: 10px; overflow: hidden; }
+        #shield-bar { width: 100%; height: 100%; background: linear-gradient(to right, #0055ff, #00ffff); box-shadow: 0 0 10px #00ffff; transition: width 0.1s; }
+        .canvas-container { width: 100%; max-width: 650px; position: relative; }
+        canvas { background-color: #05070a; border: 2px solid #00d2ff; box-shadow: 0 0 25px rgba(0, 210, 255, 0.4); border-radius: 12px; width: 100%; height: auto; display: block; }
+        .controls-area { width: 100%; max-width: 650px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 12px; }
+        .shop-box, .mobile-joystick { background-color: rgba(17, 22, 34, 0.85); border: 1px solid #0055ff; border-radius: 12px; padding: 10px; box-sizing: border-box; }
+        .shop-title { font-family: 'Orbitron', sans-serif; color: #00d2ff; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+        .upgrade-btn { width: 100%; background-color: #0d111a; border: 1px solid #0055ff; color: #ffffff; padding: 8px; border-radius: 6px; font-family: 'Rajdhani', sans-serif; font-weight: bold; font-size: 0.9rem; margin-bottom: 6px; cursor: pointer; transition: all 0.2s; text-align: left; display: flex; justify-content: space-between; }
+        .upgrade-btn:active { background-color: #0055ff; border-color: #00ffff; box-shadow: 0 0 10px #0055ff; }
+        .pad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .pad-btn { background-color: #0d111a; border: 1px solid #0055ff; color: #00d2ff; border-radius: 8px; padding: 12px 5px; font-size: 1.2rem; font-weight: bold; touch-action: manipulation; user-select: none; cursor: pointer; }
+        .pad-btn:active { background-color: #0055ff; color: #ffffff; box-shadow: 0 0 15px #00ffff; }
+        .fire-btn { grid-column: span 3; background-color: rgba(0, 210, 255, 0.15); border-color: #00ffff; }
         .back-btn { margin-top: 15px; display: inline-block; background-color: #1e293b; color: #00d2ff; border: 2px solid #00d2ff; text-decoration: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-family: 'Orbitron', sans-serif; }
+        @media (max-width: 600px) { .controls-area { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <h1>Server Raid Defense</h1>
-    <div class="hud">
-        <div id="money">Data-Packs: 150</div>
-        <div id="hp">Mainframe-HP: 10</div>
-        <div id="wave">Welle: 1</div>
+    <h1>Cyber Space Odyssey</h1>
+    <div class="interface">
+        <div id="ui-score">Score: 0</div>
+        <div id="ui-credits">Kristalle: 0 💎</div>
+        <div id="ui-level">Schiff-LVL: 1</div>
     </div>
+    <div class="bar-container"><div id="shield-bar"></div></div>
+    <div class="canvas-container"><canvas id="game-canvas" width="600" height="380"></canvas></div>
 
-    <div class="canvas-container">
-        <canvas id="game-canvas" width="600" height="400"></canvas>
-    </div>
-
-    <div class="shop">
-        <button class="shop-btn active" id="btn-fw">Firewall (50⟁)</button>
-        <button class="shop-btn" id="btn-am">Auto-Mod (90⟁)</button>
+    <div class="controls-area">
+        <div class="shop-box">
+            <div class="shop-title">Schiffs-Upgrades</div>
+            <button class="upgrade-btn" id="up-laser"><span>🔫 Plasma-Laser (LVL <span id="lvl-laser">1</span>)</span><span id="cost-laser">20 💎</span></button>
+            <button class="upgrade-btn" id="up-shield"><span>🛡️ Schild-Regen (LVL <span id="lvl-shield">1</span>)</span><span id="cost-shield">35 💎</span></button>
+            <button class="upgrade-btn" id="up-speed"><span>⚡ Triebwerke (LVL <span id="lvl-speed">1</span>)</span><span id="cost-speed">15 💎</span></button>
+        </div>
+        <div class="mobile-joystick">
+            <div class="shop-title">Mobiles Steuerkreuz</div>
+            <div class="pad-grid">
+                <button class="pad-btn" style="visibility:hidden;"></button>
+                <button class="pad-btn" id="p-btn-up">▲</button>
+                <button class="pad-btn" style="visibility:hidden;"></button>
+                <button class="pad-btn" id="p-btn-left">◀</button>
+                <button class="pad-btn" id="p-btn-down">▼</button>
+                <button class="pad-btn" id="p-btn-right">▶</button>
+                <button class="pad-btn fire-btn" id="p-btn-fire">⚡ FEUER FREI ⚡</button>
+            </div>
+        </div>
     </div>
 
     <a href="/spiele-hub" class="back-btn">⬅ Zum Hub</a>
@@ -41,134 +64,67 @@
         window.onload = function() {
             const canvas = document.getElementById('game-canvas');
             const ctx = canvas.getContext('2d');
+            let score = 0; let credits = 0; let shipLvl = 1; let gameOver = false;
+            let upLvlLaser = 1; let upLvlShield = 1; let upLvlSpeed = 1;
+            let upCostLaser = 20; let upCostShield = 35; let upCostSpeed = 15;
 
-            let money = 150; let hp = 10; let wave = 1; let gameOver = false;
-            let selectedTowerType = 'firewall';
+            const player = { x: 300, y: 280, width: 32, height: 32, speed: 4.5, maxShield: 100, shield: 100, movingLeft: false, movingRight: false, movingUp: false, movingDown: false };
+            let stars = []; let lasers = []; let enemies = []; let crystals = []; let spawnTimer = 0;
 
-            const path = [
-                {x: 0, y: 200}, {x: 150, y: 200}, {x: 150, y: 70}, 
-                {x: 350, y: 70}, {x: 350, y: 320}, {x: 500, y: 320}, {x: 500, y: 200}, {x: 600, y: 200}
-            ];
+            for(let i=0; i<40; i++) { stars.push({ x: Math.random()*600, y: Math.random()*380, size: Math.random()*1.5+0.5, speed: Math.random()*1+0.5 }); }
 
-            // BOMBENSICHERER STARTPUNKT FIX
-            const startX = path[0].x;
-            const startY = path[0].y;
-
-            let enemies = []; let towers = []; let projectiles = [];
-            let spawnTimer = 0; let waveTimer = 0; let enemiesToSpawn = 5;
-
-            document.getElementById('btn-fw').addEventListener('click', function() {
-                selectedTowerType = 'firewall'; this.classList.add('active'); document.getElementById('btn-am').classList.remove('active');
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'a') player.movingLeft = true;
+                if (e.key === 'ArrowRight' || e.key === 'd') player.movingRight = true;
+                if (e.key === 'ArrowUp' || e.key === 'w') player.movingUp = true;
+                if (e.key === 'ArrowDown' || e.key === 's') player.movingDown = true;
+                if (e.key === ' ') { e.preventDefault(); fireLaser(); }
             });
-            document.getElementById('btn-am').addEventListener('click', function() {
-                selectedTowerType = 'automod'; this.classList.add('active'); document.getElementById('btn-fw').classList.remove('active');
+            document.addEventListener('keyup', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'a') player.movingLeft = false;
+                if (e.key === 'ArrowRight' || e.key === 'd') player.movingRight = false;
+                if (e.key === 'ArrowUp' || e.key === 'w') player.movingUp = false;
+                if (e.key === 'ArrowDown' || e.key === 's') player.movingDown = false;
             });
 
-            function handleInput(clientX, clientY) {
+            function setupTouch(id, prop) {
+                const btn = document.getElementById(id);
+                btn.addEventListener('touchstart', (e) => { e.preventDefault(); player[prop] = true; });
+                btn.addEventListener('touchend', () => player[prop] = false);
+            }
+            setupTouch('p-btn-left', 'movingLeft'); setupTouch('p-btn-right', 'movingRight'); setupTouch('p-btn-up', 'movingUp'); setupTouch('p-btn-down', 'movingDown');
+            document.getElementById('p-btn-fire').addEventListener('touchstart', (e) => { e.preventDefault(); fireLaser(); });
+
+            document.getElementById('up-laser').addEventListener('click', () => {
+                if (credits >= upCostLaser) {
+                    credits -= upCostLaser; upLvlLaser++; upCostLaser = Math.floor(upCostLaser * 1.6);
+                    document.getElementById('lvl-laser').innerText = upLvlLaser; document.getElementById('cost-laser').innerText = upCostLaser + " 💎";
+                    updateUI();
+                }
+            });
+            document.getElementById('up-shield').addEventListener('click', () => {
+                if (credits >= upCostShield) {
+                    credits -= upCostShield; upLvlShield++; player.maxShield += 20; player.shield = player.maxShield; upCostShield = Math.floor(upCostShield * 1.6);
+                    document.getElementById('lvl-shield').innerText = upLvlShield; document.getElementById('cost-shield').innerText = upCostShield + " 💎";
+                    updateUI();
+                }
+            });
+            document.getElementById('up-speed').addEventListener('click', () => {
+                if (credits >= upCostSpeed) {
+                    credits -= upCostSpeed; upLvlSpeed++; player.speed += 0.8; upCostSpeed = Math.floor(upCostSpeed * 1.5);
+                    document.getElementById('lvl-speed').innerText = upLvlSpeed; document.getElementById('cost-speed').innerText = upCostSpeed + " 💎";
+                    updateUI();
+                }
+            });
+
+            function fireLaser() {
                 if (gameOver) { resetGame(); return; }
-                const rect = canvas.getBoundingClientRect();
-                const clickX = (clientX - rect.left) * (600 / rect.width);
-                const clickY = (clientY - rect.top) * (400 / rect.height);
-
-                let cost = selectedTowerType === 'firewall' ? 50 : 90;
-                if (money >= cost) {
-                    towers.push({ x: clickX, y: clickY, type: selectedTowerType, range: selectedTowerType === 'firewall' ? 100 : 140, cooldown: 0, maxCooldown: selectedTowerType === 'firewall' ? 25 : 12 });
-                    money -= cost; updateHUD();
-                }
+                if (upLvlLaser === 1) { lasers.push({ x: player.x + 14, y: player.y, w: 4, h: 14, speed: 7 }); }
+                else if (upLvlLaser === 2) { lasers.push({ x: player.x + 4, y: player.y + 10, w: 4, h: 14, speed: 7 }); lasers.push({ x: player.x + 24, y: player.y + 10, w: 4, h: 14, speed: 7 }); }
+                else { lasers.push({ x: player.x + 14, y: player.y - 2, w: 4, h: 16, speed: 8 }); lasers.push({ x: player.x - 2, y: player.y + 12, w: 4, h: 12, speed: 8 }); lasers.push({ x: player.x + 30, y: player.y + 12, w: 4, h: 12, speed: 8 }); }
             }
 
-            canvas.addEventListener('click', function(e) { handleInput(e.clientX, e.clientY); });
-            canvas.addEventListener('touchstart', function(e) { e.preventDefault(); const touch = e.touches[0]; handleInput(touch.clientX, touch.clientY); });
-
-            function updateHUD() {
-                document.getElementById('money').innerText = "Data-Packs: " + money;
-                document.getElementById('hp').innerText = "Mainframe-HP: " + hp;
-                document.getElementById('wave').innerText = "Welle: " + wave;
-            }
-
-            function spawnEnemy() {
-                if (enemiesToSpawn > 0) {
-                    spawnTimer++;
-                    if (spawnTimer > 50) {
-                        enemies.push({
-                            pathIndex: 0,
-                            x: startX,
-                            y: startY,
-                            speed: 1.4 + (wave * 0.12),
-                            hp: 20 + (wave * 18),
-                            maxHp: 20 + (wave * 18),
-                            size: 14
-                        });
-                        enemiesToSpawn--; spawnTimer = 0;
-                    }
-                } else if (enemies.length === 0) {
-                    waveTimer++;
-                    if (waveTimer > 150) { wave++; enemiesToSpawn = 5 + wave; waveTimer = 0; updateHUD(); }
-                }
-            }
-
-            function resetGame() { money = 150; hp = 10; wave = 1; gameOver = false; enemies = []; towers = []; projectiles = []; enemiesToSpawn = 5; updateHUD(); }
-
-            function update() {
-                if (gameOver) return;
-                spawnEnemy();
-
-                enemies.forEach((enemy, eIndex) => {
-                    const target = path[enemy.pathIndex + 1];
-                    const dx = target.x - enemy.x; const dy = target.y - enemy.y; const dist = Math.sqrt(dx*dx + dy*dy);
-
-                    if (dist < enemy.speed) {
-                        enemy.pathIndex++;
-                        if (enemy.pathIndex >= path.length - 1) {
-                            hp--; enemies.splice(eIndex, 1); updateHUD();
-                            if (hp <= 0) gameOver = true; return;
-                        }
-                    } else { enemy.x += (dx / dist) * enemy.speed; enemy.y += (dy / dist) * enemy.speed; }
-                });
-
-                towers.forEach(tower => {
-                    if (tower.cooldown > 0) tower.cooldown--;
-                    if (tower.cooldown === 0) {
-                        let target = null; let bestDist = tower.range;
-                        enemies.forEach(enemy => {
-                            const tdist = Math.sqrt((enemy.x - tower.x)**2 + (enemy.y - tower.y)**2);
-                            if (tdist < bestDist) { bestDist = tdist; target = enemy; }
-                        });
-                        if (target) {
-                            projectiles.push({ x: tower.x, y: tower.y, target: target, speed: 7, damage: tower.type === 'firewall' ? 12 : 6, type: tower.type });
-                            tower.cooldown = tower.maxCooldown;
-                        }
-                    }
-                });
-
-                projectiles.forEach((proj, pIndex) => {
-                    if (!enemies.includes(proj.target)) { projectiles.splice(pIndex, 1); return; }
-                    const dx = proj.target.x - proj.x; const dy = proj.target.y - proj.y; const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < proj.speed) {
-                        proj.target.hp -= proj.damage; projectiles.splice(pIndex, 1);
-                        if (proj.target.hp <= 0) {
-                            const eIdx = enemies.indexOf(proj.target);
-                            if (eIdx > -1) { enemies.splice(eIdx, 1); money += 20; updateHUD(); }
-                        }
-                    } else { proj.x += (dx / dist) * proj.speed; proj.y += (dy / dist) * proj.speed; }
-                });
-            }
-
-            function draw() {
-                ctx.fillStyle = '#05070a'; ctx.fillRect(0, 0, 600, 400);
-                
-                ctx.strokeStyle = 'rgba(0, 85, 255, 0.15)'; ctx.lineWidth = 26; ctx.beginPath(); ctx.moveTo(path[0].x, path[0].y);
-                for(let i=1; i<path.length; i++) ctx.lineTo(path[i].x, path[i].y); ctx.stroke();
-                ctx.strokeStyle = '#00d2ff'; ctx.lineWidth = 3; ctx.stroke();
-
-                towers.forEach(tower => {
-                    ctx.fillStyle = tower.type === 'firewall' ? '#00d2ff' : '#0055ff'; ctx.beginPath(); ctx.arc(tower.x, tower.y, 14, 0, Math.PI*2); ctx.fill();
-                    ctx.strokeStyle = 'rgba(0, 210, 255, 0.1)'; ctx.beginPath(); ctx.arc(tower.x, tower.y, tower.range, 0, Math.PI*2); ctx.stroke();
-                });
-
-                enemies.forEach(enemy => {
-                    ctx.fillStyle = '#ff0055'; ctx.fillRect(enemy.x - enemy.size/2, enemy.y - enemy.size/2, enemy.size, enemy.size);
-                    ctx.fillStyle = '#1e2530'; ctx.fillRect(enemy.x - 12, enemy.y - 14, 24, 4);
-                    ctx.fillStyle = '#00ffff'; ctx.fillRect(enemy.x - 12, enemy.y - 14, (enemy.hp / enemy.maxHp) * 24, 4);
-                });
-
+            function spawnEnemies() {
+                spawnTimer++; let currentMax = 40 - (score * 0.02); if (currentMax < 15) currentMax = 15;
+                if (spawnTimer > currentMax) {
+                    let typeRand = Math.random(); let eHp = 10; let eSize = 20; let eColor = '#0055ff';
