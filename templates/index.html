@@ -221,7 +221,15 @@
             margin-top: 0;
         }
 
-        .discord-tag {
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .cyber-tag {
             display: inline-block;
             background-color: #05070a;
             border: 2px solid #0055ff;
@@ -230,15 +238,20 @@
             border-radius: 20px;
             font-family: 'Orbitron', sans-serif;
             font-size: 1.1rem;
-            margin-top: 10px;
             letter-spacing: 1px;
             box-shadow: 0 0 15px rgba(0, 85, 255, 0.2);
+            text-decoration: none;
+        }
+        
+        .cyber-tag.email {
+            border-color: #00d2ff;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
         }
     </style>
 </head>
 <body>
 
-    <!-- Die Navbar mit dem Live Leaderboard-Link -->
+    <!-- Navbar mit Live Leaderboard Link -->
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
         <div class="nav-links">
@@ -251,13 +264,13 @@
     </nav>
 
     <div class="container">
-        <!-- Große Titel-Box -->
+        <!-- Titel-Box -->
         <div class="title-box">
             <h1>Game & Community Management</h1>
             <p>Offizielle Portfolio-Zentrale & Mod-Tätigkeiten</p>
         </div>
 
-        <!-- Das 3er Statistik-Grid -->
+        <!-- 3er Statistik-Grid -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-number">5+ Jahre</div>
@@ -265,7 +278,6 @@
                 <div class="stat-desc">Erfolgreiches Management von großen Gaming-Communitys und Discord-Servern.</div>
             </div>
             <div class="stat-card">
-                <!-- AUF DEINE 500+ FÄLLE KORRIGIERT! -->
                 <div class="stat-number">500+ Fälle</div>
                 <div class="stat-title">Gelöste Support-Tickets</div>
                 <div class="stat-desc">Professioneller User-Support, Konfliktlösung und Ticket-Bearbeitung im Handumdrehen.</div>
@@ -283,17 +295,20 @@
             <p>Als erfahrener Community-Moderator sorge ich für ein sicheres, aktives und toxizitätsfreies Umfeld. Meine Kernkompetenzen umfassen:</p>
             <ul>
                 <li><strong>Konfliktmanagement:</strong> Deeskalation bei Streitigkeiten zwischen Usern.</li>
-                <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung der Community-Richtlinien.</li>
+                <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung die Community-Richtlinien.</li>
                 <li><strong>Event-Planung:</strong> Organisation von Community-Turnieren und Spiele-Abenden.</li>
                 <li><strong>Bot-Konfiguration:</strong> Einrichtung von Moderations- und Log-Systemen zur Serverseicherung.</li>
             </ul>
         </div>
 
-        <!-- Kontakt Box -->
+        <!-- Kontakt Box mit E-Mail -->
         <div class="contact-box">
             <h2>Projektanfragen & Kontakt ✉️</h2>
             <p style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 15px;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
-            <div class="discord-tag">● Discord: Steffel_07</div>
+            <div class="contact-buttons">
+                <div class="cyber-tag">● Discord: Steffel_07</div>
+                <a href="mailto:stefan.prasch@gmx.net" class="cyber-tag email">📧 E-Mail: stefan.prasch@gmx.net</a>
+            </div>
         </div>
     </div>
 
@@ -305,4 +320,3 @@
         }, 10000);
     </script>
 </body>
-</html>
