@@ -18,6 +18,10 @@ def ueber_mich():
 def regelwerk():
     return render_template('regelwerk.html')
 
+@app.route('/vorlagen')
+def vorlagen():
+    return render_template('vorlagen.html')
+
 @app.route('/clicker')
 def clicker():
     return render_template('clicker.html')
