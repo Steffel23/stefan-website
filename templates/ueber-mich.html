@@ -3,224 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
-    <title>STEFAN | Wer steckt dahinter? ✦</title>
+    <title>STEFANS INTERNETZENTRALE | Wer steckt dahinter? ✦</title>
     <style>
         @import url('https://googleapis.com');
-
-        body {
-            background-color: #05070a;
-            color: #e2e8f0;
-            font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* Navbar */
-        .navbar {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 40px;
-            box-sizing: border-box;
-            border-bottom: 2px solid #1e293b;
-        }
-
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #00d2ff;
-        }
-
-        .hub-btn {
-            background-color: #0055ff;
-            color: #ffffff !important;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            padding: 40px 20px;
-            box-sizing: border-box;
-        }
-
-        .title-box {
-            border: 3px solid #00d2ff;
-            background-color: rgba(15, 22, 36, 0.9);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 40px;
-            text-align: center;
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
-        }
-
-        .title-box h1 {
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #ffffff;
-            letter-spacing: 1px;
-        }
-
-        .title-box p {
-            margin: 8px 0 0 0;
-            color: #00d2ff;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        /* Haupt-Biografie */
-        .bio-box {
-            background-color: #111622;
-            border: 2px solid #1e293b;
-            border-radius: 16px;
-            padding: 35px;
-            text-align: left;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .bio-avatar {
-            font-size: 4.5rem;
-            background-color: #05070a;
-            border: 2px solid #00d2ff;
-            padding: 15px;
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
-        }
-
-        .bio-text h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: #ffffff;
-            margin-top: 0;
-            font-size: 1.8rem;
-        }
-
-        .bio-text p {
-            color: #94a3b8;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* Neues 4er Charakter-Grid */
-        .char-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .char-card {
-            background-color: #111622;
-            border: 2px solid #1e293b;
-            border-radius: 16px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.25s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .char-card:hover {
-            transform: translateY(-5px);
-            border-color: #00d2ff;
-            box-shadow: 0 8px 20px rgba(0, 210, 255, 0.25);
-        }
-
-        .char-icon {
-            font-size: 2.8rem;
-            margin-bottom: 12px;
-            display: inline-block;
-        }
-
-        .char-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
-        }
-
-        .char-desc {
-            color: #94a3b8;
-            font-size: 1rem;
-            line-height: 1.4;
-        }
-
-        /* Highlights */
-        .char-card strong {
-            color: #00d2ff;
-        }
-
-        .back-btn {
-            display: inline-block;
-            background-color: #1e293b;
-            color: #00d2ff;
-            border: 2px solid #00d2ff;
-            font-family: 'Orbitron', sans-serif;
-            text-decoration: none;
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-            margin-bottom: 40px;
-        }
-
-        .back-btn:hover {
-            background-color: #00d2ff;
-            color: #0b0e14;
-            box-shadow: 0 0 25px rgba(0, 210, 255, 0.5);
-            transform: scale(1.03);
-        }
-
-        @media (max-width: 768px) {
-            .bio-box { flex-direction: column; text-align: center; }
-        }
+        body { background-color: #05070a; color: #e2e8f0; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .navbar { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 25px 40px; box-sizing: border-box; border-bottom: 2px solid #1e293b; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 900; color: #ffffff; text-decoration: none; letter-spacing: 2px; }
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { color: #94a3b8; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: color 0.2s; }
+        .nav-links a:hover { color: #00d2ff; }
+        .hub-btn { background-color: #0055ff; color: #ffffff !important; padding: 10px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3); }
+        .container { max-width: 1000px; width: 100%; padding: 40px 20px; box-sizing: border-box; }
+        .title-box { border: 3px solid #00d2ff; background-color: rgba(15, 22, 36, 0.9); border-radius: 20px; padding: 30px; margin-bottom: 40px; text-align: center; box-shadow: 0 0 25px rgba(0, 210, 255, 0.4); }
+        .title-box h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 2.5rem; font-weight: 900; color: #ffffff; letter-spacing: 1px; }
+        .title-box p { margin: 8px 0 0 0; color: #00d2ff; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; }
+        .bio-box { background-color: #111622; border: 2px solid #1e293b; border-radius: 16px; padding: 35px; text-align: left; margin-bottom: 40px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); display: flex; gap: 30px; align-items: center; }
+        .avatar-container { width: 120px; height: 120px; min-width: 120px; border-radius: 50%; border: 3px solid #00d2ff; box-shadow: 0 0 20px rgba(0, 210, 255, 0.4); overflow: hidden; background-color: #05070a; }
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+        .bio-text h2 { font-family: 'Orbitron', sans-serif; color: #ffffff; margin-top: 0; font-size: 1.8rem; }
+        .bio-text p { color: #94a3b8; font-size: 1.2rem; line-height: 1.6; margin: 0; }
+        .char-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .char-card { background-color: #111622; border: 2px solid #1e293b; border-radius: 16px; padding: 25px; text-align: center; transition: all 0.25s; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+        .char-card:hover { transform: translateY(-5px); border-color: #00d2ff; box-shadow: 0 8px 20px rgba(0, 210, 255, 0.25); }
+        .char-icon { font-size: 2.8rem; margin-bottom: 12px; display: inline-block; }
+        .char-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
+        .char-desc { color: #94a3b8; font-size: 1rem; line-height: 1.4; }
+        .char-card strong { color: #00d2ff; }
+        .back-btn { display: inline-block; background-color: #1e293b; color: #00d2ff; border: 2px solid #00d2ff; font-family: 'Orbitron', sans-serif; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-weight: 700; letter-spacing: 1px; transition: all 0.2s; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); margin-bottom: 40px; }
+        .back-btn:hover { background-color: #00d2ff; color: #0b0e14; box-shadow: 0 0 25px rgba(0, 210, 255, 0.5); transform: scale(1.03); }
+        @media (max-width: 768px) { .bio-box { flex-direction: column; text-align: center; } }
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
         <div class="nav-links">
@@ -232,57 +46,45 @@
             <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
         </div>
     </nav>
-
     <div class="container">
-        <!-- Titel Box -->
         <div class="title-box">
             <h1>Wer steckt hinter STEFAN?</h1>
             <p>Die Person hinter dem Community Management</p>
         </div>
-
-        <!-- Haupt-Bio -->
         <div class="bio-box">
-            <div class="bio-avatar">👦</div>
+            <div class="avatar-container">
+                <!-- PFAD PERFEKT FÜR DEINEN UPLOAD KORRIGIERT -->
+                <img src="/templates/avatar.png" alt="Stefan Avatar" class="avatar-img" onerror="this.src='https://dicebear.com'">
+            </div>
             <div class="bio-text">
                 <h2>Moin, ich bin Stefan!</h2>
                 <p>Ich bin 16 Jahre alt und verwalte leidenschaftlich aktive Online-Communitys. Neben der technischen Absicherung von Discord-Servern zeichnet mich vor allem mein starker Teamgeist im echten Leben und meine sportliche Disziplin aus.</p>
             </div>
         </div>
-
-        <!-- Neues 4er Charakter-Grid -->
         <div class="char-grid">
-            <!-- Kachel 1: Feuerwehr -->
             <div class="char-card">
                 <span class="char-icon">🧑‍🚒</span>
                 <div class="char-title">Freiwillige Feuerwehr</div>
-                <div class="char-desc">Seit <strong>9 Jahren</strong> im aktiven Dienst. Zuverlässigkeit, Teamgeist und schnelles Handeln in Krisen sind für mich selbstverständlich.</div>
+                <div class="char-desc">Seit <strong>6 Jahren</strong> treues Mitglied der Wehr und seit <strong>1 Jahr</strong> im aktiven Einsatzdienst. Zuverlässigkeit und kühler Kopf in brenzligen Lagen!</div>
             </div>
-
-            <!-- Kachel 2: Gaming -->
             <div class="char-card">
                 <span class="char-icon">🎮</span>
                 <div class="char-title">Leidenschaftlicher Gamer</div>
                 <div class="char-desc">Absoluter Arcade- und Taktik-Fan. Ich kenne die Gaming-Szene in- und auswendig und weiß, wie Zocker ticken.</div>
             </div>
-
-            <!-- Kachel 3: Sportlich -->
             <div class="char-card">
                 <span class="char-icon">⚽</span>
                 <div class="char-title">Sportlich & Fit</div>
                 <div class="char-desc">Regelmäßiges Training hält mich fokussiert. <strong>Disziplin</strong> und Durchhaltevermögen bringe ich vom Sport direkt in mein Management ein.</div>
             </div>
-
-            <!-- Kachel 4: Persönlichkeit -->
             <div class="char-card">
                 <span class="char-icon">🤝</span>
                 <div class="char-title">Nett & Korrekt</div>
                 <div class="char-desc">Ein respektvoller Umgang auf Augenhöhe ist mir extrem wichtig. Ich habe immer ein offenes Ohr für die Community.</div>
             </div>
         </div>
-
         <br>
         <a href="/" class="back-btn">⬅️ Zurück zur Hauptseite</a>
     </div>
-
 </body>
 </html>
