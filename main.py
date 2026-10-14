@@ -30,6 +30,10 @@ def bot_zentrale():
 def leaderboard():
     return render_template('leaderboard.html')
 
+@app.route('/bot-config')
+def bot_config():
+    return render_template('bot-config.html')
+
 @app.route('/jump')
 def jump():
     return render_template('jump.html')
