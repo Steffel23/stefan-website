@@ -10,6 +10,10 @@ def home():
 def spiele_hub():
     return render_template('spiele-hub.html')
 
+@app.route('/ueber-mich')
+def ueber_mich():
+    return render_template('ueber-mich.html')
+
 @app.route('/clicker')
 def clicker():
     return render_template('clicker.html')
