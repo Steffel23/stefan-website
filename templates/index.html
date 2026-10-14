@@ -59,7 +59,6 @@
             color: #00d2ff;
         }
 
-        /* Spiele-Hub & Leaderboard Buttons */
         .hub-btn {
             background-color: #0055ff;
             color: #ffffff !important;
@@ -114,7 +113,7 @@
             font-size: 1.3rem;
             line-height: 1.6;
             margin: 0 0 40px 0;
-            max-width: 600px;
+            max-width: 650px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -148,7 +147,7 @@
 </head>
 <body>
 
-    <!-- Die Navbar mit neuem Leaderboard-Link -->
+    <!-- Die Navbar mitsamt funktionierendem Live Leaderboard Link -->
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
         <div class="nav-links">
@@ -162,11 +161,12 @@
         </div>
     </nav>
 
-    <!-- Hauptinhalt -->
+    <!-- Hauptinhalt MIT DEINER BIOGRAFIE -->
     <div class="container">
         <div class="welcome-box">
             <h1>WILLKOMMEN BEI <span>STEFAN</span></h1>
-            <p>Dein Hub für Moderation, Community-Management und erstklassige Arcade-Handy-Spiele. Schau dich um und knack den globalen Playtime-Highscore!</p>
+            <!-- DEIN ORIGINAL-TEXT IST WIEDER DA! -->
+            <p>Ich bin Stefan, dein professioneller Partner für Community-Management und Moderation mit über 5 Jahren Erfahrung und mehr als 500 erfolgreich gelösten Fällen. Zocke jetzt unsere Arcade-Handy-Spiele und knack den weltweiten Playtime-Highscore!</p>
             
             <div class="cta-group">
                 <a href="/spiele-hub" class="main-btn" style="background-color: #0055ff; border-color: #0055ff; box-shadow: 0 4px 15px rgba(0, 85, 255, 0.3);">Direkt Zocken 🎮</a>
@@ -178,10 +178,8 @@
 
     <script>
         // AUTOMATISCHER PLATTFORM-ZEITZÄHLER
-        // Trackt die Verweildauer des Users im Hintergrund und speichert sie alle 10 Sekunden
         setInterval(function() {
             let totalTime = parseFloat(localStorage.getItem('stefan_total_site_time')) || 0;
-            // Fügt alle 10 Sekunden ein Stück Zeit hinzu (10s = 0.166 Minuten)
             localStorage.setItem('stefan_total_site_time', (totalTime + 0.166).toFixed(2));
         }, 10000);
     </script>
