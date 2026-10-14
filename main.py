@@ -26,6 +26,10 @@ def vorlagen():
 def bot_zentrale():
     return render_template('bot-zentrale.html')
 
+@app.route('/tetris')
+def tetris():
+    return render_template('tetris.html')
+
 @app.route('/clicker')
 def clicker():
     return render_template('clicker.html')
