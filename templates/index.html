@@ -163,7 +163,7 @@
             color: #e2e8f0;
         }
 
-        /* Kontakt-Box */
+        /* Kontakt-Box (Als feste Textanzeige) */
         .contact-section {
             background-color: #1e293b;
             border: 2px solid #334155;
@@ -193,18 +193,11 @@
             padding: 15px 25px;
             border-radius: 10px;
             color: #e2e8f0;
-            text-decoration: none;
             font-weight: bold;
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.2s ease;
-        }
-
-        .contact-method:hover {
-            border-color: #3b82f6;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+            user-select: text; /* Erlaubt das einfache Kopieren des Textes */
         }
 
         .cta-box {
@@ -269,7 +262,7 @@
 
         <div class="info-section">
             <h2>Gute Server brauchen Struktur 🛠️</h2>
-            <p>Als erfahrener Community-Moderator sorge ich für ein sicheres, aktives und toxizitätsfreies Umfeld. Meine Kernkompetenzen umfassen:</p>
+            <p>Als erfahrener Community-Moderator sorge ich für ein sicheres, active und toxizitätsfreies Umfeld. Meine Kernkompetenzen umfassen:</p>
             <ul>
                 <li><strong>Konfliktmanagement:</strong> Deeskalation bei Streitigkeiten zwischen Usern.</li>
                 <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung der Community-Richtlinien.</li>
@@ -278,21 +271,21 @@
             </ul>
         </div>
 
-        <!-- Kontakt-Zentrale mit funktionierenden Links -->
+        <!-- Feste Kontakt-Zentrale ohne Klick-Zwang -->
         <div class="contact-section">
             <h2>Projektanfragen &amp; Kontakt ✉️</h2>
             <p style="color: #94a3b8;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
             
             <div class="contact-grid">
-                <!-- Discord Button öffnet Discord direkt mit einer Suche nach dir -->
-                <a href="https://discord.com" target="_blank" class="contact-method">
+                <!-- Discord Infobox -->
+                <div class="contact-method">
                     <span>💬</span> Discord: Steffel_07
-                </a>
+                </div>
                 
-                <!-- E-Mail Button öffnet direkt das Mail-Programm -->
-                <a href="mailto:deine.email@://beispiel.com" class="contact-method">
-                    <span>📧</span> E-Mail schreiben
-                </a>
+                <!-- E-Mail Infobox mit deiner echten Adresse -->
+                <div class="contact-method">
+                    <span>📧</span> E-Mail: stefan.prasch@gmx.net
+                </div>
             </div>
         </div>
 
