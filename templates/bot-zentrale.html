@@ -16,8 +16,6 @@
             align-items: center;
             min-height: 100vh;
         }
-
-        /* Fette Cyber-Navbar oben */
         .navbar {
             width: 100%;
             max-width: 1200px;
@@ -28,7 +26,6 @@
             box-sizing: border-box;
             border-bottom: 2px solid #1e293b;
         }
-
         .logo {
             font-size: 1.6rem;
             font-weight: 800;
@@ -36,25 +33,20 @@
             text-decoration: none;
             letter-spacing: 1px;
         }
-
         .nav-links {
             display: flex;
             gap: 20px;
             align-items: center;
         }
-
         .nav-links a {
             color: #94a3b8;
             text-decoration: none;
             font-weight: 600;
             transition: color 0.2s;
         }
-
         .nav-links a:hover {
             color: #3b82f6;
         }
-
-        /* Spiele-Hub Button */
         .hub-btn {
             background-color: #3b82f6;
             color: #ffffff !important;
@@ -63,20 +55,16 @@
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
             transition: transform 0.2s, background-color 0.2s !important;
         }
-
         .hub-btn:hover {
             background-color: #2563eb;
             transform: translateY(-2px);
         }
-
-        /* Hauptbereich */
         .container {
             max-width: 1000px;
             width: 100%;
             padding: 40px 20px;
             box-sizing: border-box;
         }
-
         .header-box {
             background-color: #1e293b;
             border: 2px solid #334155;
@@ -85,13 +73,11 @@
             margin-bottom: 40px;
             text-align: center;
         }
-
         .header-box h1 {
             color: #ffffff;
             margin: 0 0 10px 0;
             font-size: 2.3rem;
         }
-
         .header-box p {
             color: #3b82f6;
             font-weight: bold;
@@ -99,8 +85,6 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
-        /* Bot-Karten */
         .bot-card {
             background-color: #111827;
             border: 2px solid #1e293b;
@@ -108,7 +92,6 @@
             padding: 30px;
             margin-bottom: 40px;
         }
-
         .bot-card h2 {
             color: #ffffff;
             margin-top: 0;
@@ -118,7 +101,6 @@
             align-items: center;
             gap: 12px;
         }
-
         .bot-status {
             font-size: 0.9rem;
             background-color: rgba(16, 185, 129, 0.2);
@@ -128,25 +110,20 @@
             font-weight: bold;
             margin-left: auto;
         }
-
-        /* Befehls-Tabelle */
         .cmd-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
         }
-
         .cmd-table th, .cmd-table td {
             text-align: left;
             padding: 12px;
             border-bottom: 1px solid #1e293b;
         }
-
         .cmd-table th {
             color: #3b82f6;
             font-weight: bold;
         }
-
         .code-text {
             font-family: 'Courier New', Courier, monospace;
             background-color: #0d0f12;
@@ -155,13 +132,10 @@
             color: #e2e8f0;
             border: 1px solid #334155;
         }
-
-        /* Zurück-Button */
         .back-box {
             text-align: center;
             margin-top: 20px;
         }
-
         .back-btn {
             display: inline-block;
             background-color: #1e293b;
@@ -173,7 +147,6 @@
             transition: all 0.2s;
             border: 1px solid #334155;
         }
-
         .back-btn:hover {
             background-color: #3b82f6;
             color: #ffffff;
@@ -182,8 +155,6 @@
     </style>
 </head>
 <body>
-
-    <!-- Die neue Navbar mit allen 6 Knöpfen -->
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
         <div class="nav-links">
@@ -195,14 +166,11 @@
             <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
         </div>
     </nav>
-
     <div class="container">
         <div class="header-box">
             <h1>Live-Bot-Zentrale &amp; Befehle</h1>
             <p>Die mächtigsten Moderations-Tools im Überblick</p>
         </div>
-
-        <!-- Dyno Bot Box -->
         <div class="bot-card">
             <h2>🤖 Dyno Bot <span class="bot-status">Konfiguriert</span></h2>
             <p>Umfassendes Moderationssystem für Discord. Ideal für automatisierte Filter und manuelle Sanktionen.</p>
@@ -210,40 +178,12 @@
                 <tr><th>Befehl</th><th>Beschreibung</th></tr>
                 <tr><td><span class="code-text">?ban @user [Grund]</span></td><td>Sperrt einen User permanent vom Server.</td></tr>
                 <tr><td><span class="code-text">?mute @user [Zeit]</span></td><td>Verpasst einem User ein Schreibverbot.</td></tr>
-                <tr><td><span class="code-text">?warn @user [Grund]</span></td><td>Erteilt eine offizielle Verwarnung im System.</td></tr>
                 <tr><td><span class="code-text">?purge [Anzahl]</span></td><td>Löscht blitzschnell eine bestimmte Anzahl an Nachrichten.</td></tr>
             </table>
         </div>
-
-        <!-- MEE6 Bot Box -->
-        <div class="bot-card">
-            <h2>🤖 MEE6 Bot <span class="bot-status">Konfiguriert</span></h2>
-            <p>Zuständig für das Level-System, automatische Zuweisung von Willkommensrollen und Stream-Benachrichtigungen.</p>
-            <table class="cmd-table">
-                <tr><th>Befehl</th><th>Beschreibung</th></tr>
-                <tr><td><span class="code-text">!rank</span></td><td>Zeigt das aktuelle Level und die XP-Karte des Users an.</td></tr>
-                <tr><td><span class="code-text">!levels</span></td><td>Öffnet die Rangliste (Leaderboard) des Servers.</td></tr>
-                <tr><td><span class="code-text">!clear [Anzahl]</span></td><td>Säubert den Textkanal von alten Nachrichten.</td></tr>
-            </table>
-        </div>
-
-        <!-- Twitch Nightbot Box -->
-        <div class="bot-card">
-            <h2>🔮 Twitch Nightbot <span class="bot-status">Aktiv</span></h2>
-            <p>Automatisierter Chat-Moderator für Twitch-Streams. Filtert Spam und führt nützliche Chat-Befehle aus.</p>
-            <table class="cmd-table">
-                <tr><th>Befehl</th><th>Beschreibung</th></tr>
-                <tr><td><span class="code-text">!commands</span></td><td>Zeigt den Zuschauern alle verfügbaren Stream-Befehle.</td></tr>
-                <tr><td><span class="code-text">!uptime</span></td><td>Gibt an, wie lange der Streamer bereits live ist.</td></tr>
-                <tr><td><span class="code-text">!socials</span></td><td>Postet automatisch alle Social-Media-Links in den Chat.</td></tr>
-            </table>
-        </div>
-
-        <!-- Zurück-Button -->
         <div class="back-box">
             <a href="/" class="back-btn">⬅️ Zurück zur Hauptseite</a>
         </div>
     </div>
-
 </body>
 </html>
