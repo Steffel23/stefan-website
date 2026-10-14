@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEFANS SPIELE | Cyber-Tetris 🧱</title>
+    <style>
+        @import url('https://googleapis.com');
+
+        body {
+            background-color: #05070a;
+            color: #ffffff;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00d2ff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #00d2ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .game-container {
+            display: flex;
+            gap: 20px;
+            background-color: #11141a;
+            padding: 20px;
+            border-radius: 16px;
+            border: 2px solid #00d2ff;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.2);
+        }
+
+        canvas {
+            background-color: #05070a;
+            border: 2px solid #1e2530;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 150px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .info-box {
+            background-color: #0d0f12;
+            border: 1px solid #1e2530;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .info-title {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            color: #00d2ff;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-shadow: 0 0 5px rgba(0, 210, 255, 0.5);
+        }
+
+        #nextCanvas {
+            background-color: #05070a;
+            border: 1px solid #1e2530;
+            margin-top: 5px;
+        }
+
+        .controls-info {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        .back-btn {
+            margin-top: 30px;
+            display: inline-block;
+            background-color: #1e2530;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .back-btn:hover {
+            background-color: #00d2ff;
+            color: #05070a;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cyber-Tetris</h1>
+
+    <div class="game-container">
+        <!-- Das Haupt-Spielfeld -->
+        <canvas id="tetris" width="240" height="480"></canvas>
+
+        <!-- Die Seitenanzeige für Punkte und Vorschau -->
+        <div class="sidebar">
+            <div>
+                <div class="info-box">
+                    <div class="info-title">Score</div>
+                    <div id="score" class="info-value">0</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-title">Linien</div>
+                    <div id="lines" class="info-value">0</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-title">Nächstes</div>
+                    <canvas id="nextCanvas" width="96" height="96"></canvas>
+                </div>
+            </div>
+
+            <div class="info-box controls-info">
+                <div class="info-title" style="margin-bottom: 8px;">Steuerung</div>
+                ⬅️ / ➡️ : Bewegen<br>
+                ⬆️ : Drehen<br>
+                ⬇️ : Schneller Fall<br>
+                Leertaste: Sofort Fall
+            </div>
+        </div>
+    </div>
+
+    <a href="/spiele-hub" class="back-btn">⬅️ Zum Spiele-Hub</a>
+
+    <script>
+        const canvas = document.getElementById('tetris');
+        const context = canvas.getContext('2d');
+        context.scale(24, 24); // Kachelgröße anpassen
+
+        const nextCanvas = document.getElementById('nextCanvas');
+        const nextContext = nextCanvas.getContext('2d');
+        nextContext.scale(24, 24);
+
+        // Spielfeld-Matrix (10 Spalten, 20 Zeilen)
+        const arena = createMatrix(10, 20);
+
+        const player = {
+            pos: {x: 0, y: 0},
+            matrix: null,
+            next: null,
+            score: 0,
+            lines: 0
+        };
+
+        const colors = [
+            null,
+            '#ff0055', // T
+            '#00f0ff', // I
+            '#ffcc00', // O
+            '#ff3300', // Z
+            '#00ff66', // S
+            '#aa00ff', // J
+            '#ff6600'  // L
+        ];
+
+        function createMatrix(w, h) {
+            const matrix = [];
+            while (h--) {
+                matrix.push(new Array(w).fill(0));
+            }
+            return matrix;
+        }
+
+        function createPiece(type) {
+            if (type === 'T') {
+                return [[0, 1, 0], [1, 1, 1], [0, 0, 0]];
+            } else if (type === 'I') {
+                return [[0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0], [0, 2, 0, 0]];
+            } else if (type === 'O') {
+                return [[3, 3], [3, 3]];
+            } else if (type === 'Z') {
+                return [[4, 4, 0], [0, 4, 4], [0, 0, 0]];
+            } else if (type === 'S') {
+                return [[0, 5, 5], [5, 5, 0], [0, 0, 0]];
+            } else if (type === 'J') {
+                return [[0, 6, 0], [0, 6, 0], [6, 6, 0]];
+            } else if (type === 'L') {
+                return [[0, 7, 0], [0, 7, 0], [0, 7, 7]];
+            }
+        }
+
+        function drawMatrix(matrix, offset, ctx) {
+            matrix.forEach((row, y) => {
+                row.forEach((value, x) => {
+                    if (value !== 0) {
+                        ctx.fillStyle = colors[value];
+                        ctx.fillRect(x + offset.x, y + offset.y, 1, 1);
+                        ctx.strokeStyle = '#05070a';
+                        ctx.lineWidth = 0.05;
+                        ctx.strokeRect(x + offset.x, y + offset.y, 1, 1);
+                    }
+                });
+            });
+        }
+
+        function draw() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            drawMatrix(arena, {x: 0, y: 0}, context);
+            drawMatrix(player.matrix, player.pos, context);
+
+            nextContext.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+            drawMatrix(player.next, {x: 1, y: 1}, nextContext);
+        }
+
+        function merge(arena, player) {
+            player.matrix.forEach((row, y) => {
+                row.forEach((value, x) => {
+                    if (value !== 0) {
+                        arena[y + player.pos.y][x + player.pos.x] = value;
+                    }
+                });
+            });
+        }
+
+        function collide(arena, player) {
+            const [m, o] = [player.matrix, player.pos];
+            for (let y = 0; y < m.length; ++y) {
+                for (let x = 0; x < m[y].length; ++x) {
+                    if (m[y][x] !== 0 && (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function arenaSweep() {
+            let rowCount = 1;
+            outer: for (let y = arena.length - 1; y > 0; --y) {
+                for (let x = 0; x < arena[y].length; ++x) {
+                    if (arena[y][x] === 0) {
+                        continue outer;
+                    }
+                }
+                const row = arena.splice(y, 1)[0].fill(0);
+                arena.unshift(row);
+                ++y;
+
+                player.score += rowCount * 10;
+                player.lines++;
+                rowCount *= 2;
+            }
+            updateScore();
+        }
+
+        function playerDrop() {
+            player.pos.y++;
+            if (collide(arena, player)) {
+                player.pos.y--;
+                merge(arena, player);
+                playerReset();
+                arenaSweep();
+            }
+            dropCounter = 0;
+        }
+
+        function playerInstantDrop() {
+            while (!collide(arena, player)) {
+                player.pos.y++;
+            }
+            player.pos.y--;
+            merge(arena, player);
+            playerReset();
+            arenaSweep();
+            dropCounter = 0;
+        }
+
+        function playerMove(dir) {
+            player.pos.x += dir;
+            if (collide(arena, player)) {
+                player.pos.x -= dir;
+            }
+        }
+
+        function playerReset() {
+            const pieces = 'ILJOTSZ';
+            if (player.next === null) {
+                player.next = createPiece(pieces[pieces.length * Math.random() | 0]);
+            }
+            player.matrix = player.next;
+            player.next = createPiece(pieces[pieces.length * Math.random() | 0]);
+            player.pos.y = 0;
+            player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+
+            if (collide(arena, player)) {
+                arena.forEach(row => row.fill(0));
+                player.score = 0;
+                player.lines = 0;
+                updateScore();
+            }
+        }
+
+        function playerRotate(dir) {
+            const pos = player.pos.x;
+            let offset = 1;
+            rotate(player.matrix, dir);
+            while (collide(arena, player)) {
+                player.pos.x += offset;
