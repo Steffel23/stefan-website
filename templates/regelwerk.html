@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEFAN | Regelwerk-Vorlagen 📜</title>
+    <style>
+        body {
+            background-color: #0d0f12;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Fette Cyber-Navbar oben */
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            box-sizing: border-box;
+            border-bottom: 2px solid #1e293b;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        /* Spiele-Hub Button */
+        .hub-btn {
+            background-color: #3b82f6;
+            color: #ffffff !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            transition: transform 0.2s, background-color 0.2s !important;
+        }
+
+        .hub-btn:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* Hauptbereich */
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .header-box {
+            background-color: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .header-box h1 {
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            font-size: 2.3rem;
+        }
+
+        .header-box p {
+            color: #3b82f6;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Regelwerk-Sektionen */
+        .rule-section {
+            background-color: #111827;
+            border: 2px solid #1e293b;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .rule-section h2 {
+            color: #ffffff;
+            margin-top: 0;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Kopierbarer Code-Block */
+        .code-block {
+            background-color: #0d0f12;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #cbd5e1;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            user-select: text;
+        }
+
+        /* Zurück-Button unten */
+        .back-box {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid #334155;
+        }
+
+        .back-btn:hover {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Die neue Navbar mit allen 4 Knöpfen -->
+    <nav class="navbar">
+        <a href="/" class="logo">✦ STEFAN</a>
+        <div class="nav-links">
+            <a href="/">Startseite</a>
+            <a href="/ueber-mich">Über mich</a>
+            <a href="/regelwerk" style="color: #3b82f6;">Regelwerk</a>
+            <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-box">
+            <h1>Community Regelwerk-Vorlagen</h1>
+            <p>Professionelle Vorlagen zum Kopieren &amp; Nutzen</p>
+        </div>
+
+        <!-- Discord Vorlage -->
+        <div class="rule-section">
+            <h2><span>💬</span> Discord Server Regelwerk</h2>
+            <div class="code-block">§1. Allgemeines &amp; Verhalten
+• Höflicher und respektvoller Umgang miteinander ist Pflicht.
+• Beleidigungen, Provokationen, Hassrede, Sexismus oder Rassismus werden nicht toleriert.
+
+§2. Chat &amp; Medien
+• Kein Spamming, Caps-Lock oder übermäßiges Erwähnen (Ping) von Teammitgliedern.
+• NSFW-Inhalte (Not Safe For Work) sind strengstens untersagt.
+• Fremdwerbung in Textkanälen oder Direktnachrichten (DM) führt zum permanenten Bann.
+
+§3. Voice-Channels
+• Stimmenverzerrer, störende Hintergrundgeräusche oder Musik über das Mikrofon sind verboten.
+• Das Aufnehmen von Gesprächen ohne Einwilligung aller Beteiligten ist untersagt.</div>
+        </div>
+
+        <!-- Twitch Vorlage -->
+        <div class="rule-section">
+            <h2><span>🎥</span> Twitch Chat Richtlinien</h2>
+            <div class="code-block">1. Respektiere den Streamer, die Moderatoren und andere Zuschauer.
+2. Kein Backseat-Gaming (ungefragte Tipps/Spoiler), außer der Streamer bittet darum.
+3. Keine Eigenwerbung oder Links ohne Erlaubnis (Mod-Whitelisting).
+4. Vermeide religiöse, politische oder diskriminierende Diskussionen im Chat.
+5. Spam (Zeichen, Emotes, Caps) wird von den Bots automatisch gefiltert und verwarnt.</div>
+        </div>
+
+        <!-- Zurück-Button -->
+        <div class="back-box">
+            <a href="/" class="back-btn">⬅️ Zurück zur Hauptseite</a>
+        </div>
+    </div>
+
+</body>
+</html>
