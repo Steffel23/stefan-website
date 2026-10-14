@@ -3,176 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
-    <title>STEFANS SPIELE | Cyber Space Odyssey 🌌</title>
+    <title>STEFANS SPIELE | Cyber Rocket 🚀</title>
     <style>
-        body { 
-            background-color: #030508; 
-            color: #ffffff; 
-            font-family: sans-serif; 
-            margin: 0; 
-            padding: 10px; 
-            text-align: center; 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            box-sizing: border-box; 
-            overflow: hidden; 
-        }
-        h1 { 
-            color: #00d2ff; 
-            margin: 5px 0; 
-            text-transform: uppercase; 
-            font-size: 1.6rem; 
-        }
-        .interface { 
-            display: flex; 
-            gap: 15px; 
-            font-size: 0.95rem; 
-            color: #00d2ff; 
-            margin-bottom: 8px; 
-            justify-content: center; 
-        }
-        .bar-container { 
-            width: 100%; 
-            max-width: 500px; 
-            height: 6px; 
-            background-color: #111622; 
-            border: 1px solid #0055ff; 
-            border-radius: 3px; 
-            margin-bottom: 10px; 
-            overflow: hidden; 
-        }
-        #shield-bar { 
-            width: 100%; 
-            height: 100%; 
-            background: #00ffff; 
-            transition: width 0.1s; 
-        }
-        .canvas-container { 
-            width: 100%; 
-            max-width: 650px; 
-            position: relative; 
-        }
-        canvas { 
-            background-color: #05070a; 
-            border: 2px solid #00d2ff; 
-            border-radius: 12px; 
-            width: 100%; 
-            height: auto; 
-            display: block; 
-        }
-        .controls-area { 
-            width: 100%; 
-            max-width: 650px; 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-            margin-top: 12px; 
-        }
-        .shop-box, .mobile-joystick { 
-            background-color: #111622; 
-            border: 1px solid #0055ff; 
-            border-radius: 12px; 
-            padding: 10px; 
-            box-sizing: border-box; 
-        }
-        .shop-title { 
-            color: #00d2ff; 
-            font-size: 0.85rem; 
-            text-transform: uppercase; 
-            margin-bottom: 8px; 
-        }
-        .upgrade-btn { 
-            width: 100%; 
-            background-color: #0d111a; 
-            border: 1px solid #0055ff; 
-            color: #ffffff; 
-            padding: 8px; 
-            border-radius: 6px; 
-            font-weight: bold; 
-            font-size: 0.9rem; 
-            margin-bottom: 6px; 
-            cursor: pointer; 
-            display: flex; 
-            justify-content: space-between; 
-        }
-        .upgrade-btn:active { 
-            background-color: #0055ff; 
-        }
-        .pad-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 8px; 
-        }
-        .pad-btn { 
-            background-color: #0d111a; 
-            border: 1px solid #0055ff; 
-            color: #00d2ff; 
-            border-radius: 8px; 
-            padding: 12px 5px; 
-            font-size: 1.2rem; 
-            font-weight: bold; 
-            touch-action: manipulation; 
-            user-select: none; 
-        }
-        .pad-btn:active { 
-            background-color: #0055ff; 
-            color: #ffffff; 
-        }
-        .fire-btn { 
-            grid-column: span 3; 
-            background-color: rgba(0, 210, 255, 0.15); 
-            border-color: #00ffff; 
-        }
-        .back-btn { 
-            margin-top: 15px; 
-            display: inline-block; 
-            background-color: #1e293b; 
-            color: #00d2ff; 
-            border: 2px solid #00d2ff; 
-            text-decoration: none; 
-            padding: 10px 24px; 
-            border-radius: 8px; 
-            font-weight: 600; 
-        }
-        @media (max-width: 600px) { 
-            .controls-area { grid-template-columns: 1fr; } 
-        }
+        @import url('https://googleapis.com');
+        body { background-color: #030508; color: #ffffff; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 10px; text-align: center; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; box-sizing: border-box; overflow: hidden; }
+        h1 { font-family: 'Orbitron', sans-serif; color: #00d2ff; margin: 5px 0; text-shadow: 0 0 15px #00d2ff; text-transform: uppercase; font-size: 1.8rem; }
+        .score-box { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; color: #00d2ff; margin: 8px 0; text-shadow: 0 0 5px rgba(0, 210, 255, 0.5); }
+        .canvas-container { width: 100%; max-width: 400px; position: relative; }
+        canvas { background-color: #05070a; border: 2px solid #00d2ff; box-shadow: 0 0 25px rgba(0, 210, 255, 0.4); border-radius: 12px; width: 100%; height: auto; display: block; cursor: pointer; }
+        .hint { color: #94a3b8; font-size: 1rem; margin-top: 10px; }
+        .back-btn { margin-top: 15px; display: inline-block; background-color: #1e293b; color: #00d2ff; border: 2px solid #00d2ff; text-decoration: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-family: 'Orbitron', sans-serif; }
     </style>
 </head>
 <body>
 
-    <h1>Cyber Space Odyssey</h1>
-    <div class="interface">
-        <div id="ui-score">Score: 0</div>
-        <div id="ui-credits">Kristalle: 0 💎</div>
-        <div id="ui-level">Schiff-LVL: 1</div>
-    </div>
-    <div class="bar-container"><div id="shield-bar"></div></div>
-    <div class="canvas-container"><canvas id="game-canvas" width="600" height="380"></canvas></div>
+    <h1>Cyber Rocket</h1>
+    <div id="score" class="score-box">Score: 0</div>
 
-    <div class="controls-area">
-        <div class="shop-box">
-            <div class="shop-title">Schiffs-Upgrades</div>
-            <button class="upgrade-btn" id="up-laser"><span> Plasma-Laser (LVL <span id="lvl-laser">1</span>)</span><span id="cost-laser">20 💎</span></button>
-            <button class="upgrade-btn" id="up-shield"><span> Schild-Regen (LVL <span id="lvl-shield">1</span>)</span><span id="cost-shield">35 💎</span></button>
-            <button class="upgrade-btn" id="up-speed"><span> Triebwerke (LVL <span id="lvl-speed">1</span>)</span><span id="cost-speed">15 💎</span></button>
-        </div>
-        <div class="mobile-joystick">
-            <div class="shop-title">Mobiles Steuerkreuz</div>
-            <div class="pad-grid">
-                <button class="pad-btn" style="visibility:hidden;"></button>
-                <button class="pad-btn" id="p-btn-up">▲</button>
-                <button class="pad-btn" style="visibility:hidden;"></button>
-                <button class="pad-btn" id="p-btn-left">◀</button>
-                <button class="pad-btn" id="p-btn-down">▼</button>
-                <button class="pad-btn" id="p-btn-right">▶</button>
-                <button class="pad-btn fire-btn" id="p-btn-fire">⚡ FEUER FREI ⚡</button>
-            </div>
-        </div>
+    <div class="canvas-container">
+        <canvas id="game-canvas" width="400" height="500"></canvas>
     </div>
+    
+    <div class="hint">📱 Tippe auf das Feld / 💻 Drücke Leertaste zum Fliegen!</div>
 
     <a href="/spiele-hub" class="back-btn">⬅ Zum Hub</a>
 
@@ -181,57 +33,165 @@
             const canvas = document.getElementById('game-canvas');
             const ctx = canvas.getContext('2d');
 
-            let score = 0; let credits = 0; let shipLvl = 1; let gameOver = false;
-            let upLvlLaser = 1; let upLvlShield = 1; let upLvlSpeed = 1;
-            let upCostLaser = 20; let upCostShield = 35; let upCostSpeed = 15;
+            let score = 0;
+            let gameOver = false;
+            let gravity = 0.25;
 
-            const player = { x: 284, y: 300, width: 32, height: 32, speed: 4.5, maxShield: 100, shield: 100, movingLeft: false, movingRight: false, movingUp: false, movingDown: false };
-            let stars = []; let lasers = []; let enemies = []; let crystals = []; let spawnTimer = 0;
+            const bird = {
+                x: 50,
+                y: 200,
+                w: 34,
+                h: 24,
+                velocity: 0,
+                lift: -6,
+                flap: function() {
+                    if (gameOver) {
+                        resetGame();
+                    } else {
+                        this.velocity = this.lift;
+                    }
+                }
+            };
 
-            for(let i=0; i<40; i++) { 
-                stars.push({ x: Math.random()*600, y: Math.random()*380, size: Math.random()*1.5+0.5, speed: Math.random()*1+0.5 }); 
-            }
+            let pipes = [];
+            let pipeTimer = 0;
 
+            // PC-Steuerung
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft' || e.key === 'a') player.movingLeft = true;
-                if (e.key === 'ArrowRight' || e.key === 'd') player.movingRight = true;
-                if (e.key === 'ArrowUp' || e.key === 'w') player.movingUp = true;
-                if (e.key === 'ArrowDown' || e.key === 's') player.movingDown = true;
-                if (e.key === ' ') { e.preventDefault(); fireLaser(); }
-            });
-            document.addEventListener('keyup', (e) => {
-                if (e.key === 'ArrowLeft' || e.key === 'a') player.movingLeft = false;
-                if (e.key === 'ArrowRight' || e.key === 'd') player.movingRight = false;
-                if (e.key === 'ArrowUp' || e.key === 'w') player.movingUp = false;
-                if (e.key === 'ArrowDown' || e.key === 's') player.movingDown = false;
+                if (e.key === ' ' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    bird.flap();
+                }
             });
 
-            function setupTouch(id, prop) {
-                const btn = document.getElementById(id);
-                if(!btn) return;
-                btn.addEventListener('touchstart', (e) => { e.preventDefault(); player[prop] = true; });
-                btn.addEventListener('touchend', (e) => { e.preventDefault(); player[prop] = false; });
-                btn.addEventListener('mousedown', () => player[prop] = true);
-                btn.addEventListener('mouseup', () => player[prop] = false);
+            // Mobile Handy-Steuerung & Maus-Klicks
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                bird.flap();
+            });
+            canvas.addEventListener('mousedown', () => {
+                bird.flap();
+            });
+
+            function spawnPipe() {
+                pipeTimer++;
+                if (pipeTimer > 100) {
+                    const gap = 130; // Durchflugs-Lücke
+                    const topHeight = Math.random() * (canvas.height - gap - 100) + 30;
+                    pipes.push({
+                        x: canvas.width,
+                        top: topHeight,
+                        bottom: canvas.height - topHeight - gap,
+                        w: 50,
+                        speed: 2.5,
+                        passed: false
+                    });
+                    pipeTimer = 0;
+                }
             }
-            setupTouch('p-btn-left', 'movingLeft'); setupTouch('p-btn-right', 'movingRight'); setupTouch('p-btn-up', 'movingUp'); setupTouch('p-btn-down', 'movingDown');
-            document.getElementById('p-btn-fire').addEventListener('touchstart', (e) => { e.preventDefault(); fireLaser(); });
-            document.getElementById('p-btn-fire').addEventListener('mousedown', () => fireLaser());
 
-            document.getElementById('up-laser').addEventListener('click', () => {
-                if (credits >= upCostLaser) {
-                    credits -= upCostLaser; upLvlLaser++; upCostLaser = Math.floor(upCostLaser * 1.6);
-                    document.getElementById('lvl-laser').innerText = upLvlLaser; document.getElementById('cost-laser').innerText = upCostLaser + " 💎";
-                    updateUI();
+            function resetGame() {
+                score = 0;
+                pipes = [];
+                gameOver = false;
+                bird.y = 200;
+                bird.velocity = 0;
+                document.getElementById('score').innerText = "Score: " + score;
+            }
+
+            function update() {
+                if (gameOver) return;
+
+                bird.velocity += gravity;
+                bird.y += bird.velocity;
+
+                // Decken- und Bodenkollision
+                if (bird.y + bird.h > canvas.height || bird.y < 0) {
+                    gameOver = true;
                 }
-            });
-            document.getElementById('up-shield').addEventListener('click', () => {
-                if (credits >= upCostShield) {
-                    credits -= upCostShield; upLvlShield++; player.maxShield += 20; player.shield = player.maxShield; upCostShield = Math.floor(upCostShield * 1.6);
-                    document.getElementById('lvl-shield').innerText = upLvlShield; document.getElementById('cost-shield').innerText = upCostShield + " 💎";
-                    updateUI();
+
+                spawnPipe();
+
+                pipes.forEach((pipe, index) => {
+                    pipe.x -= pipe.speed;
+
+                    // Kollisions-Prüfung mit den Röhren
+                    if (bird.x + bird.w > pipe.x && bird.x < pipe.x + pipe.w) {
+                        if (bird.y < pipe.top || bird.y + bird.h > canvas.height - pipe.bottom) {
+                            gameOver = true;
+                        }
+                    }
+
+                    // Score erhöhen
+                    if (!pipe.passed && pipe.x + pipe.w < bird.x) {
+                        score++;
+                        pipe.passed = true;
+                        document.getElementById('score').innerText = "Score: " + score;
+                    }
+
+                    if (pipe.x + pipe.w < 0) {
+                        pipes.splice(index, 1);
+                    }
+                });
+            }
+
+            function draw() {
+                // Hintergrund löschen
+                ctx.fillStyle = '#05070a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Neon-Blaue Röhren zeichnen
+                ctx.fillStyle = '#0055ff';
+                ctx.strokeStyle = '#00d2ff';
+                ctx.lineWidth = 2;
+                
+                pipes.forEach(pipe => {
+                    // Obere Röhre
+                    ctx.fillRect(pipe.x, 0, pipe.w, pipe.top);
+                    ctx.strokeRect(pipe.x, 0, pipe.w, pipe.top);
+                    
+                    // Untere Röhre
+                    ctx.fillRect(pipe.x, canvas.height - pipe.bottom, pipe.w, pipe.bottom);
+                    ctx.strokeRect(pipe.x, canvas.height - pipe.bottom, pipe.w, pipe.bottom);
+                });
+
+                // Deine Cyber-Rakete zeichnen (Neon-Cyanes Dreieck)
+                ctx.fillStyle = '#00ffff';
+                ctx.beginPath();
+                ctx.moveTo(bird.x + bird.w, bird.y + bird.h / 2);
+                ctx.lineTo(bird.x, bird.y);
+                ctx.lineTo(bird.x, bird.y + bird.h);
+                ctx.closePath();
+                ctx.fill();
+
+                // Antriebsfeuer (Rot)
+                if (!gameOver && Math.random() > 0.4) {
+                    ctx.fillStyle = '#ff0055';
+                    ctx.fillRect(bird.x - 6, bird.y + bird.h / 2 - 3, 6, 6);
                 }
-            });
-            document.getElementById('up-speed').addEventListener('click', () => {
-                if (credits >= upCostSpeed) {
-                    credits -= upCostSpeed; upLvlSpeed++; player.speed += 0.8; upCostSpeed = Math.floor(upCostSpeed * 1.5);
+
+                if (gameOver) {
+                    ctx.fillStyle = 'rgba(5, 7, 10, 0.85)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#ff0055';
+                    ctx.font = '26px "Orbitron"';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 10);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '16px "Rajdhani"';
+                    ctx.fillText('Tippe auf das Feld für Neustart', canvas.width / 2, canvas.height / 2 + 20);
+                }
+            }
+
+            function loop() {
+                update();
+                draw();
+                requestAnimationFrame(loop);
+            }
+
+            resetGame();
+            loop();
+        };
+    </script>
+</body>
+</html>
