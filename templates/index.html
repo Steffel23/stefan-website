@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STEFAN | Offizielle Website ✦</title>
+    <title>STEFAN | Mod & Community Management ✦</title>
     <style>
         @import url('https://googleapis.com');
 
@@ -37,8 +37,7 @@
             font-weight: 900;
             color: #ffffff;
             text-decoration: none;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+            letter-spacing: 2px;
         }
 
         .nav-links {
@@ -77,102 +76,224 @@
             color: #05070a !important;
         }
 
-        /* Hauptbereich Container */
+        /* Hauptcontainer */
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
-            padding: 60px 20px;
+            padding: 40px 20px;
             box-sizing: border-box;
+        }
+
+        /* Große Titel-Box */
+        .title-box {
+            border: 3px solid #00d2ff;
+            background-color: rgba(15, 22, 36, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
             text-align: center;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
         }
 
-        .welcome-box {
-            background: linear-gradient(to bottom, #111622, #0d111a);
-            border: 2px solid #1e293b;
-            border-radius: 24px;
-            padding: 50px 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .welcome-box h1 {
+        .title-box h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
+            margin: 0;
+            font-size: 2.5rem;
             font-weight: 900;
             color: #ffffff;
-            margin: 0 0 15px 0;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
-        .welcome-box h1 span {
+        .title-box p {
+            margin: 8px 0 0 0;
             color: #00d2ff;
-            text-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
-        }
-
-        .welcome-box p {
-            color: #94a3b8;
-            font-size: 1.3rem;
-            line-height: 1.6;
-            margin: 0 0 40px 0;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .main-btn {
-            background-color: #1e293b;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 14px 30px;
-            border-radius: 10px;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-            border: 1px solid #334155;
         }
 
-        .main-btn:hover {
-            background-color: #0055ff;
-            border-color: #0055ff;
-            box-shadow: 0 0 15px rgba(0, 85, 255, 0.4);
-            transform: scale(1.03);
+        /* Das 3er Statistik-Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background-color: #111622;
+            border: 2px solid #1e293b;
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #00d2ff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+        }
+
+        .stat-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .stat-desc {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        /* Inhalts-Boxen */
+        .content-box {
+            background-color: #111622;
+            border: 2px solid #1e293b;
+            border-radius: 16px;
+            padding: 35px;
+            text-align: left;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .content-box p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .content-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content-box li {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .content-box li::before {
+            content: "•";
+            color: #00d2ff;
+            font-size: 1.4rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        .content-box strong {
+            color: #00d2ff;
+        }
+
+        /* Kontakt Box */
+        .contact-box {
+            background-color: #111622;
+            border: 2px solid #1e293b;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin-top: 0;
+        }
+
+        .discord-tag {
+            display: inline-block;
+            background-color: #05070a;
+            border: 2px solid #0055ff;
+            color: #ffffff;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(0, 85, 255, 0.2);
         }
     </style>
 </head>
 <body>
 
-    <!-- Die Navbar mitsamt funktionierendem Live Leaderboard Link -->
+    <!-- Die Navbar mit dem Live Leaderboard-Link -->
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
         <div class="nav-links">
             <a href="/" style="color: #00d2ff;">Startseite</a>
             <a href="/ueber-mich">Über mich</a>
             <a href="/regelwerk">Regelwerk</a>
-            <a href="/vorlagen">Vorlagen</a>
-            <a href="/bot-zentrale">Bot-Zentrale</a>
             <a href="/leaderboard">🏆 Live Leaderboard</a>
             <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
         </div>
     </nav>
 
-    <!-- Hauptinhalt MIT DEINER BIOGRAFIE -->
     <div class="container">
-        <div class="welcome-box">
-            <h1>WILLKOMMEN BEI <span>STEFAN</span></h1>
-            <!-- DEIN ORIGINAL-TEXT IST WIEDER DA! -->
-            <p>Ich bin Stefan, dein professioneller Partner für Community-Management und Moderation mit über 5 Jahren Erfahrung und mehr als 500 erfolgreich gelösten Fällen. Zocke jetzt unsere Arcade-Handy-Spiele und knack den weltweiten Playtime-Highscore!</p>
-            
-            <div class="cta-group">
-                <a href="/spiele-hub" class="main-btn" style="background-color: #0055ff; border-color: #0055ff; box-shadow: 0 4px 15px rgba(0, 85, 255, 0.3);">Direkt Zocken 🎮</a>
-                <a href="/bot-zentrale" class="main-btn">Bot-Zentrale 🤖</a>
-                <a href="/regelwerk" class="main-btn">Server-Regeln 📜</a>
+        <!-- Große Titel-Box -->
+        <div class="title-box">
+            <h1>Game & Community Management</h1>
+            <p>Offizielle Portfolio-Zentrale & Mod-Tätigkeiten</p>
+        </div>
+
+        <!-- Das 3er Statistik-Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">5+ Jahre</div>
+                <div class="stat-title">Erfahrung</div>
+                <div class="stat-desc">Erfolgreiches Management von großen Gaming-Communitys und Discord-Servern.</div>
             </div>
+            <div class="stat-card">
+                <!-- AUF DEINE 500+ FÄLLE KORRIGIERT! -->
+                <div class="stat-number">500+ Fälle</div>
+                <div class="stat-title">Gelöste Support-Tickets</div>
+                <div class="stat-desc">Professioneller User-Support, Konfliktlösung und Ticket-Bearbeitung im Handumdrehen.</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-title">System-Überwachung</div>
+                <div class="stat-desc">Automatisierte Filterung, Schutz vor Raids und Optimierung von Server-Strukturen.</div>
+            </div>
+        </div>
+
+        <!-- Struktur-Box -->
+        <div class="content-box">
+            <h2>Gute Server brauchen Struktur 🛠️</h2>
+            <p>Als erfahrener Community-Moderator sorge ich für ein sicheres, aktives und toxizitätsfreies Umfeld. Meine Kernkompetenzen umfassen:</p>
+            <ul>
+                <li><strong>Konfliktmanagement:</strong> Deeskalation bei Streitigkeiten zwischen Usern.</li>
+                <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung der Community-Richtlinien.</li>
+                <li><strong>Event-Planung:</strong> Organisation von Community-Turnieren und Spiele-Abenden.</li>
+                <li><strong>Bot-Konfiguration:</strong> Einrichtung von Moderations- und Log-Systemen zur Serverseicherung.</li>
+            </ul>
+        </div>
+
+        <!-- Kontakt Box -->
+        <div class="contact-box">
+            <h2>Projektanfragen & Kontakt ✉️</h2>
+            <p style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 15px;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
+            <div class="discord-tag">● Discord: Steffel_07</div>
         </div>
     </div>
 
