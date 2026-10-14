@@ -1,298 +1,46 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STEFAN | Mod & Community Management</title>
-    <style>
-        body {
-            background-color: #0d0f12;
-            color: #e2e8f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+from flask import Flask, render_template
 
-        /* Fette Cyber-Navbar oben */
-        .navbar {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 40px;
-            box-sizing: border-box;
-            border-bottom: 2px solid #1e293b;
-        }
+app = Flask(__name__)
 
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #ffffff;
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
+@app.route('/spiele-hub')
+def spiele_hub():
+    return render_template('spiele-hub.html')
 
-        .nav-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
+@app.route('/ueber-mich')
+def ueber_mich():
+    return render_template('ueber-mich.html')
 
-        .nav-links a:hover {
-            color: #3b82f6;
-        }
+@app.route('/regelwerk')
+def regelwerk():
+    return render_template('regelwerk.html')
 
-        /* Spiele-Hub Button */
-        .hub-btn {
-            background-color: #3b82f6;
-            color: #ffffff !important;
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-            transition: transform 0.2s, background-color 0.2s !important;
-        }
+@app.route('/clicker')
+def clicker():
+    return render_template('clicker.html')
 
-        .hub-btn:hover {
-            background-color: #2563eb;
-            transform: translateY(-2px);
-        }
+@app.route('/jump')
+def jump():
+    return render_template('jump.html')
 
-        /* Hauptbereich */
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            padding: 40px 20px;
-            box-sizing: border-box;
-        }
+@app.route('/labyrinth')
+def labyrinth():
+    return render_template('labyrinth.html')
 
-        .header-box {
-            background-color: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
+@app.route('/racing')
+def racing():
+    return render_template('racing.html')
 
-        .header-box h1 {
-            color: #ffffff;
-            margin: 0 0 10px 0;
-            font-size: 2.3rem;
-        }
+@app.route('/shooter')
+def shooter():
+    return render_template('shooter.html')
 
-        .header-box p {
-            color: #3b82f6;
-            font-weight: bold;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+@app.route('/io')
+def io_game():
+    return render_template('io.html')
 
-        /* Mod-Statistiken */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background-color: #111827;
-            border: 2px solid #1e293b;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            transition: border-color 0.2s;
-        }
-
-        .stat-card:hover {
-            border-color: #3b82f6;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #3b82f6;
-            margin-bottom: 5px;
-        }
-
-        .stat-title {
-            font-size: 1.1rem;
-            color: #ffffff;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .stat-desc {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        /* Job-Beschreibung */
-        .info-section {
-            background-color: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-        }
-
-        .info-section h2 {
-            color: #ffffff;
-            margin-top: 0;
-            border-bottom: 2px solid #334155;
-            padding-bottom: 10px;
-        }
-
-        .info-section ul {
-            padding-left: 20px;
-            line-height: 1.8;
-            color: #e2e8f0;
-        }
-
-        /* Kontakt-Box (Als feste Textanzeige) */
-        .contact-section {
-            background-color: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .contact-section h2 {
-            color: #ffffff;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-
-        .contact-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .contact-method {
-            background-color: #111827;
-            border: 1px solid #334155;
-            padding: 15px 25px;
-            border-radius: 10px;
-            color: #e2e8f0;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            user-select: text;
-        }
-
-        .cta-box {
-            text-align: center;
-            margin-top: 40px;
-            border-top: 2px solid #1e293b;
-            padding-top: 30px;
-        }
-
-        .cta-link {
-            display: inline-block;
-            background-color: #3b82f6;
-            color: white;
-            text-decoration: none;
-            padding: 15px 35px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        .cta-link:hover {
-            background-color: #2563eb;
-            transform: translateY(-2px);
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Aktualisierte Navbar mit dem "Über mich"-Button -->
-    <nav class="navbar">
-        <a href="/" class="logo">✦ STEFAN</a>
-        <div class="nav-links">
-            <a href="/">Startseite</a>
-            <a href="/ueber-mich">Über mich</a>
-            <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="header-box">
-            <h1>Game & Community Management</h1>
-            <p>Offizielle Portfolio-Zentrale & Mod-Tätigkeiten</p>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">5+ Jahre</div>
-                <div class="stat-title">Erfahrung</div>
-                <div class="stat-desc">Erfolgreiches Management von großen Gaming-Communitys und Discord-Servern.</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">1k+ Fälle</div>
-                <div class="stat-title">Gelöste Support-Tickets</div>
-                <div class="stat-desc">Professioneller User-Support, Konfliktlösung und Ticket-Bearbeitung im Handumdrehen.</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">24/7</div>
-                <div class="stat-title">System-Überwachung</div>
-                <div class="stat-desc">Automatisierte Filterung, Schutz vor Raids und Optimierung von Server-Strukturen.</div>
-            </div>
-        </div>
-
-        <div class="info-section">
-            <h2>Gute Server brauchen Struktur 🛠️</h2>
-            <p>Als erfahrener Community-Moderator sorge ich für ein sicheres, aktives und toxizitätsfreies Umfeld. Meine Kernkompetenzen umfassen:</p>
-            <ul>
-                <li><strong>Konfliktmanagement:</strong> Deeskalation bei Streitigkeiten zwischen Usern.</li>
-                <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung der Community-Richtlinien.</li>
-                <li><strong>Event-Planung:</strong> Organisation von Community-Turnieren und Spiele-Abenden.</li>
-                <li><strong>Bot-Konfiguration:</strong> Einrichtung von Moderations- und Log-Systemen zur Serverabsicherung.</li>
-            </ul>
-        </div>
-
-        <!-- Feste Kontakt-Zentrale -->
-        <div class="contact-section">
-            <h2>Projektanfragen &amp; Kontakt ✉️</h2>
-            <p style="color: #94a3b8;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
-            
-            <div class="contact-grid">
-                <div class="contact-method">
-                    <span>💬</span> Discord: Steffel_07
-                </div>
-                <div class="contact-method">
-                    <span>📧</span> E-Mail: stefan.prasch@gmx.net
-                </div>
-            </div>
-        </div>
-
-        <div class="cta-box">
-            <p style="color: #94a3b8; margin-bottom: 15px;">Lust auf eine Pause? Besuche meine Arcade-Sammlung:</p>
-            <a href="/spiele-hub" class="cta-link">Direkt zum Spiele-Hub 🎮</a>
-        </div>
-    </div>
-
-</body>
-</html>
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000, debug=True)
