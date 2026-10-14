@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STEFAN | Mod & Community Management</title>
+    <title>STEFAN | Offizielle Website ✦</title>
     <style>
+        @import url('https://googleapis.com');
+
         body {
-            background-color: #0d0f12;
+            background-color: #05070a;
             color: #e2e8f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Rajdhani', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -30,16 +32,18 @@
         }
 
         .logo {
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.6rem;
-            font-weight: 800;
+            font-weight: 900;
             color: #ffffff;
             text-decoration: none;
             letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
         }
 
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             align-items: center;
         }
 
@@ -47,255 +51,139 @@
             color: #94a3b8;
             text-decoration: none;
             font-weight: 600;
+            font-size: 1.1rem;
             transition: color 0.2s;
         }
 
         .nav-links a:hover {
-            color: #3b82f6;
+            color: #00d2ff;
         }
 
-        /* Spiele-Hub Button */
+        /* Spiele-Hub & Leaderboard Buttons */
         .hub-btn {
-            background-color: #3b82f6;
+            background-color: #0055ff;
             color: #ffffff !important;
             padding: 10px 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-            transition: transform 0.2s, background-color 0.2s !important;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3);
+            transition: all 0.2s !important;
         }
 
         .hub-btn:hover {
-            background-color: #2563eb;
+            background-color: #00d2ff;
+            box-shadow: 0 0 15px #00d2ff;
             transform: translateY(-2px);
+            color: #05070a !important;
         }
 
-        /* Hauptbereich */
+        /* Hauptbereich Container */
         .container {
-            max-width: 1000px;
+            max-width: 900px;
             width: 100%;
-            padding: 40px 20px;
+            padding: 60px 20px;
             box-sizing: border-box;
-        }
-
-        .header-box {
-            background-color: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
             text-align: center;
         }
 
-        .header-box h1 {
-            color: #ffffff;
-            margin: 0 0 10px 0;
-            font-size: 2.3rem;
-        }
-
-        .header-box p {
-            color: #3b82f6;
-            font-weight: bold;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Mod-Statistiken */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background-color: #111827;
+        .welcome-box {
+            background: linear-gradient(to bottom, #111622, #0d111a);
             border: 2px solid #1e293b;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            transition: border-color 0.2s;
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .stat-card:hover {
-            border-color: #3b82f6;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #3b82f6;
-            margin-bottom: 5px;
-        }
-
-        .stat-title {
-            font-size: 1.1rem;
+        .welcome-box h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
             color: #ffffff;
-            font-weight: 600;
-            margin-bottom: 10px;
+            margin: 0 0 15px 0;
+            letter-spacing: 2px;
         }
 
-        .stat-desc {
+        .welcome-box h1 span {
+            color: #00d2ff;
+            text-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
+        }
+
+        .welcome-box p {
             color: #94a3b8;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin: 0 0 40px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Job-Beschreibung */
-        .info-section {
-            background-color: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-        }
-
-        .info-section h2 {
-            color: #ffffff;
-            margin-top: 0;
-            border-bottom: 2px solid #334155;
-            padding-bottom: 10px;
-        }
-
-        .info-section ul {
-            padding-left: 20px;
-            line-height: 1.8;
-            color: #e2e8f0;
-        }
-
-        /* Feste Kontakt-Zentrale */
-        .contact-section {
-            background-color: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .contact-section h2 {
-            color: #ffffff;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-
-        .contact-grid {
+        .cta-group {
             display: flex;
-            justify-content: center;
             gap: 20px;
+            justify-content: center;
             flex-wrap: wrap;
-            margin-top: 20px;
         }
 
-        .contact-method {
-            background-color: #111827;
-            border: 1px solid #334155;
-            padding: 15px 25px;
-            border-radius: 10px;
-            color: #e2e8f0;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            user-select: text;
-        }
-
-        .cta-box {
-            text-align: center;
-            margin-top: 40px;
-            border-top: 2px solid #1e293b;
-            padding-top: 30px;
-        }
-
-        .cta-link {
-            display: inline-block;
-            background-color: #3b82f6;
-            color: white;
+        .main-btn {
+            background-color: #1e293b;
+            color: #ffffff;
             text-decoration: none;
-            padding: 15px 35px;
-            font-weight: bold;
-            font-size: 1.2rem;
+            padding: 14px 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-            transition: transform 0.2s, background-color 0.2s;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            border: 1px solid #334155;
         }
 
-        .cta-link:hover {
-            background-color: #2563eb;
-            transform: translateY(-2px);
+        .main-btn:hover {
+            background-color: #0055ff;
+            border-color: #0055ff;
+            box-shadow: 0 0 15px rgba(0, 85, 255, 0.4);
+            transform: scale(1.03);
         }
     </style>
 </head>
 <body>
 
-    <!-- Die Navbar mit ALLEN 6 KNÖPFEN -->
+    <!-- Die Navbar mit neuem Leaderboard-Link -->
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
         <div class="nav-links">
-            <a href="/">Startseite</a>
+            <a href="/" style="color: #00d2ff;">Startseite</a>
             <a href="/ueber-mich">Über mich</a>
             <a href="/regelwerk">Regelwerk</a>
             <a href="/vorlagen">Vorlagen</a>
             <a href="/bot-zentrale">Bot-Zentrale</a>
+            <a href="/leaderboard">🏆 Live Leaderboard</a>
             <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
         </div>
     </nav>
 
+    <!-- Hauptinhalt -->
     <div class="container">
-        <div class="header-box">
-            <h1>Game & Community Management</h1>
-            <p>Offizielle Portfolio-Zentrale & Mod-Tätigkeiten</p>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">5+ Jahre</div>
-                <div class="stat-title">Erfahrung</div>
-                <div class="stat-desc">Erfolgreiches Management von großen Gaming-Communitys und Discord-Servern.</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">1k+ Fälle</div>
-                <div class="stat-title">Gelöste Support-Tickets</div>
-                <div class="stat-desc">Professioneller User-Support, Konfliktlösung und Ticket-Bearbeitung im Handumdrehen.</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">24/7</div>
-                <div class="stat-title">System-Überwachung</div>
-                <div class="stat-desc">Automatisierte Filterung, Schutz vor Raids und Optimierung von Server-Strukturen.</div>
-            </div>
-        </div>
-
-        <div class="info-section">
-            <h2>Gute Server brauchen Struktur 🛠️</h2>
-            <p>Als erfahrener Community-Moderator sorge ich für ein sicheres, aktives und toxizitätsfreies Umfeld. Meine Kernkompetenzen umfassen:</p>
-            <ul>
-                <li><strong>Konfliktmanagement:</strong> Deeskalation bei Streitigkeiten zwischen Usern.</li>
-                <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung die Community-Richtlinien.</li>
-                <li><strong>Event-Planung:</strong> Organisation von Community-Turnieren und Spiele-Abenden.</li>
-                <li><strong>Bot-Konfiguration:</strong> Einrichtung von Moderations- und Log-Systemen zur Serverabsicherung.</li>
-            </ul>
-        </div>
-
-        <!-- Feste Kontakt-Zentrale -->
-        <div class="contact-section">
-            <h2>Projektanfragen &amp; Kontakt ✉️</h2>
-            <p style="color: #94a3b8;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
+        <div class="welcome-box">
+            <h1>WILLKOMMEN BEI <span>STEFAN</span></h1>
+            <p>Dein Hub für Moderation, Community-Management und erstklassige Arcade-Handy-Spiele. Schau dich um und knack den globalen Playtime-Highscore!</p>
             
-            <div class="contact-grid">
-                <div class="contact-method">
-                    <span>💬</span> Discord: Steffel_07
-                </div>
-                <div class="contact-method">
-                    <span>📧</span> E-Mail: stefan.prasch@gmx.net
-                </div>
+            <div class="cta-group">
+                <a href="/spiele-hub" class="main-btn" style="background-color: #0055ff; border-color: #0055ff; box-shadow: 0 4px 15px rgba(0, 85, 255, 0.3);">Direkt Zocken 🎮</a>
+                <a href="/bot-zentrale" class="main-btn">Bot-Zentrale 🤖</a>
+                <a href="/regelwerk" class="main-btn">Server-Regeln 📜</a>
             </div>
-        </div>
-
-        <div class="cta-box">
-            <p style="color: #94a3b8; margin-bottom: 15px;">Lust auf eine Pause? Besuche meine Arcade-Sammlung:</p>
-            <a href="/spiele-hub" class="cta-link">Direkt zum Spiele-Hub 🎮</a>
         </div>
     </div>
 
+    <script>
+        // AUTOMATISCHER PLATTFORM-ZEITZÄHLER
+        // Trackt die Verweildauer des Users im Hintergrund und speichert sie alle 10 Sekunden
+        setInterval(function() {
+            let totalTime = parseFloat(localStorage.getItem('stefan_total_site_time')) || 0;
+            // Fügt alle 10 Sekunden ein Stück Zeit hinzu (10s = 0.166 Minuten)
+            localStorage.setItem('stefan_total_site_time', (totalTime + 0.166).toFixed(2));
+        }, 10000);
+    </script>
 </body>
 </html>
