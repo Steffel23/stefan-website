@@ -12,8 +12,7 @@
         .nav-links { display: flex; gap: 25px; align-items: center; }
         .nav-links a { color: #94a3b8; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: color 0.2s; }
         .nav-links a:hover { color: #00d2ff; }
-        .hub-btn { background-color: #0055ff; color: #ffffff !important; padding: 10px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3); transition: all 0.2s !important; }
-        .hub-btn:hover { background-color: #00d2ff; box-shadow: 0 0 15px #00d2ff; transform: translateY(-2px); color: #05070a !important; }
+        .hub-btn { background-color: #0055ff; color: #ffffff !important; padding: 10px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3); }
         .container { max-width: 1000px; width: 100%; padding: 40px 20px; box-sizing: border-box; }
         .title-box { border: 3px solid #00d2ff; background-color: rgba(15, 22, 36, 0.9); border-radius: 20px; padding: 30px; margin-bottom: 40px; text-align: center; box-shadow: 0 0 25px rgba(0, 210, 255, 0.4); position: relative; }
         .title-box h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 2.5rem; font-weight: 900; color: #ffffff; letter-spacing: 1px; }
@@ -33,13 +32,13 @@
         .service-icon { font-size: 2.5rem; margin-bottom: 10px; display: inline-block; }
         .service-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
         .service-desc { color: #94a3b8; font-size: 0.95rem; line-height: 1.4; }
-        .content-box { background-color: #111622; border: 2px solid #1e293b; border-radius: 16px; padding: 35px; text-align: left; margin-bottom: 40px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+        .content-box { background-color: #111622; border: 2px solid #1e293b; border-radius: 16px; padding: 35px; text-align: left; margin-bottom: 40px; }
         .content-box h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; margin-top: 0; margin-bottom: 20px; }
         .content-box p { color: #94a3b8; font-size: 1.1rem; line-height: 1.5; }
         .content-box ul { list-style: none; padding: 0; margin: 0; }
         .content-box li { font-size: 1.1rem; color: #e2e8f0; margin-bottom: 12px; padding-left: 15px; position: relative; }
         .content-box li::before { content: "•"; color: #00d2ff; font-size: 1.4rem; position: absolute; left: 0; top: -2px; }
-        .contact-box { background-color: #111622; border: 2px solid #1e293b; border-radius: 16px; padding: 30px; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); margin-bottom: 40px; }
+        .contact-box { background-color: #111622; border: 2px solid #1e293b; border-radius: 16px; padding: 30px; text-align: center; margin-bottom: 40px; }
         .contact-box h2 { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; color: #ffffff; margin-top: 0; margin-bottom: 10px; }
         .contact-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
         .cyber-tag { display: inline-block; background-color: #05070a; border: 2px solid #0055ff; color: #ffffff; padding: 10px 25px; border-radius: 20px; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; letter-spacing: 1px; box-shadow: 0 0 15px rgba(0, 85, 255, 0.2); text-decoration: none; }
@@ -115,3 +114,10 @@
             <p style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 15px;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
             <div class="contact-buttons">
                 <div class="cyber-tag">● Discord: Steffel_07</div>
+                <a href="mailto:stefan.prasch@gmx.net" class="cyber-tag email">📧 E-Mail: stefan.prasch@gmx.net</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function updateCounter() {
+            let visitCount = parseInt(localStorage.getItem('stefan_portfolio_visits')) || 201; 
