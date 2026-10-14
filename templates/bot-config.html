@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEFAN | Bot Configurator 🛠️</title>
+    <style>
+        @import url('https://googleapis.com');
+        body { background-color: #05070a; color: #e2e8f0; font-family: 'Rajdhani', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .navbar { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 25px 40px; box-sizing: border-box; border-bottom: 2px solid #1e293b; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 900; color: #ffffff; text-decoration: none; letter-spacing: 2px; }
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { color: #94a3b8; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: color 0.2s; }
+        .nav-links a:hover { color: #00d2ff; }
+        .hub-btn { background-color: #0055ff; color: #ffffff !important; padding: 10px 20px; border-radius: 8px; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3); }
+        .container { max-width: 800px; width: 100%; padding: 40px 20px; box-sizing: border-box; }
+        .title-box { border: 3px solid #00d2ff; background-color: rgba(15, 22, 36, 0.9); border-radius: 20px; padding: 25px; margin-bottom: 30px; text-align: center; box-shadow: 0 0 25px rgba(0, 210, 255, 0.4); }
+        .title-box h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 2.2rem; font-weight: 900; color: #ffffff; }
+        .config-card { background-color: #111622; border: 2px solid #1e293b; border-radius: 16px; padding: 30px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); text-align: left; }
+        .config-card h2 { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: #ffffff; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 1.1rem; color: #94a3b8; margin-bottom: 5px; font-weight: bold; }
+        .text-input { width: 100%; background-color: #05070a; border: 2px solid #1e293b; color: #ffffff; padding: 12px; border-radius: 8px; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; box-sizing: border-box; }
+        .text-input:focus { border-color: #00d2ff; outline: none; }
+        .checkbox-label { display: flex; align-items: center; gap: 12px; font-size: 1.15rem; color: #e2e8f0; cursor: pointer; padding: 10px; border-radius: 8px; background-color: #05070a; margin-bottom: 10px; border: 1px solid #1e293b; transition: all 0.2s; }
+        .checkbox-label:hover { border-color: #0055ff; background-color: rgba(0, 85, 255, 0.05); }
+        .checkbox-input { width: 18px; height: 18px; accent-color: #00d2ff; cursor: pointer; }
+        .output-box { background-color: #05070a; border: 2px dashed #00d2ff; border-radius: 12px; padding: 20px; margin-top: 25px; font-family: monospace; font-size: 1rem; color: #00ffff; white-space: pre-wrap; text-align: left; display: none; }
+        .action-btn { width: 100%; background-color: #0055ff; border: none; color: white; padding: 14px; border-radius: 10px; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(0, 85, 255, 0.3); margin-top: 10px; }
+        .action-btn:hover { background-color: #00d2ff; color: #05070a; box-shadow: 0 0 20px #00d2ff; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">✦ STEFAN</a>
+        <div class="nav-links">
+            <a href="/">Startseite</a>
+            <a href="/ueber-mich">Über mich</a>
+            <a href="/leaderboard">🏆 Leaderboard</a>
+            <a href="/bot-config" style="color: #00d2ff;">🛠️ Bot Config</a>
+            <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="title-box">
+            <h1>Discord Bot Configurator</h1>
+            <p style="color: #94a3b8; font-weight: bold;">Klicke dein Setup zusammen & sende es Stefan!</p>
+        </div>
+        <div class="config-card">
+            <h2>1. Server-Details</h2>
+            <div class="input-group">
+                <label for="server-name">Dein Server-Name:</label>
+                <input type="text" id="server-name" class="text-input" placeholder="Z.B. Stefans Gaming Lounge...">
+            </div>
+            <div class="input-group">
+                <label for="server-member">Ungefähre Mitgliederanzahl:</label>
+                <input type="text" id="server-member" class="text-input" placeholder="Z.B. 150...">
+            </div>
+        </div>
+        <div class="config-card">
+            <h2>2. Gewünschte Bot-Systeme</h2>
+            <label class="checkbox-label"><input type="checkbox" id="feat-mod" class="checkbox-input" value="Auto-Moderation & Raid-Schutz"> 🛡️ Auto-Moderation & Anti-Raid Schutz</label>
+            <label class="checkbox-label"><input type="checkbox" id="feat-ticket" class="checkbox-input" value="Support-Ticket System"> 🎫 Privates Support-Ticket-System</label>
+            <label class="checkbox-label"><input type="checkbox" id="feat-welcome" class="checkbox-input" value="Willkommens- & Embed-System"> 👋 Automatisierte Willkommens-Nachrichten</label>
+            <label class="checkbox-label"><input type="checkbox" id="feat-games" class="checkbox-input" value="Gaming & Level-System"> 🎮 Level-System, XP & Rollen</label>
+        </div>
+        <button class="action-btn" onclick="generateConfig()">CONFIGURATION GENERIEREN ⚡</button>
+        <div id="output-box" class="output-box"></div>
+        <button class="action-btn" id="copy-btn" onclick="copyConfig()" style="display:none; background-color: #00aa66;">📋 CONFIG-TEXT KOPIEREN</button>
+    </div>
+    <script>
+        function generateConfig() {
+            const sName = document.getElementById('server-name').value.trim() || "Unbekannt";
+            const sMember = document.getElementById('server-member').value.trim() || "Unbekannt";
+            let selectedFeatures = [];
+            if(document.getElementById('feat-mod').checked) selectedFeatures.push("- Auto-Moderation & Raid-Schutz 🛡️");
+            if(document.getElementById('feat-ticket').checked) selectedFeatures.push("- Support-Ticket System 🎫");
+            if(document.getElementById('feat-welcome').checked) selectedFeatures.push("- Willkommens- & Embed-System 👋");
+            if(document.getElementById('feat-games').checked) selectedFeatures.push("- Gaming & Level-System 🎮");
+            if(selectedFeatures.length === 0) selectedFeatures.push("- Standard Bot-Einrichtung");
+            const configText = `=== STEFANS BOT CONFIG REQUEST ===\n\n• Server-Name: ${sName}\n• Mitglieder: ${sMember}\n\nGewünschte Systeme:\n${selectedFeatures.join("\n")}\n\n==================================\nKopiere diesen Text und schicke ihn an Steffel_07 auf Discord!`;
+            const outBox = document.getElementById('output-box'); outBox.innerText = configText; outBox.style.display = 'block';
+            document.getElementById('copy-btn').style.display = 'block'; outBox.scrollIntoView({ behavior: 'smooth' });
+        }
+        function copyConfig() { const text = document.getElementById('output-box').innerText; navigator.clipboard.writeText(text); alert("Anfrage-Text kopiert! Schicke ihn Stefan auf Discord (Steffel_07)."); }
+    </script>
+</body>
+</html>
