@@ -46,8 +46,19 @@
             <h1>Discord Bot Configurator</h1>
             <p style="color: #94a3b8; font-weight: bold;">Klicke dein Setup zusammen & sende es Stefan!</p>
         </div>
+        
+        <!-- Kunden Details -->
         <div class="config-card">
-            <h2>1. Server-Details</h2>
+            <h2>1. Deine Infos</h2>
+            <div class="input-group">
+                <label for="client-discord">Dein Discord-Name (Gamer-Tag):</label>
+                <input type="text" id="client-discord" class="text-input" placeholder="Z.B. Kumpel_09...">
+            </div>
+        </div>
+
+        <!-- Server-Details -->
+        <div class="config-card">
+            <h2>2. Server-Details</h2>
             <div class="input-group">
                 <label for="server-name">Dein Server-Name:</label>
                 <input type="text" id="server-name" class="text-input" placeholder="Z.B. Stefans Gaming Lounge...">
@@ -57,19 +68,23 @@
                 <input type="text" id="server-member" class="text-input" placeholder="Z.B. 150...">
             </div>
         </div>
+
+        <!-- Systeme -->
         <div class="config-card">
-            <h2>2. Gewünschte Bot-Systeme</h2>
+            <h2>3. Gewünschte Bot-Systeme</h2>
             <label class="checkbox-label"><input type="checkbox" id="feat-mod" class="checkbox-input" value="Auto-Moderation & Raid-Schutz"> 🛡️ Auto-Moderation & Anti-Raid Schutz</label>
             <label class="checkbox-label"><input type="checkbox" id="feat-ticket" class="checkbox-input" value="Support-Ticket System"> 🎫 Privates Support-Ticket-System</label>
             <label class="checkbox-label"><input type="checkbox" id="feat-welcome" class="checkbox-input" value="Willkommens- & Embed-System"> 👋 Automatisierte Willkommens-Nachrichten</label>
             <label class="checkbox-label"><input type="checkbox" id="feat-games" class="checkbox-input" value="Gaming & Level-System"> 🎮 Level-System, XP & Rollen</label>
         </div>
+        
         <button class="action-btn" onclick="generateConfig()">CONFIGURATION GENERIEREN ⚡</button>
         <div id="output-box" class="output-box"></div>
         <button class="action-btn" id="copy-btn" onclick="copyConfig()" style="display:none; background-color: #00aa66;">📋 CONFIG-TEXT KOPIEREN</button>
     </div>
     <script>
         function generateConfig() {
+            const cDiscord = document.getElementById('client-discord').value.trim() || "Unbekannt";
             const sName = document.getElementById('server-name').value.trim() || "Unbekannt";
             const sMember = document.getElementById('server-member').value.trim() || "Unbekannt";
             let selectedFeatures = [];
@@ -78,7 +93,9 @@
             if(document.getElementById('feat-welcome').checked) selectedFeatures.push("- Willkommens- & Embed-System 👋");
             if(document.getElementById('feat-games').checked) selectedFeatures.push("- Gaming & Level-System 🎮");
             if(selectedFeatures.length === 0) selectedFeatures.push("- Standard Bot-Einrichtung");
-            const configText = `=== STEFANS BOT CONFIG REQUEST ===\n\n• Server-Name: ${sName}\n• Mitglieder: ${sMember}\n\nGewünschte Systeme:\n${selectedFeatures.join("\n")}\n\n==================================\nKopiere diesen Text und schicke ihn an Steffel_07 auf Discord!`;
+            
+            // TEXT FÜR DEINE KUNDEN ANGEPASST
+            const configText = `=== STEFANS BOT CONFIG REQUEST ===\n\n• Von Discord-User: ${cDiscord}\n• Server-Name: ${sName}\n• Mitglieder: ${sMember}\n\nGewünschte Systeme:\n${selectedFeatures.join("\n")}\n\n==================================\nKopiere diesen Text und schicke ihn Stefan auf Discord (Steffel_07)!`;
             const outBox = document.getElementById('output-box'); outBox.innerText = configText; outBox.style.display = 'block';
             document.getElementById('copy-btn').style.display = 'block'; outBox.scrollIntoView({ behavior: 'smooth' });
         }
