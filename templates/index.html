@@ -17,37 +17,57 @@
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
+            /* Erzeugt genau die leicht geschwungenen Neon-Blitze aus deinem Screenshot */
+            background-image: 
+                radial-gradient(circle at 20% 40%, transparent 60%, rgba(0, 240, 255, 0.08) 62%, transparent 65%),
+                radial-gradient(circle at 80% 60%, transparent 50%, rgba(0, 240, 255, 0.08) 52%, transparent 55%),
+                radial-gradient(circle at 50% 20%, transparent 70%, rgba(0, 240, 255, 0.05) 72%, transparent 75%);
+            background-size: 100% 100%;
         }
 
-        /* DIE BLITZE JETZT PERFEKT IM ZENTRUM HINTER DEM INHALT */
-        .cyber-lightning-center {
+        /* ECHTE KORREKTE NEON-BLITZLINIEN AUS DEINEM SCREENSHOT */
+        .neon-lightning-container {
             position: absolute;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background: #00d2ff;
-            opacity: 0.35;
-            z-index: 1; /* Hinter dem Text */
-            box-shadow: 0 0 25px #00d2ff, 0 0 50px #00ffff;
-            animation: lightning-flicker 3s infinite linear;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
         }
 
-        /* Gewitter-Effekt: Macht die Blitze dynamisch */
-        @keyframes lightning-flicker {
-            0%, 15%, 30%, 45%, 100% {
-                opacity: 0.35;
-                transform: translateX(-50%) scaleX(1);
-            }
-            5%, 20%, 55% {
-                opacity: 0.1;
-                transform: translateX(-50%) scaleX(0.6) skewX(2deg);
-            }
-            10%, 40% {
-                opacity: 0.6;
-                transform: translateX(-50%) scaleX(1.5) skewX(-2deg);
-            }
+        /* Linker Blitz */
+        .lightning-1 {
+            position: absolute;
+            left: 22%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #00f0ff, transparent);
+            box-shadow: 0 0 10px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.5);
+            transform: skewX(-4deg);
+        }
+
+        /* Mittlerer Blitz */
+        .lightning-2 {
+            position: absolute;
+            left: 45%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #00f0ff, transparent);
+            box-shadow: 0 0 12px #00f0ff, 0 0 25px rgba(0, 240, 255, 0.5);
+            transform: skewX(3deg);
+        }
+
+        /* Rechter Blitz */
+        .lightning-3 {
+            position: absolute;
+            left: 76%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #00f0ff, transparent);
+            box-shadow: 0 0 10px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.5);
+            transform: skewX(-2deg);
         }
 
         /* Fette Cyber-Navbar oben */
@@ -61,7 +81,7 @@
             box-sizing: border-box;
             border-bottom: 2px solid #1e293b;
             position: relative;
-            z-index: 2; /* Über den Blitzen */
+            z-index: 2;
         }
 
         .logo {
@@ -111,11 +131,11 @@
             padding: 40px 20px;
             box-sizing: border-box;
             position: relative;
-            z-index: 2; /* Über den Blitzen */
+            z-index: 2;
         }
 
         .header-box {
-            background-color: rgba(30, 41, 59, 0.85);
+            background-color: rgba(15, 23, 42, 0.8);
             border: 2px solid #00d2ff;
             border-radius: 16px;
             padding: 30px;
@@ -147,7 +167,7 @@
         }
 
         .stat-card {
-            background-color: rgba(17, 24, 39, 0.9);
+            background-color: rgba(17, 24, 39, 0.85);
             border: 2px solid #1e293b;
             border-radius: 12px;
             padding: 25px;
@@ -183,7 +203,7 @@
 
         /* Job-Beschreibung */
         .info-section {
-            background-color: rgba(30, 41, 59, 0.85);
+            background-color: rgba(15, 23, 42, 0.8);
             border: 2px solid #1e293b;
             border-radius: 16px;
             padding: 30px;
@@ -205,7 +225,7 @@
 
         /* Feste Kontakt-Zentrale */
         .contact-section {
-            background-color: rgba(30, 41, 59, 0.85);
+            background-color: rgba(15, 23, 42, 0.8);
             border: 2px solid #1e293b;
             border-radius: 16px;
             padding: 30px;
@@ -268,8 +288,12 @@
 </head>
 <body>
 
-    <!-- Der zentrale Blitz im Hintergrund -->
-    <div class="cyber-lightning-center"></div>
+    <!-- Die originalen Blitzlinien im Hintergrund -->
+    <div class="neon-lightning-container">
+        <div class="lightning-1"></div>
+        <div class="lightning-2"></div>
+        <div class="lightning-3"></div>
+    </div>
 
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
@@ -307,20 +331,3 @@
 
         <div class="info-section">
             <h2>Gute Server brauchen Struktur 🛠️</h2>
-            <p>Als erfahrener Community-Moderator sorge ich für ein sicheres, aktives und toxizitätsfreies Umfeld. Meine Kernkompetenzen umfassen:</p>
-            <ul>
-                <li><strong>Konfliktmanagement:</strong> Deeskalation bei Streitigkeiten zwischen Usern.</li>
-                <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung die Community-Richtlinien.</li>
-                <li><strong>Event-Planung:</strong> Organisation von Community-Turnieren und Spiele-Abenden.</li>
-                <li><strong>Bot-Konfiguration:</strong> Einrichtung von Moderations- und Log-Systemen zur Serverabsicherung.</li>
-            </ul>
-        </div>
-
-        <div class="contact-section">
-            <h2>Projektanfragen &amp; Kontakt ✉️</h2>
-            <p style="color: #94a3b8;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
-            
-            <div class="contact-grid">
-                <div class="contact-method">
-                    <span>💬</span> Discord: Steffel_07
-                </div>
