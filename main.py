@@ -1,6 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
+import os
 
 app = Flask(__name__)
+
+# Automatischer Bild-Fix: Liefert das Bild aus, egal wo es liegt!
+@app.route('/avatar.png')
+def custom_avatar():
+    if os.path.exists('avatar.png'):
+        return send_from_directory('.', 'avatar.png')
+    elif os.path.exists('templates/avatar.png'):
+        return send_from_directory('templates', 'avatar.png')
+    return send_from_directory('.', 'avatar.png')
 
 @app.route('/')
 def home():
