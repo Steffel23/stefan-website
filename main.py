@@ -22,6 +22,10 @@ def regelwerk():
 def vorlagen():
     return render_template('vorlagen.html')
 
+@app.route('/bot-zentrale')
+def bot_zentrale():
+    return render_template('bot-zentrale.html')
+
 @app.route('/clicker')
 def clicker():
     return render_template('clicker.html')
