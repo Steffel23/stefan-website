@@ -14,6 +14,10 @@ def spiele_hub():
 def ueber_mich():
     return render_template('ueber-mich.html')
 
+@app.route('/regelwerk')
+def regelwerk():
+    return render_template('regelwerk.html')
+
 @app.route('/clicker')
 def clicker():
     return render_template('clicker.html')
