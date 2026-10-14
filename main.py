@@ -1,9 +1,8 @@
 from flask import Flask, render_template, send_from_directory
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
-# Automatischer Bild-Fix: Liefert das Bild aus, egal wo es liegt!
 @app.route('/avatar.png')
 def custom_avatar():
     if os.path.exists('avatar.png'):
@@ -14,6 +13,9 @@ def custom_avatar():
 
 @app.route('/')
 def home():
+    # Lädt die Startseite direkt und unzerstörbar
+    if os.path.exists('index.html'):
+        return send_from_directory('.', 'index.html')
     return render_template('index.html')
 
 @app.route('/spiele-hub')
