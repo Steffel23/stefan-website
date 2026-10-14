@@ -30,10 +30,6 @@ def bot_zentrale():
 def tetris():
     return render_template('tetris.html')
 
-@app.route('/clicker')
-def clicker():
-    return render_template('clicker.html')
-
 @app.route('/jump')
 def jump():
     return render_template('jump.html')
