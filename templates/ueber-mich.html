@@ -6,7 +6,7 @@
     <title>STEFAN | Über mich 👤</title>
     <style>
         body {
-            background-color: #0d0f12;
+            background-color: #05070a;
             color: #e2e8f0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -15,6 +15,28 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Die permanenten, cleanen blauen Neon-Blitze an den Seiten */
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: #00d2ff;
+            box-shadow: 0 0 15px #00d2ff, 0 0 30px #00c8ff, 0 0 45px #00ffff;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        body::before { left: 40px; }
+        body::after { right: 40px; }
+
+        @media (max-width: 768px) {
+            body::before { left: 10px; }
+            body::after { right: 10px; }
         }
 
         /* Fette Cyber-Navbar oben */
@@ -27,6 +49,8 @@
             padding: 25px 40px;
             box-sizing: border-box;
             border-bottom: 2px solid #1e293b;
+            position: relative;
+            z-index: 2;
         }
 
         .logo {
@@ -75,15 +99,18 @@
             width: 100%;
             padding: 40px 20px;
             box-sizing: border-box;
+            position: relative;
+            z-index: 2;
         }
 
         .header-box {
-            background-color: #1e293b;
-            border: 2px solid #334155;
+            background-color: rgba(30, 41, 59, 0.7);
+            border: 2px solid #00d2ff;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
             text-align: center;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
         }
 
         .header-box h1 {
@@ -93,7 +120,7 @@
         }
 
         .header-box p {
-            color: #3b82f6;
+            color: #00d2ff;
             font-weight: bold;
             margin: 0;
             text-transform: uppercase;
@@ -102,7 +129,7 @@
 
         /* Über mich Info-Box */
         .profile-section {
-            background-color: #111827;
+            background-color: rgba(17, 24, 39, 0.8);
             border: 2px solid #1e293b;
             border-radius: 16px;
             padding: 35px;
@@ -150,14 +177,14 @@
         }
 
         .skill-card {
-            background-color: #1e293b;
+            background-color: rgba(30, 41, 59, 0.7);
             border: 2px solid #334155;
             border-radius: 12px;
             padding: 25px;
         }
 
         .skill-card h3 {
-            color: #3b82f6;
+            color: #00d2ff;
             margin-top: 0;
             margin-bottom: 15px;
             font-size: 1.3rem;
@@ -182,30 +209,30 @@
         .back-btn {
             display: inline-block;
             background-color: #1e293b;
-            color: #94a3b8;
+            color: #00d2ff;
+            border: 2px solid #00d2ff;
             text-decoration: none;
             padding: 12px 28px;
             border-radius: 8px;
             font-weight: 600;
             transition: all 0.2s;
-            border: 1px solid #334155;
         }
 
         .back-btn:hover {
-            background-color: #3b82f6;
-            color: #ffffff;
-            border-color: #3b82f6;
+            background-color: #00d2ff;
+            color: #05070a;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
         }
     </style>
 </head>
 <body>
 
-    <!-- Die Navbar mit allen 3 Knöpfen -->
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
         <div class="nav-links">
             <a href="/">Startseite</a>
-            <a href="/ueber-mich" style="color: #3b82f6;">Über mich</a>
+            <a href="/ueber-mich" style="color: #00d2ff;">Über mich</a>
+            <a href="/regelwerk">Regelwerk</a>
             <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
         </div>
     </nav>
@@ -216,7 +243,6 @@
             <p>Die Person hinter dem Community Management</p>
         </div>
 
-        <!-- Profil-Vorstellung -->
         <div class="profile-section">
             <div class="profile-avatar">👨‍💻</div>
             <div class="profile-text">
@@ -225,7 +251,6 @@
             </div>
         </div>
 
-        <!-- Detaillierte Skill-Aufteilung -->
         <div class="skills-grid">
             <div class="skill-card">
                 <h3><span>💬</span> Discord Experte</h3>
@@ -248,7 +273,6 @@
             </div>
         </div>
 
-        <!-- Zurück-Button -->
         <div class="back-box">
             <a href="/" class="back-btn">⬅️ Zurück zur Hauptseite</a>
         </div>
