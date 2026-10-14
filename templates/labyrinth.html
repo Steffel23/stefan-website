@@ -50,6 +50,10 @@
                 {x: 350, y: 70}, {x: 350, y: 320}, {x: 500, y: 320}, {x: 500, y: 200}, {x: 600, y: 200}
             ];
 
+            // BOMBENSICHERER STARTPUNKT FIX
+            const startX = path[0].x;
+            const startY = path[0].y;
+
             let enemies = []; let towers = []; let projectiles = [];
             let spawnTimer = 0; let waveTimer = 0; let enemiesToSpawn = 5;
 
@@ -82,15 +86,14 @@
                 document.getElementById('wave').innerText = "Welle: " + wave;
             }
 
-            // DER FEHLER IST WEG: Greift jetzt stabil auf den ersten Startpunkt des Pfads zu!
             function spawnEnemy() {
                 if (enemiesToSpawn > 0) {
                     spawnTimer++;
                     if (spawnTimer > 50) {
                         enemies.push({
                             pathIndex: 0,
-                            x: path[0].x,
-                            y: path[0].y,
+                            x: startX,
+                            y: startY,
                             speed: 1.4 + (wave * 0.12),
                             hp: 20 + (wave * 18),
                             maxHp: 20 + (wave * 18),
