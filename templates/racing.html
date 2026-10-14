@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
     <title>STEFANS SPIELE | Turbo Racer 🏎️</title>
     <style>
-        @import url('https://googleapis.com');
-
         body {
             background-color: #05070a;
             color: #ffffff;
-            font-family: 'Rajdhani', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 10px;
             text-align: center;
@@ -22,16 +20,12 @@
             box-sizing: border-box;
             overflow: hidden;
         }
-
         h1 {
-            font-family: 'Orbitron', sans-serif;
             color: #00d2ff;
             margin: 5px 0;
-            text-shadow: 0 0 15px #00d2ff;
             text-transform: uppercase;
             font-size: 1.8rem;
         }
-
         #game-canvas {
             background-color: #0d1117;
             border: 2px solid #00d2ff;
@@ -40,16 +34,11 @@
             max-width: 100%;
             max-height: 60vh;
         }
-
         .score-box {
-            font-family: 'Orbitron', sans-serif;
             font-size: 1.3rem;
             color: #00d2ff;
             margin: 8px 0;
-            text-shadow: 0 0 5px rgba(0, 210, 255, 0.5);
         }
-
-        /* Mobile Touch-Zonen */
         .mobile-touch-zones {
             display: none;
             width: 100%;
@@ -58,7 +47,6 @@
             margin-top: 15px;
             gap: 15px;
         }
-
         .touch-zone {
             flex: 1;
             background-color: rgba(0, 210, 255, 0.1);
@@ -67,19 +55,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #00d2ff;
             font-weight: bold;
             touch-action: manipulation;
             user-select: none;
-            font-family: 'Orbitron', sans-serif;
         }
-
         .touch-zone:active {
             background-color: rgba(0, 210, 255, 0.3);
-            box-shadow: 0 0 15px #00d2ff;
         }
-
         .back-btn {
             margin-top: 15px;
             display: inline-block;
@@ -90,14 +74,9 @@
             padding: 10px 24px;
             border-radius: 8px;
             font-weight: 600;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
         }
-
         @media (max-width: 768px) {
-            .mobile-touch-zones {
-                display: flex;
-            }
+            .mobile-touch-zones { display: flex; }
         }
     </style>
 </head>
@@ -124,10 +103,9 @@
         let gameOver = false;
         let gameSpeed = 5;
 
-        // Spieler-Auto (Neon-Blau)
         const car = {
-            x: canvas.width / 2 - 18,
-            y: canvas.height - 90,
+            x: 200 - 18,
+            y: 500 - 90,
             width: 36,
             height: 70,
             speed: 7,
@@ -139,9 +117,8 @@
         let obstacleTimer = 0;
 
         const trackLeft = 60;
-        const trackRight = canvas.width - 60;
+        const trackRight = 400 - 60;
 
-        // PC-Steuerung
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft' || e.key === 'a') car.movingLeft = true;
             if (e.key === 'ArrowRight' || e.key === 'd') car.movingRight = true;
@@ -153,7 +130,6 @@
             if (e.key === 'ArrowRight' || e.key === 'd') car.movingRight = false;
         });
 
-        // Handy-Steuerung
         const leftZone = document.getElementById('left-zone');
         const rightZone = document.getElementById('right-zone');
 
@@ -185,53 +161,16 @@
             obstacles = [];
             gameOver = false;
             gameSpeed = 5;
-            car.x = canvas.width / 2 - 18;
+            car.x = 200 - 18;
             document.getElementById('score').innerText = "Strecke: " + distance + "m";
         }
 
         function drawCyberCar(x, y, w, h, isPlayer) {
             const mainColor = isPlayer ? '#00d2ff' : '#ff0055';
-            const detailColor = isPlayer ? '#ffffff' : '#ff9900';
-            const lightColor = isPlayer ? '#ffffcc' : '#ff3333';
-
-            ctx.save();
-            
-            // Cockpit / Haupt-Chassis
             ctx.fillStyle = mainColor;
-            ctx.fillRect(x + 4, y + 10, w - 8, h - 20);
-            
-            // Radkästen vorne & hinten
-            ctx.fillStyle = '#0d0f12';
-            ctx.fillRect(x, y + 8, 4, 14); 
-            ctx.fillRect(x + w - 4, y + 8, 4, 14); 
-            ctx.fillRect(x, y + h - 22, 4, 14); 
-            ctx.fillRect(x + w - 4, y + h - 22, 4, 14); 
-
-            // Heckspoiler
-            ctx.fillStyle = mainColor;
-            ctx.fillRect(x, y + h - 6, w, 6);
-            ctx.fillStyle = '#05070a';
-            ctx.fillRect(x + 6, y + h - 6, w - 12, 4);
-
-            // Front-Spoiler / Stoßstange
-            ctx.fillStyle = mainColor;
-            ctx.fillRect(x + 2, y, w - 4, 4);
-
-            // Windschutzscheibe / Neon-Cockpitfenster
-            ctx.fillStyle = detailColor;
-            ctx.fillRect(x + 8, y + 25, w - 16, 12);
-
-            // Lichter zeichnen
-            ctx.fillStyle = lightColor;
-            if (isPlayer) {
-                ctx.fillRect(x + 4, y, 6, 3);
-                ctx.fillRect(x + w - 10, y, 6, 3);
-            } else {
-                ctx.fillRect(x + 4, y + h - 3, 6, 3);
-                ctx.fillRect(x + w - 10, y + h - 3, 6, 3);
-            }
-
-            ctx.restore();
+            ctx.fillRect(x, y, w, h);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(x + 6, y + 15, w - 12, 15);
         }
 
         function update() {
@@ -248,46 +187,54 @@
             spawnObstacle();
             obstacles.forEach((obs, index) => {
                 obs.y += obs.speed;
-                if (obs.y > canvas.height) obstacles.splice(index, 1);
+                if (obs.y > 500) obstacles.splice(index, 1);
                 if (checkCollision(car, obs)) gameOver = true;
             });
         }
 
         function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, 400, 500);
 
-            // Grüne Wiese links/rechts
             ctx.fillStyle = '#061006';
-            ctx.fillRect(0, 0, trackLeft, canvas.height);
-            ctx.fillRect(trackRight, 0, trackLeft, canvas.height);
+            ctx.fillRect(0, 0, trackLeft, 500);
+            ctx.fillRect(trackRight, 0, trackLeft, 500);
 
-            // Graue Rennstrecke
             ctx.fillStyle = '#1a1f26';
-            ctx.fillRect(trackLeft, 0, trackRight - trackLeft, canvas.height);
+            ctx.fillRect(trackLeft, 0, trackRight - trackLeft, 500);
 
-            // FEHLER BEHOBEN: Sicheres Zeichnen der Mittellinien ohne setLineDash Absturz
             ctx.fillStyle = '#ffffff';
             let lineY = (distance * gameSpeed * 0.1) % 40;
-            for (let y = -40 + lineY; y < canvas.height; y += 40) {
-                ctx.fillRect(canvas.width / 2 - 2, y, 4, 20);
+            for (let y = -40 + lineY; y < 500; y += 40) {
+                ctx.fillRect(200 - 2, y, 4, 20);
             }
 
-            // Spieler-Auto zeichnen
             drawCyberCar(car.x, car.y, car.width, car.height, true);
 
-            // Gegner-Autos zeichnen
             obstacles.forEach(obs => {
                 drawCyberCar(obs.x, obs.y, obs.width, obs.height, false);
             });
 
             if (gameOver) {
                 ctx.fillStyle = 'rgba(5, 7, 10, 0.85)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillRect(0, 0, 400, 500);
                 ctx.fillStyle = '#ff0055';
-                ctx.font = '24px "Orbitron"';
+                ctx.font = '20px Arial';
                 ctx.textAlign = 'center';
-                ctx.fillText('CRASH - GAME OVER', canvas.width / 2, canvas.height / 2 - 10);
+                ctx.fillText('CRASH - GAME OVER', 200, 240);
                 ctx.fillStyle = '#ffffff';
-                ctx.font = '16px "Rajdhani"';
-                ctx.fillText('Tippe eine Touchzone / Space zum Neustart', canvas.width / 2, canvas.height / 2 + 20);
+                ctx.font = '14px Arial';
+                ctx.fillText('Tippe eine Zone / Space zum Neustart', 200, 280);
             }
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        resetGame();
+        loop();
+    </script>
+</body>
+</html>
