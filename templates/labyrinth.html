@@ -82,7 +82,7 @@
                 document.getElementById('wave').innerText = "Welle: " + wave;
             }
 
-            // ZIP-FEHLER FIX: Hier greift er jetzt mathematisch korrekt auf das Array zu!
+            // DER FEHLER IST WEG: Greift jetzt stabil auf den ersten Startpunkt des Pfads zu!
             function spawnEnemy() {
                 if (enemiesToSpawn > 0) {
                     spawnTimer++;
