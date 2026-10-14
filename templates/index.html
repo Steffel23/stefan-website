@@ -93,6 +93,7 @@
             margin-bottom: 40px;
             text-align: center;
             box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
+            position: relative;
         }
 
         .title-box h1 {
@@ -111,6 +112,27 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
+        }
+
+        /* Blau leuchtender Besucherzähler */
+        .visitor-counter {
+            display: inline-block;
+            background-color: #05070a;
+            border: 1px solid #0055ff;
+            color: #00ffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 8px;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+        }
+
+        #visit-count {
+            color: #ffffff;
+            text-shadow: 0 0 8px #00ffff;
         }
 
         /* Das 3er Statistik-Grid */
@@ -264,10 +286,13 @@
     </nav>
 
     <div class="container">
-        <!-- Titel-Box -->
+        <!-- Titel-Box MIT LIVE BESUCHERZÄHLER -->
         <div class="title-box">
             <h1>Game & Community Management</h1>
             <p>Offizielle Portfolio-Zentrale & Mod-Tätigkeiten</p>
+            <div class="visitor-counter">
+                📡 SEITEN-AUFRUFE: <span id="visit-count">Lädt...</span>
+            </div>
         </div>
 
         <!-- 3er Statistik-Grid -->
@@ -302,21 +327,3 @@
         </div>
 
         <!-- Kontakt Box mit E-Mail -->
-        <div class="contact-box">
-            <h2>Projektanfragen & Kontakt ✉️</h2>
-            <p style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 15px;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
-            <div class="contact-buttons">
-                <div class="cyber-tag">● Discord: Steffel_07</div>
-                <a href="mailto:stefan.prasch@gmx.net" class="cyber-tag email">📧 E-Mail: stefan.prasch@gmx.net</a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // AUTOMATISCHER PLATTFORM-ZEITZÄHLER
-        setInterval(function() {
-            let totalTime = parseFloat(localStorage.getItem('stefan_total_site_time')) || 0;
-            localStorage.setItem('stefan_total_site_time', (totalTime + 0.166).toFixed(2));
-        }, 10000);
-    </script>
-</body>
