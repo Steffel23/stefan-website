@@ -2,147 +2,289 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Retro 3D Raycaster</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
+    <title>STEFANS SPIELE | Server Raid Defense 🛡️</title>
     <style>
-        body { margin: 0; background: #111; color: white; font-family: monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-        h1 { margin: 5px; font-size: 24px; color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }
-        #canvasContainer { position: relative; border: 4px solid #333; box-shadow: 0 0 20px rgba(0,255,204,0.2); }
-        canvas { display: block; background: black; }
-        .hud { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 20px; background: rgba(0,0,0,0.7); padding: 5px 15px; border-radius: 5px; border: 1px solid #00ffcc; pointer-events: none; }
+        @import url('https://googleapis.com');
+
+        body {
+            background-color: #05070a;
+            color: #ffffff;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00d2ff;
+            margin: 5px 0;
+            text-shadow: 0 0 15px #00d2ff;
+            text-transform: uppercase;
+            font-size: 1.8rem;
+        }
+
+        .hud {
+            display: flex;
+            gap: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: #00d2ff;
+            margin: 8px 0;
+            text-shadow: 0 0 5px rgba(0, 210, 255, 0.5);
+        }
+
+        #game-canvas {
+            background-color: #0b0f17;
+            border: 2px solid #00d2ff;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
+            border-radius: 12px;
+            max-width: 100%;
+            max-height: 55vh;
+            cursor: pointer;
+        }
+
+        /* Komplett blaue Cyber-Shop-Buttons */
+        .shop {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px;
+        }
+
+        .shop-btn {
+            flex: 1;
+            background-color: #0d111a;
+            border: 2px solid #0055ff;
+            color: #00d2ff;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: all 0.2s;
+            box-shadow: 0 0 10px rgba(0, 85, 255, 0.2);
+        }
+
+        .shop-btn.active {
+            background-color: #0055ff;
+            color: #ffffff;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px #0055ff, 0 0 30px #00ffff;
+            text-shadow: 0 0 5px #ffffff;
+        }
+
+        .back-btn {
+            margin-top: 15px;
+            display: inline-block;
+            background-color: #1e293b;
+            color: #00d2ff;
+            border: 2px solid #00d2ff;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .back-btn:hover {
+            background-color: #00d2ff;
+            color: #05070a;
+            box-shadow: 0 0 15px #00d2ff;
+        }
     </style>
 </head>
 <body>
 
-    <h1>3D LABYRINTH SHOOTER 🧭</h1>
-    <div id="canvasContainer">
-        <canvas id="gameCanvas" width="640" height="400"></canvas>
-        <div class="hud">ZIEL: FINDE DEN GELBEN AUSGANG!</div>
+    <h1>Server Raid Defense</h1>
+    <div class="hud">
+        <div id="money">Data-Packs: 150</div>
+        <div id="hp">Mainframe-HP: 10</div>
+        <div id="wave">Welle: 1</div>
     </div>
-    <p style="color:#777; margin-top:10px;">Steuerung: <b>W / S</b> = Vor & Zurück | <b>A / D</b> = Links & Rechts drehen</p>
+
+    <canvas id="game-canvas" width="600" height="400"></canvas>
+
+    <div class="shop">
+        <button class="shop-btn active" id="btn-fw">Firewall (50⟁)</button>
+        <button class="shop-btn" id="btn-am">Auto-Mod (90⟁)</button>
+    </div>
+
+    <a href="/spiele-hub" class="back-btn">⬅ Zum Hub</a>
 
     <script>
-        const canvas = document.getElementById("gameCanvas");
-        const ctx = canvas.getContext("2d");
+        window.onload = function() {
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
 
-        const mapWidth = 10;
-        const mapHeight = 10;
-        const tileSize = 32;
+            let money = 150;
+            let hp = 10;
+            let wave = 1;
+            let gameOver = false;
 
-        // 1 = Wand, 0 = Leer, 2 = Ausgang (Ziel)
-        // Komplett flach geschrieben, damit beim Abschicken im Chat absolut nichts verschwindet!
-        const map = [
-            1,1,1,1,1,1,1,1,1,1,
-            1,0,0,0,1,0,0,0,2,1,
-            1,0,1,0,1,0,1,1,0,1,
-            1,0,1,0,0,0,0,1,0,1,
-            1,0,1,1,1,1,0,1,0,1,
-            1,0,0,0,0,1,0,0,0,1,
-            1,1,1,1,0,1,1,1,0,1,
-            1,0,0,0,0,0,0,1,0,1,
-            1,0,1,1,1,1,0,0,0,1,
-            1,1,1,1,1,1,1,1,1,1
-        ];
+            let selectedTowerType = 'firewall';
 
-        let playerX = 45;
-        let playerY = 45;
-        let playerAngle = 0.5;
-        let fov = Math.PI / 3;
+            const path = [
+                {x: 0, y: 200}, {x: 150, y: 200}, {x: 150, y: 70}, 
+                {x: 350, y: 70}, {x: 350, y: 320}, {x: 500, y: 320}, {x: 500, y: 200}, {x: 600, y: 200}
+            ];
 
-        const keys = {};
-        window.addEventListener("keydown", e => keys[e.code] = true);
-        window.addEventListener("keyup", e => keys[e.code] = false);
+            let enemies = [];
+            let towers = [];
+            let projectiles = [];
+            let spawnTimer = 0;
+            let waveTimer = 0;
+            let enemiesToSpawn = 5;
 
-        function update() {
-            let moveSpeed = 1.5;
-            let rotSpeed = 0.04;
+            document.getElementById('btn-fw').addEventListener('click', function() {
+                selectedTowerType = 'firewall';
+                this.classList.add('active');
+                document.getElementById('btn-am').classList.remove('active');
+            });
+            document.getElementById('btn-am').addEventListener('click', function() {
+                selectedTowerType = 'automod';
+                this.classList.add('active');
+                document.getElementById('btn-fw').classList.remove('active');
+            });
 
-            if (keys["KeyA"] || keys["ArrowLeft"]) playerAngle -= rotSpeed;
-            if (keys["KeyD"] || keys["ArrowRight"]) playerAngle += rotSpeed;
+            canvas.addEventListener('click', function(e) {
+                if (gameOver) { resetGame(); return; }
+                
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const clickX = (e.clientX - rect.left) * scaleX;
+                const clickY = (e.clientY - rect.top) * scaleY;
 
-            let newX = playerX;
-            let newY = playerY;
-
-            if (keys["KeyW"] || keys["ArrowUp"]) {
-                newX += Math.cos(playerAngle) * moveSpeed;
-                newY += Math.sin(playerAngle) * moveSpeed;
-            }
-            if (keys["KeyS"] || keys["ArrowDown"]) {
-                newX -= Math.cos(playerAngle) * moveSpeed;
-                newY -= Math.sin(playerAngle) * moveSpeed;
-            }
-
-            let checkMapX = Math.floor(newX / tileSize);
-            let checkMapY = Math.floor(newY / tileSize);
-
-            if (checkMapY >= 0 && checkMapY < mapHeight && checkMapX >= 0 && checkMapX < mapWidth) {
-                let mapIndex = checkMapY * mapWidth + checkMapX;
-                if (map[mapIndex] === 0) {
-                    playerX = newX;
-                    playerY = newY;
-                } else if (map[mapIndex] === 2) {
-                    alert("GEWONNEN! Du hast den Ausgang gefunden! 🎉");
-                    playerX = 45; playerY = 45; playerAngle = 0.5;
+                let cost = selectedTowerType === 'firewall' ? 50 : 90;
+                if (money >= cost) {
+                    towers.push({
+                        x: clickX,
+                        y: clickY,
+                        type: selectedTowerType,
+                        range: selectedTowerType === 'firewall' ? 100 : 140,
+                        cooldown: 0,
+                        maxCooldown: selectedTowerType === 'firewall' ? 25 : 12
+                    });
+                    money -= cost;
+                    updateHUD();
                 }
+            });
+
+            function updateHUD() {
+                document.getElementById('money').innerText = "Data-Packs: " + money;
+                document.getElementById('hp').innerText = "Mainframe-HP: " + hp;
+                document.getElementById('wave').innerText = "Welle: " + wave;
             }
-        }
 
-        function draw() {
-            ctx.fillStyle = "#222"; ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
-            ctx.fillStyle = "#444"; ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height / 2);
-
-            const numRays = canvas.width;
-            const halfFov = fov / 2;
-
-            for (let i = 0; i < numRays; i++) {
-                let rayAngle = (playerAngle - halfFov) + (i / numRays) * fov;
-                let distance = 0;
-                let hitWall = false;
-                let wallType = 0;
-
-                let cos = Math.cos(rayAngle);
-                let sin = Math.sin(rayAngle);
-
-                while (!hitWall && distance < 400) {
-                    distance += 1.0;
-                    let checkX = Math.floor((playerX + cos * distance) / tileSize);
-                    let checkY = Math.floor((playerY + sin * distance) / tileSize);
-
-                    if (checkX < 0 || checkX >= mapWidth || checkY < 0 || checkY >= mapHeight) {
-                        hitWall = true;
-                        distance = 400;
-                    } else {
-                        let mapIndex = checkY * mapWidth + checkX;
-                        if (map[mapIndex] > 0) {
-                            hitWall = true;
-                            wallType = map[mapIndex];
-                        }
+            function spawnEnemy() {
+                if (enemiesToSpawn > 0) {
+                    spawnTimer++;
+                    if (spawnTimer > 50) {
+                        enemies.push({
+                            pathIndex: 0,
+                            x: path[0].x,
+                            y: path[0].y,
+                            speed: 1.4 + (wave * 0.12),
+                            hp: 20 + (wave * 18),
+                            maxHp: 20 + (wave * 18),
+                            size: 14
+                        });
+                        enemiesToSpawn--;
+                        spawnTimer = 0;
+                    }
+                } else if (enemies.length === 0) {
+                    waveTimer++;
+                    if (waveTimer > 150) {
+                        wave++;
+                        enemiesToSpawn = 5 + wave;
+                        waveTimer = 0;
+                        updateHUD();
                     }
                 }
-
-                let correctedDistance = distance * Math.cos(rayAngle - playerAngle);
-                let wallHeight = Math.min(canvas.height, (tileSize * canvas.height) / correctedDistance);
-                let colorValue = Math.max(0, 255 - (correctedDistance * 0.7));
-                
-                if (wallType === 2) {
-                    ctx.strokeStyle = `rgb(${colorValue}, ${colorValue}, 0)`;
-                } else {
-                    ctx.strokeStyle = `rgb(0, ${colorValue}, ${colorValue})`;
-                }
-
-                ctx.beginPath();
-                ctx.moveTo(i, (canvas.height / 2) - (wallHeight / 2));
-                ctx.lineTo(i, (canvas.height / 2) + (wallHeight / 2));
-                ctx.stroke();
             }
-        }
 
-        function loop() {
-            update();
-            draw();
-            requestAnimationFrame(loop);
-        }
+            function resetGame() {
+                money = 150;
+                hp = 10;
+                wave = 1;
+                gameOver = false;
+                enemies = [];
+                towers = [];
+                projectiles = [];
+                enemiesToSpawn = 5;
+                updateHUD();
+            }
 
-        loop();
-    </script>
-</body>
-</html>
+            function update() {
+                if (gameOver) return;
+
+                spawnEnemy();
+
+                enemies.forEach((enemy, eIndex) => {
+                    const target = path[enemy.pathIndex + 1];
+                    const dx = target.x - enemy.x;
+                    const dy = target.y - enemy.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+
+                    if (dist < enemy.speed) {
+                        enemy.pathIndex++;
+                        if (enemy.pathIndex >= path.length - 1) {
+                            hp--;
+                            enemies.splice(eIndex, 1);
+                            updateHUD();
+                            if (hp <= 0) gameOver = true;
+                            return;
+                        }
+                    } else {
+                        enemy.x += (dx / dist) * enemy.speed;
+                        enemy.y += (dy / dist) * enemy.speed;
+                    }
+                });
+
+                towers.forEach(tower => {
+                    if (tower.cooldown > 0) tower.cooldown--;
+
+                    if (tower.cooldown === 0) {
+                        let target = null;
+                        let bestDist = tower.range;
+
+                        enemies.forEach(enemy => {
+                            const tdx = enemy.x - tower.x;
+                            const tdy = enemy.y - tower.y;
+                            const tdist = Math.sqrt(tdx*tdx + tdy*tdy);
+                            if (tdist < bestDist) {
+                                bestDist = tdist;
+                                target = enemy;
+                            }
+                        });
+
+                        if (target) {
+                            projectiles.push({
+                                x: tower.x,
+                                y: tower.y,
+                                target: target,
+                                speed: 7,
+                                damage: tower.type === 'firewall' ? 12 : 6,
+                                type: tower.type
+                            });
+                            tower.cooldown = tower.maxCooldown;
+                        }
+                    }
+                });
+
+                projectiles.forEach((proj, pIndex) => {
+                    if (!enemies.includes(proj.target)) {
+                        projectiles.splice(pIndex, 1);
+                        return;
+                    }
+
