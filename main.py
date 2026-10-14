@@ -1,22 +1,20 @@
 from flask import Flask, render_template, send_from_directory
 import os
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__)
 
 @app.route('/avatar.png')
 def custom_avatar():
     if os.path.exists('avatar.png'):
         return send_from_directory('.', 'avatar.png')
-    elif os.path.exists('templates/avatar.png'):
-        return send_from_directory('templates', 'avatar.png')
     return send_from_directory('.', 'avatar.png')
 
 @app.route('/')
 def home():
-    # Lädt die Startseite direkt und unzerstörbar
+    # Zwingt den Server, die neue index.html von der Hauptebene zu laden
     if os.path.exists('index.html'):
         return send_from_directory('.', 'index.html')
-    return render_template('index.html')
+    return "Startseite lädt... Bitte aktualisieren!"
 
 @app.route('/spiele-hub')
 def spiele_hub():
