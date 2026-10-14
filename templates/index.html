@@ -19,55 +19,35 @@
             overflow-x: hidden;
         }
 
-        /* DIE ECHTEN, DYNAMISCH FLACKERNDEN BLITZE LINKS UND RECHTS */
-        .cyber-lightning-left, .cyber-lightning-right {
-            position: fixed;
+        /* DIE BLITZE JETZT PERFEKT IM ZENTRUM HINTER DEM INHALT */
+        .cyber-lightning-center {
+            position: absolute;
             top: 0;
-            width: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
             height: 100%;
             background: #00d2ff;
-            opacity: 0.7;
-            z-index: 1;
-            /* Das unregelmäßige, heftige Gewitter-Flackern */
-            animation: lightning-strike 4s infinite linear;
+            opacity: 0.35;
+            z-index: 1; /* Hinter dem Text */
+            box-shadow: 0 0 25px #00d2ff, 0 0 50px #00ffff;
+            animation: lightning-flicker 3s infinite linear;
         }
 
-        .cyber-lightning-left {
-            left: 40px;
-            box-shadow: 0 0 20px #00d2ff, 0 0 40px #00ffff;
-        }
-
-        .cyber-lightning-right {
-            right: 40px;
-            box-shadow: 0 0 20px #00d2ff, 0 0 40px #00ffff;
-        }
-
-        /* Generiert die unregelmäßigen Zacken-Bewegungen und Blitzeinschläge */
-        @keyframes lightning-strike {
-            0%, 12%, 24%, 36%, 100% {
-                opacity: 0.8;
-                transform: skewX(-1deg) scaleX(1);
-                filter: drop-shadow(0 0 15px #00d2ff);
+        /* Gewitter-Effekt: Macht die Blitze dynamisch */
+        @keyframes lightning-flicker {
+            0%, 15%, 30%, 45%, 100% {
+                opacity: 0.35;
+                transform: translateX(-50%) scaleX(1);
             }
-            5%, 15%, 28% {
-                opacity: 0.2;
-                transform: skewX(2deg) scaleX(0.5);
-                filter: drop-shadow(0 0 5px #00c8ff);
+            5%, 20%, 55% {
+                opacity: 0.1;
+                transform: translateX(-50%) scaleX(0.6) skewX(2deg);
             }
-            10%, 30% {
-                opacity: 1;
-                transform: skewX(-3deg) scaleX(1.8);
-                filter: drop-shadow(0 0 35px #00ffff);
-            }
-            50%, 75% {
+            10%, 40% {
                 opacity: 0.6;
-                transform: skewX(1deg) scaleX(0.9);
+                transform: translateX(-50%) scaleX(1.5) skewX(-2deg);
             }
-        }
-
-        @media (max-width: 768px) {
-            .cyber-lightning-left { left: 10px; }
-            .cyber-lightning-right { right: 10px; }
         }
 
         /* Fette Cyber-Navbar oben */
@@ -81,7 +61,7 @@
             box-sizing: border-box;
             border-bottom: 2px solid #1e293b;
             position: relative;
-            z-index: 2;
+            z-index: 2; /* Über den Blitzen */
         }
 
         .logo {
@@ -131,7 +111,7 @@
             padding: 40px 20px;
             box-sizing: border-box;
             position: relative;
-            z-index: 2;
+            z-index: 2; /* Über den Blitzen */
         }
 
         .header-box {
@@ -288,9 +268,8 @@
 </head>
 <body>
 
-    <!-- Die beiden flackernden Cyber-Blitze -->
-    <div class="cyber-lightning-left"></div>
-    <div class="cyber-lightning-right"></div>
+    <!-- Der zentrale Blitz im Hintergrund -->
+    <div class="cyber-lightning-center"></div>
 
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
@@ -331,4 +310,17 @@
             <p>Als erfahrener Community-Moderator sorge ich für ein sicheres, aktives und toxizitätsfreies Umfeld. Meine Kernkompetenzen umfassen:</p>
             <ul>
                 <li><strong>Konfliktmanagement:</strong> Deeskalation bei Streitigkeiten zwischen Usern.</li>
-                <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung der Community-Richtlinien.</li>
+                <li><strong>Regelwerk-Durchsetzung:</strong> Konsequente, aber faire Einhaltung die Community-Richtlinien.</li>
+                <li><strong>Event-Planung:</strong> Organisation von Community-Turnieren und Spiele-Abenden.</li>
+                <li><strong>Bot-Konfiguration:</strong> Einrichtung von Moderations- und Log-Systemen zur Serverabsicherung.</li>
+            </ul>
+        </div>
+
+        <div class="contact-section">
+            <h2>Projektanfragen &amp; Kontakt ✉️</h2>
+            <p style="color: #94a3b8;">Du suchst einen zuverlässigen Moderator für dein Projekt? Melde dich direkt bei mir:</p>
+            
+            <div class="contact-grid">
+                <div class="contact-method">
+                    <span>💬</span> Discord: Steffel_07
+                </div>
