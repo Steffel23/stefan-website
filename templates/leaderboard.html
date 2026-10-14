@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEFAN | Global Leaderboard 🏆</title>
+    <style>
+        @import url('https://googleapis.com');
+
+        body {
+            background-color: #0d0f12;
+            color: #e2e8f0;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Fette Cyber-Navbar oben */
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            box-sizing: border-box;
+            border-bottom: 2px solid #1e293b;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        .hub-btn {
+            background-color: #3b82f6;
+            color: #ffffff !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            transition: transform 0.2s, background-color 0.2s !important;
+        }
+
+        .hub-btn:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* Hauptbereich */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .header-box {
+            background-color: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
+        }
+
+        .header-box h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00d2ff;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+            margin: 0 0 10px 0;
+            font-size: 2.3rem;
+        }
+
+        /* Rangliste Tabelle */
+        .leaderboard-card {
+            background-color: #111827;
+            border: 2px solid #1e293b;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .rank-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.2rem;
+        }
+
+        .rank-table th, .rank-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .rank-table th {
+            font-family: 'Orbitron', sans-serif;
+            color: #3b82f6;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .rank-number {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: #94a3b8;
+        }
+
+        .rank-1 { color: #ffd700; text-shadow: 0 0 10px #ffd700; }
+        .rank-2 { color: #c0c0c0; text-shadow: 0 0 10px #c0c0c0; }
+        .rank-3 { color: #cd7f32; text-shadow: 0 0 10px #cd7f32; }
+
+        .game-tag {
+            background-color: rgba(59, 130, 246, 0.1);
+            border: 1px solid #3b82f6;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: #00d2ff;
+        }
+
+        .time-value {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Die Navbar -->
+    <nav class="navbar">
+        <a href="/" class="logo">✦ STEFAN</a>
+        <div class="nav-links">
+            <a href="/">Startseite</a>
+            <a href="/ueber-mich">Über mich</a>
+            <a href="/regelwerk">Regelwerk</a>
+            <a href="/vorlagen">Vorlagen</a>
+            <a href="/bot-zentrale">Bot-Zentrale</a>
+            <a href="/leaderboard" style="color: #3b82f6;">🏆 Leaderboard</a>
+            <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-box">
+            <h1>GLOBAL ARCADE RANKING</h1>
+            <p style="color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; font-weight: bold;">Wer ist der absolute King of Playtime?</p>
+        </div>
+
+        <div class="leaderboard-card">
+            <table class="rank-table">
+                <thead>
+                    <tr>
+                        <th>Rang</th>
+                        <th>Spiel</th>
+                        <th>Deine Gesamt-Spielzeit</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <!-- Wird automatisch per JavaScript befüllt -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Funktion zum Laden und Anzeigen der Spielzeiten aus dem Browser-Speicher
+        function loadLeaderboard() {
+            // Spielzeiten auslesen (Standardwert 0 Minuten, falls noch nicht gezockt wurde)
+            const games = [
+                { name: "Cyber Rocket 🕹️", time: parseFloat(localStorage.getItem('time_cyber_rocket')) || 0 },
+                { name: "Space Shooter 🛸", time: parseFloat(localStorage.getItem('time_space_shooter')) || 0 },
+                { name: "Turbo Racer 🏎️", time: parseFloat(localStorage.getItem('time_turbo_racer')) || 0 },
+                { name: "Infinite Jump 🦘", time: parseFloat(localStorage.getItem('time_infinite_jump')) || 0 }
+            ];
+
+            // Sortieren: Das am meisten gespielte Spiel kommt ganz nach oben
+            games.sort((a, b) => b.time - a.time);
+
+            const tbody = document.getElementById('leaderboard-body');
+            tbody.innerHTML = "";
+
+            games.forEach((game, index) => {
+                const tr = document.createElement('tr');
+                
+                // Medaillen-Klassen für die Top 3 vergeben
+                let rankClass = "rank-number";
+                if (index === 0) rankClass += " rank-1";
+                if (index === 1) rankClass += " rank-2";
+                if (index === 2) rankClass += " rank-3";
+
+                // Formatierung der Zeitanzeige
+                let timeString = game.time.toFixed(1) + " Min.";
+                if (game.time === 0) {
+                    timeString = "Noch ungespielt 💤";
+                }
+
+                tr.innerHTML = `
+                    <td class="${rankClass}">#${index + 1}</td>
+                    <td><span class="game-tag">${game.name}</span></td>
+                    <td class="time-value">${timeString}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Rangliste beim Laden der Seite direkt aufrufen
+        loadLeaderboard();
+    </script>
+</body>
+</html>
