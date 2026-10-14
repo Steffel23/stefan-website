@@ -19,24 +19,15 @@
             overflow-x: hidden;
         }
 
-        /* Die permanenten, cleanen blauen Neon-Blitze an den Seiten */
-        body::before, body::after {
-            content: "";
+        /* Der Hintergrund-Kasten für die echten Blitze */
+        #lightning-canvas {
             position: fixed;
             top: 0;
-            width: 4px;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background: #00d2ff;
-            box-shadow: 0 0 15px #00d2ff, 0 0 30px #00c8ff, 0 0 45px #00ffff;
-            opacity: 0.8;
+            pointer-events: none;
             z-index: 1;
-        }
-        body::before { left: 40px; }
-        body::after { right: 40px; }
-
-        @media (max-width: 768px) {
-            body::before { left: 10px; }
-            body::after { right: 10px; }
         }
 
         /* Fette Cyber-Navbar oben */
@@ -104,19 +95,21 @@
         }
 
         .header-box {
-            background-color: rgba(30, 41, 59, 0.7);
+            background-color: rgba(30, 41, 59, 0.75);
             border: 2px solid #00d2ff;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
             text-align: center;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2), inset 0 0 15px rgba(0, 210, 255, 0.05);
+            backdrop-filter: blur(5px);
         }
 
         .header-box h1 {
             color: #ffffff;
             margin: 0 0 10px 0;
             font-size: 2.3rem;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
         }
 
         .header-box p {
@@ -136,17 +129,19 @@
         }
 
         .stat-card {
-            background-color: rgba(17, 24, 39, 0.8);
+            background-color: rgba(17, 24, 39, 0.85);
             border: 2px solid #1e293b;
             border-radius: 12px;
             padding: 25px;
             text-align: center;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
         }
 
         .stat-card:hover {
             border-color: #00d2ff;
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.15);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         .stat-number {
@@ -154,6 +149,7 @@
             font-weight: 800;
             color: #00d2ff;
             margin-bottom: 5px;
+            text-shadow: 0 0 8px rgba(0, 210, 255, 0.3);
         }
 
         .stat-title {
@@ -171,11 +167,12 @@
 
         /* Job-Beschreibung */
         .info-section {
-            background-color: rgba(30, 41, 59, 0.7);
+            background-color: rgba(30, 41, 59, 0.75);
             border: 2px solid #1e293b;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
+            backdrop-filter: blur(5px);
         }
 
         .info-section h2 {
@@ -193,12 +190,13 @@
 
         /* Feste Kontakt-Zentrale */
         .contact-section {
-            background-color: rgba(30, 41, 59, 0.7);
+            background-color: rgba(30, 41, 59, 0.75);
             border: 2px solid #1e293b;
             border-radius: 16px;
             padding: 30px;
             margin-bottom: 40px;
             text-align: center;
+            backdrop-filter: blur(5px);
         }
 
         .contact-section h2 {
@@ -255,6 +253,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Leinwand für die echten, unregelmäßigen Blitze -->
+    <canvas id="lightning-canvas"></canvas>
 
     <nav class="navbar">
         <a href="/" class="logo">✦ STEFAN</a>
@@ -321,5 +322,3 @@
         </div>
     </div>
 
-</body>
-</html>
