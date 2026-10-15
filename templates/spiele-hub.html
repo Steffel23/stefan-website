@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STEFANS SPIELE</title>
+    <!-- Das hier lädt deine coolen Icons, das darf nicht fehlen -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         body { background-color: #050811; color: white; font-family: 'Arial', sans-serif; margin: 0; padding: 0; }
         .title-box { text-align: center; margin: 50px auto; padding: 20px; border: 3px solid #00d2ff; box-shadow: 0 0 20px #00d2ff; width: fit-content; border-radius: 10px; }
         .title-box h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: 2px; color: #00d2ff; text-shadow: 0 0 12px rgba(0, 210, 255, 0.6); }
         .title-box p { margin: 5px 0 0; color: #64a3b8; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; }
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto 60px auto; position: relative; z-index: 2; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto 60px auto; position: relative; z-index: 2; padding: 0 20px; }
         .game-card { background-color: #111625; border: 2px solid #1a243c; border-radius: 10px; padding: 40px 20px; text-decoration: none; color: #ffffff; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .game-card:hover { transform: translateY(-8px); border-color: #00d2ff; box-shadow: 0 12px 25px rgba(0, 210, 255, 0.3); }
-        .game-icon { font-size: 3rem; transition: transform 0.2s; }
+        .game-icon { font-size: 3rem; color: #00d2ff; transition: transform 0.2s; text-shadow: 0 0 10px rgba(0, 210, 255, 0.5); }
         .game-card:hover .game-icon { transform: scale(1.1); }
-        .game-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 0.5px; margin-top: 15px; }
+        .game-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 0.5px; margin-top: 15px; text-transform: uppercase; }
         .back-btn { display: inline-block; margin-top: 20px; background-color: #1c293b; color: #00d2ff; border: 2px solid #00d2ff; font-family: 'Orbitron', sans-serif; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-weight: 700; letter-spacing: 1px; transition: all 0.2s; text-align: center; }
         .back-btn:hover { background-color: #00d2ff; color: #0b0e14; box-shadow: 0 0 25px rgba(0, 210, 255, 0.5); transform: scale(1.03); }
     </style>
@@ -27,29 +29,30 @@
     </div>
 
     <div class="games-grid">
+        <!-- Alle originalen Icons wieder repariert -->
         <a href="/labyrinth" class="game-card">
-            <span class="game-icon">🕹</span>
+            <i class="fas fa-gamepad game-icon"></i>
             <span class="game-title">Cyber Rocket</span>
         </a>
 
         <a href="/shooter" class="game-card">
-            <span class="game-icon">🚀</span>
+            <i class="fas fa-rocket game-icon"></i>
             <span class="game-title">Space Shooter</span>
         </a>
 
         <a href="/racing" class="game-card">
-            <span class="game-icon">🏎</span>
+            <i class="fas fa-car game-icon"></i>
             <span class="game-title">Turbo Racer</span>
         </a>
 
         <a href="/jump" class="game-card">
-            <span class="game-icon">🐫</span>
+            <i class="fas fa-arrow-up game-icon"></i>
             <span class="game-title">Infinite Jump</span>
         </a>
 
-        <!-- HIER IST DER LINK JETZT OPTIMIERT AUF /frosch -->
+        <!-- Deine neue Frosch-Karte im exakt gleichen Look -->
         <a href="/frosch" class="game-card">
-            <span class="game-icon">🐸</span>
+            <i class="fas fa-bullseye game-icon"></i>
             <span class="game-title">Frog Catcher</span>
         </a>
     </div>
