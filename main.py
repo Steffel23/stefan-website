@@ -1,7 +1,7 @@
 from flask import Flask, render_template, send_from_directory
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 @app.route('/avatar.png')
 def custom_avatar():
@@ -13,8 +13,12 @@ def custom_avatar():
 
 @app.route('/')
 def home():
-    # Lädt die Startseite sauber aus dem templates-Ordner
-    return render_template('index.html')
+    # ULTIMATIVER FIX: Sucht die index.html überall, damit nie wieder ein Fehler kommt!
+    if os.path.exists('templates/index.html'):
+        return render_template('index.html')
+    elif os.path.exists('index.html'):
+        return send_from_directory('.', 'index.html')
+    return "Startseite nicht gefunden! Bitte stelle sicher, dass eine index.html existiert."
 
 @app.route('/spiele-hub')
 def spiele_hub():
