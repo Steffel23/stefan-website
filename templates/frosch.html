@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>STEFANS SPIELE - Snake</title>
+    <title>STEFANS SPIELE - Frog Catcher</title>
     <style>
         body {
             background-color: #030811;
@@ -12,7 +12,6 @@
             text-align: center;
             margin: 0;
             padding: 10px;
-            /* Verhindert ungewolltes Scrollen und Wackeln auf Handys */
             touch-action: none;
             overflow: hidden;
         }
@@ -69,170 +68,188 @@
 </head>
 <body>
 
-    <h1>Retro Snake</h1>
-    <div class="score-board">Punkte: <span id="score">0</span></div>
+    <h1>Frog Catcher</h1>
+    <div class="score-board">Punkte: <span id="score">0</span> | Leben: <span id="lives">3</span></div>
 
     <div id="game-container">
-        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+        <canvas id="frogCanvas" width="400" height="400"></canvas>
     </div>
     
-    <div class="hint-text">Steuerung: WASD / Pfeiltasten am PC & Wischen am Handy</div>
-
-    <!-- Wichtig: Hier ist direkt der richtige Link zum Spielehub eingebaut -->
+    <div class="hint-text">Steuerung: A / D oder Pfeiltasten am PC | Links/Rechts tippen am Handy</div>
     <a href="/spiele-hub" class="back-btn">Zurück zum Spielehub</a>
 
     <script>
-        const canvas = document.getElementById("snakeCanvas");
+        const canvas = document.getElementById("frogCanvas");
         const ctx = canvas.getContext("2d");
         const scoreElement = document.getElementById("score");
+        const livesElement = document.getElementById("lives");
 
-        const grid = 20;
-        let count = 0;
         let score = 0;
-        
-        let snake = {
-            x: 160,
-            y: 160,
-            dx: grid,
-            dy: 0,
-            cells: [{x: 160, y: 160}, {x: 140, y: 160}],
-            maxCells: 4
+        let lives = 3;
+        let gameOver = false;
+
+        // Frosch (Spieler) Eigenschaften
+        const frog = {
+            width: 50,
+            height: 30,
+            x: 175,
+            y: 350,
+            speed: 7,
+            dx: 0
         };
 
-        let apple = { x: 320, y: 320 };
+        // Fliegen (Ziele) Array
+        let flies = [];
+        const flySpeed = 3;
 
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
+        function spawnFly() {
+            if (gameOver) return;
+            const x = Math.random() * (canvas.width - 20) + 10;
+            flies.push({ x: x, y: 0, radius: 8 });
+            // Zufälliges nächstes Spawn-Intervall
+            setTimeout(spawnFly, Math.random() * 1000 + 800);
         }
 
         function resetGame() {
-            snake.x = 160;
-            snake.y = 160;
-            snake.cells = [{x: 160, y: 160}, {x: 140, y: 160}];
-            snake.maxCells = 4;
-            snake.dx = grid;
-            snake.dy = 0;
             score = 0;
+            lives = 3;
+            gameOver = false;
+            flies = [];
+            frog.x = 175;
             scoreElement.textContent = score;
-            apple.x = getRandomInt(0, 20) * grid;
-            apple.y = getRandomInt(0, 20) * grid;
+            livesElement.textContent = lives;
         }
 
-        function loop() {
-            requestAnimationFrame(loop);
-
-            if (++count < 6) { return; }
-            count = 0;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            snake.x += snake.dx;
-            snake.y += snake.dy;
-
-            if (snake.x < 0 || snake.x >= canvas.width || snake.y < 0 || snake.y >= canvas.height) {
-                resetGame();
-            }
-
-            snake.cells.unshift({x: snake.x, y: snake.y});
-
-            if (snake.cells.length > snake.maxCells) {
-                snake.cells.pop();
-            }
-
-            ctx.fillStyle = '#ff4a4a';
-            ctx.fillRect(apple.x, apple.y, grid - 1, grid - 1);
-
-            ctx.fillStyle = '#00D2FF';
-            snake.cells.forEach(function(cell, index) {
-                ctx.fillRect(cell.x, cell.y, grid - 1, grid - 1);
-
-                if (cell.x === apple.x && cell.y === apple.y) {
-                    snake.maxCells++;
-                    score += 10;
-                    scoreElement.textContent = score;
-                    apple.x = getRandomInt(0, 20) * grid;
-                    apple.y = getRandomInt(0, 20) * grid;
-                }
-
-                for (let i = index + 1; i < snake.cells.length; i++) {
-                    if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-                        resetGame();
-                    }
-                }
-            });
-        }
-
-        // ==========================================
-        // 1. PC STEUERUNG (Pfeiltasten & WASD)
-        // ==========================================
+        // Tastensteuerung (PC)
         document.addEventListener('keydown', function(e) {
             const key = e.key.toLowerCase();
-            
-            // Links (Pfeiltaste Links oder A)
-            if ((e.which === 37 || key === 'a') && snake.dx === 0) {
-                snake.dx = -grid; snake.dy = 0;
-            } 
-            // Hoch (Pfeiltaste Hoch oder W)
-            else if ((e.which === 38 || key === 'w') && snake.dy === 0) {
-                snake.dy = -grid; snake.dx = 0;
-            } 
-            // Rechts (Pfeiltaste Rechts oder D)
-            else if ((e.which === 39 || key === 'd') && snake.dx === 0) {
-                snake.dx = grid; snake.dy = 0;
-            } 
-            // Runter (Pfeiltaste Runter oder S)
-            else if ((e.which === 40 || key === 's') && snake.dy === 0) {
-                snake.dy = grid; snake.dx = 0;
+            if (key === 'a' || e.keyCode === 37) frog.dx = -frog.speed;
+            if (key === 'd' || e.keyCode === 39) frog.dx = frog.speed;
+            if (gameOver && e.keyCode === 32) resetGame(); // Leertaste für Neustart
+        });
+
+        document.addEventListener('keyup', function(e) {
+            const key = e.key.toLowerCase();
+            if (key === 'a' || e.keyCode === 37 || key === 'd' || e.keyCode === 39) {
+                frog.dx = 0;
             }
         });
 
-        // ==========================================
-        // 2. HANDY STEUERUNG (Wischgesten / Swipe)
-        // ==========================================
-        let touchstartX = 0;
-        let touchstartY = 0;
-        let touchendX = 0;
-        let touchendY = 0;
+        // Touchsteuerung (Handy)
+        canvas.addEventListener('touchstart', function(e) {
+            if (gameOver) {
+                resetGame();
+                return;
+            }
+            const rect = canvas.getBoundingClientRect();
+            const touchX = e.touches[0].clientX - rect.left;
+            const canvasWidthRelative = rect.width;
 
-        document.addEventListener('touchstart', function(e) {
-            touchstartX = e.changedTouches[0].screenX;
-            touchstartY = e.changedTouches[0].screenY;
-        }, {passive: false});
-
-        document.addEventListener('touchmove', function(e) {
-            // Verhindert das Scrollen der Seite während man wischt
-            e.preventDefault(); 
-        }, {passive: false});
-
-        document.addEventListener('touchend', function(e) {
-            touchendX = e.changedTouches[0].screenX;
-            touchendY = e.changedTouches[0].screenY;
-            handleSwipe();
-        }, {passive: false});
-
-        function handleSwipe() {
-            const xDiff = touchendX - touchstartX;
-            const yDiff = touchendY - touchstartY;
-            
-            // Überprüfen, ob horizontaler oder vertikaler Swipe stärker war
-            if (Math.abs(xDiff) > Math.abs(yDiff)) {
-                // Horizontaler Swipe
-                if (xDiff > 30 && snake.dx === 0) { // Rechts geswiped
-                    snake.dx = grid; snake.dy = 0;
-                } else if (xDiff < -30 && snake.dx === 0) { // Links geswiped
-                    snake.dx = -grid; snake.dy = 0;
-                }
+            // Wenn in der linken Hälfte getippt wird -> nach links, sonst rechts
+            if (touchX < canvasWidthRelative / 2) {
+                frog.dx = -frog.speed;
             } else {
-                // Vertikaler Swipe
-                if (yDiff > 30 && snake.dy === 0) { // Runter geswiped
-                    snake.dx = 0; snake.dy = grid;
-                } else if (yDiff < -30 && snake.dy === 0) { // Hoch geswiped
-                    snake.dx = 0; snake.dy = -grid;
+                frog.dx = frog.speed;
+            }
+        }, {passive: true});
+
+        canvas.addEventListener('touchend', function() {
+            frog.dx = 0;
+        }, {passive: true});
+
+        function update() {
+            if (!gameOver) {
+                // Frosch bewegen
+                frog.x += frog.dx;
+
+                // Grenzen einhalten
+                if (frog.x < 0) frog.x = 0;
+                if (frog.x + frog.width > canvas.width) frog.x = canvas.width - frog.width;
+
+                // Fliegen bewegen und prüfen
+                for (let i = flies.length - 1; i >= 0; i--) {
+                    flies[i].y += flySpeed;
+
+                    // Kollision mit Frosch (Kopfbereich des Frosches)
+                    if (flies[i].x > frog.x && 
+                        flies[i].x < frog.x + frog.width && 
+                        flies[i].y + flies[i].radius > frog.y && 
+                        flies[i].y - flies[i].radius < frog.y + frog.height) {
+                        
+                        flies.splice(i, 1);
+                        score += 10;
+                        scoreElement.textContent = score;
+                        continue;
+                    }
+
+                    // Boden berührt (Fliege entkommen)
+                    if (flies[i].y > canvas.height) {
+                        flies.splice(i, 1);
+                        lives--;
+                        livesElement.textContent = lives;
+
+                        if (lives <= 0) {
+                            gameOver = true;
+                        }
+                    }
                 }
             }
         }
 
-        requestAnimationFrame(loop);
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (gameOver) {
+                ctx.fillStyle = '#ff4a4a';
+                ctx.font = '30px Orbitron, sans-serif';
+                ctx.fillText("GAME OVER", 110, 180);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '16px Arial';
+                ctx.fillText("Tippe oder drücke Leertaste zum Neustart", 60, 220);
+                return;
+            }
+
+            // Fliegen zeichnen (als kleine goldene Kreise/Glühwürmchen)
+            ctx.fillStyle = '#FFD700';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#FFD700';
+            flies.forEach(fly => {
+                ctx.beginPath();
+                ctx.arc(fly.x, fly.y, fly.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.shadowBlur = 0; // Shadow-Reset
+
+            // Frosch zeichnen (Neon-Grün)
+            ctx.fillStyle = '#00FF66';
+            // Körper
+            ctx.beginPath();
+            ctx.ellipse(frog.x + 25, frog.y + 15, 25, 15, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Augen
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(frog.x + 15, frog.y + 5, 6, 0, Math.PI * 2);
+            ctx.arc(frog.x + 35, frog.y + 5, 6, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#030811';
+            ctx.beginPath();
+            ctx.arc(frog.x + 15, frog.y + 5, 3, 0, Math.PI * 2);
+            ctx.arc(frog.x + 35, frog.y + 5, 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Spiel starten
+        spawnFly();
+        gameLoop();
     </script>
 </body>
 </html>
