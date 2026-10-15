@@ -50,7 +50,7 @@
             text-decoration: none; 
             font-weight: 600; 
             font-size: 1.1rem; 
- transition: color 0.2s; 
+            transition: color 0.2s; 
         }
         
         .nav-links a:hover { 
@@ -110,21 +110,6 @@
             text-align: left; 
             margin-bottom: 40px; 
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
-            display: flex; 
-            gap: 35px; 
-            align-items: center; 
-        }
-        
-        /* Das freistehende Bild ALS ROBUSTER INLINE-BASE64-DATA-FLOW */
-        .avatar-img-clean { 
-            width: 150px; 
-            height: 150px; 
-            min-width: 150px; 
-            border-radius: 12px; 
-            object-fit: cover; 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            border: none !important;
-            outline: none !important;
         }
         
         .bio-text h2 { 
@@ -199,7 +184,7 @@
             border-radius: 10px; 
             font-weight: 700; 
             letter-spacing: 1px; 
- transition: all 0.2s; 
+            transition: all 0.2s; 
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); 
             margin-bottom: 40px; 
         }
@@ -209,10 +194,6 @@
             color: #0b0e14; 
             box-shadow: 0 0 25px rgba(0, 210, 255, 0.5); 
             transform: scale(1.03); 
-        }
-        
-        @media (max-width: 768px) { 
-            .bio-box { flex-direction: column; text-align: center; } 
         }
     </style>
 </head>
@@ -236,9 +217,8 @@
             <p>Die Person hinter dem Community Management</p>
         </div>
 
+        <!-- BILD UND KASTEN SIND JETZT VOLLSTÄNDIG ENTFERNT -->
         <div class="bio-box">
-            <!-- UNZERSTÖRBAR: Das blonde Minecraft-Icon komplett als Inline-Bild ohne Rahmen eingebunden -->
-            <img src="https://nano-banana.com" alt="Stefan Avatar" class="avatar-img-clean" style="border:none; outline:none;">
             <div class="bio-text">
                 <h2>Moin, ich bin Stefan!</h2>
                 <p>Ich bin 16 Jahre alt und leite leidenschaftlich professionelle Online-Communitys und Discord-Infrastrukturen. Neben der technischen Absicherung von High-End-Servern zeichne ich mich vor allem durch echten Teamgeist, absolute Zuverlässigkeit und sportliche Disziplin aus.</p>
@@ -267,7 +247,7 @@
             <div class="char-card">
                 <span class="char-icon">⚡</span>
                 <div class="char-title">Krisenmanagement 24/7</div>
-                <div class="char-desc">Egal ob Server-Raids, Server-Crashes oder Support-Staus – ich bleibe im Stress absolut ruhig und löse Probleme **strukturiert und blitzschnell**.</div>
+                <div class="char-desc">Egal ob Server-Raids, Server-Crashes oder Support-Staus – ich bleibe im Stress absolut ruhig und löse Probleme <strong>strukturiert und blitzschnell</strong>.</div>
             </div>
 
             <div class="char-card">
@@ -279,9 +259,13 @@
             <div class="char-card">
                 <span class="char-icon">⚽</span>
                 <div class="char-title">Sportliche Disziplin</div>
-                <div class="char-desc">Regelmäßiges Training hält mich fokussiert. Diese **Disziplin** und das Durchhaltevermögen bringe ich vom Sport direkt in mein Management ein.</div>
+                <div class="char-desc">Regelmäßiges Training hält mich fokussiert. Diese <strong>Disziplin</strong> und das Durchhaltevermögen bringe ich vom Sport direkt in mein Management ein.</div>
             </div>
         </div>
 
         <br>
         <a href="/" class="back-btn">⬅️ Zurück zur Hauptseite</a>
+    </div>
+
+</body>
+</html>
