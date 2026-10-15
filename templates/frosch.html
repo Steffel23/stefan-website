@@ -2,152 +2,237 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frog Catcher! 🐸</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>STEFANS SPIELE - Snake</title>
     <style>
         body {
+            background-color: #030811;
+            color: white;
             font-family: 'Arial', sans-serif;
             text-align: center;
-            background-color: #050811;
-            color: white;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
+            /* Verhindert ungewolltes Scrollen und Wackeln auf Handys */
+            touch-action: none;
+            overflow: hidden;
         }
-        h1 { color: #00d2ff; text-shadow: 0 0 10px rgba(0, 210, 255, 0.5); }
-        .stats {
-            font-size: 24px;
-            margin: 20px;
-            color: #64a3b8;
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00D2FF;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+            margin: 10px 0;
+            font-size: 1.8rem;
         }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 120px);
-            grid-gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
+        .score-board {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #8f9db1;
         }
-        .box {
-            width: 120px;
-            height: 120px;
-            background-color: #111625;
-            border: 2px solid #1a243c;
-            border-radius: 15px;
-            font-size: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.1s;
+        #game-container {
+            margin: 10px auto;
+            position: relative;
+            max-width: 90vw;
+            width: 400px;
         }
-        .box:active { background-color: #1c293b; border-color: #00d2ff; }
-        button {
-            padding: 12px 24px;
-            font-size: 18px;
-            background-color: #1c293b;
-            color: #00d2ff;
-            border: 2px solid #00d2ff;
+        canvas {
+            background-color: #111a2d;
+            border: 2px solid #00D2FF;
             border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-weight: bold;
-            transition: all 0.2s;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+            display: block;
+            width: 100%;
+            height: auto;
         }
-        button:hover { background-color: #00d2ff; color: #0b0e14; box-shadow: 0 0 15px #00d2ff; }
-        button:disabled { background-color: #111625; border-color: #1a243c; color: #444; cursor: not-allowed; box-shadow: none; }
-        .back-link {
+        .hint-text {
+            font-size: 0.9rem;
+            color: #576574;
+            margin-top: 5px;
+        }
+        .back-btn {
             display: inline-block;
-            margin-top: 30px;
-            color: #00d2ff;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #111a2d;
+            color: #00D2FF;
+            border: 2px solid #00D2FF;
+            border-radius: 5px;
             text-decoration: none;
+            transition: all 0.3s ease;
             font-weight: bold;
+        }
+        .back-btn:hover {
+            background-color: #00D2FF;
+            color: #111a2d;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
         }
     </style>
 </head>
 <body>
 
-    <h1>Frog Catcher! 🐸</h1>
+    <h1>Retro Snake</h1>
+    <div class="score-board">Punkte: <span id="score">0</span></div>
+
+    <div id="game-container">
+        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+    </div>
     
-    <div class="stats">
-        <span>Punkte: <strong id="score" style="color: #00d2ff;">0</strong></span> | 
-        <span>Zeit: <strong id="time" style="color: #00d2ff;">15</strong>s</span>
-    </div>
+    <div class="hint-text">Steuerung: WASD / Pfeiltasten am PC & Wischen am Handy</div>
 
-    <button id="start-btn" onclick="startGame()">Spiel starten</button>
-
-    <div class="grid">
-        <div class="box" id="1" onclick="catchFrog(1)"></div>
-        <div class="box" id="2" onclick="catchFrog(2)"></div>
-        <div class="box" id="3" onclick="catchFrog(3)"></div>
-        <div class="box" id="4" onclick="catchFrog(4)"></div>
-        <div class="box" id="5" onclick="catchFrog(5)"></div>
-        <div class="box" id="6" onclick="catchFrog(6)"></div>
-        <div class="box" id="7" onclick="catchFrog(7)"></div>
-        <div class="box" id="8" onclick="catchFrog(8)"></div>
-        <div class="box" id="9" onclick="catchFrog(9)"></div>
-    </div>
-
-    <br>
-    <a href="/spiele-hub" class="back-link">⬅ Zurück zum Spiele-Hub</a>
+    <!-- Wichtig: Hier ist direkt der richtige Link zum Spielehub eingebaut -->
+    <a href="/spiele-hub" class="back-btn">Zurück zum Spielehub</a>
 
     <script>
+        const canvas = document.getElementById("snakeCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreElement = document.getElementById("score");
+
+        const grid = 20;
+        let count = 0;
         let score = 0;
-        let timeLeft = 15;
-        let frogPosition = null;
-        let gameInterval;
-        let frogInterval;
+        
+        let snake = {
+            x: 160,
+            y: 160,
+            dx: grid,
+            dy: 0,
+            cells: [{x: 160, y: 160}, {x: 140, y: 160}],
+            maxCells: 4
+        };
 
-        function startGame() {
+        let apple = { x: 320, y: 320 };
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function resetGame() {
+            snake.x = 160;
+            snake.y = 160;
+            snake.cells = [{x: 160, y: 160}, {x: 140, y: 160}];
+            snake.maxCells = 4;
+            snake.dx = grid;
+            snake.dy = 0;
             score = 0;
-            timeLeft = 15;
-            document.getElementById("score").innerText = score;
-            document.getElementById("time").innerText = timeLeft;
-            document.getElementById("start-btn").disabled = true;
+            scoreElement.textContent = score;
+            apple.x = getRandomInt(0, 20) * grid;
+            apple.y = getRandomInt(0, 20) * grid;
+        }
 
-            clearGrid();
+        function loop() {
+            requestAnimationFrame(loop);
 
-            gameInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById("time").innerText = timeLeft;
+            if (++count < 6) { return; }
+            count = 0;
 
-                if (timeLeft <= 0) {
-                    clearInterval(gameInterval);
-                    clearInterval(frogInterval);
-                    clearGrid();
-                    alert("Zeit abgelaufen! Deine Punkte: " + score);
-                    document.getElementById("start-btn").disabled = false;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            snake.x += snake.dx;
+            snake.y += snake.dy;
+
+            if (snake.x < 0 || snake.x >= canvas.width || snake.y < 0 || snake.y >= canvas.height) {
+                resetGame();
+            }
+
+            snake.cells.unshift({x: snake.x, y: snake.y});
+
+            if (snake.cells.length > snake.maxCells) {
+                snake.cells.pop();
+            }
+
+            ctx.fillStyle = '#ff4a4a';
+            ctx.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+
+            ctx.fillStyle = '#00D2FF';
+            snake.cells.forEach(function(cell, index) {
+                ctx.fillRect(cell.x, cell.y, grid - 1, grid - 1);
+
+                if (cell.x === apple.x && cell.y === apple.y) {
+                    snake.maxCells++;
+                    score += 10;
+                    scoreElement.textContent = score;
+                    apple.x = getRandomInt(0, 20) * grid;
+                    apple.y = getRandomInt(0, 20) * grid;
                 }
-            }, 1000);
 
-            moveFrog();
-            frogInterval = setInterval(moveFrog, 800);
+                for (let i = index + 1; i < snake.cells.length; i++) {
+                    if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+                        resetGame();
+                    }
+                }
+            });
         }
 
-        function moveFrog() {
-            clearGrid();
-            let randomId = Math.floor(Math.random() * 9) + 1;
-            let targetBox = document.getElementById(randomId);
-            if (targetBox) {
-                targetBox.innerText = "🐸";
-                frogPosition = randomId;
+        // ==========================================
+        // 1. PC STEUERUNG (Pfeiltasten & WASD)
+        // ==========================================
+        document.addEventListener('keydown', function(e) {
+            const key = e.key.toLowerCase();
+            
+            // Links (Pfeiltaste Links oder A)
+            if ((e.which === 37 || key === 'a') && snake.dx === 0) {
+                snake.dx = -grid; snake.dy = 0;
+            } 
+            // Hoch (Pfeiltaste Hoch oder W)
+            else if ((e.which === 38 || key === 'w') && snake.dy === 0) {
+                snake.dy = -grid; snake.dx = 0;
+            } 
+            // Rechts (Pfeiltaste Rechts oder D)
+            else if ((e.which === 39 || key === 'd') && snake.dx === 0) {
+                snake.dx = grid; snake.dy = 0;
+            } 
+            // Runter (Pfeiltaste Runter oder S)
+            else if ((e.which === 40 || key === 's') && snake.dy === 0) {
+                snake.dy = grid; snake.dx = 0;
+            }
+        });
+
+        // ==========================================
+        // 2. HANDY STEUERUNG (Wischgesten / Swipe)
+        // ==========================================
+        let touchstartX = 0;
+        let touchstartY = 0;
+        let touchendX = 0;
+        let touchendY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchstartX = e.changedTouches[0].screenX;
+            touchstartY = e.changedTouches[0].screenY;
+        }, {passive: false});
+
+        document.addEventListener('touchmove', function(e) {
+            // Verhindert das Scrollen der Seite während man wischt
+            e.preventDefault(); 
+        }, {passive: false});
+
+        document.addEventListener('touchend', function(e) {
+            touchendX = e.changedTouches[0].screenX;
+            touchendY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, {passive: false});
+
+        function handleSwipe() {
+            const xDiff = touchendX - touchstartX;
+            const yDiff = touchendY - touchstartY;
+            
+            // Überprüfen, ob horizontaler oder vertikaler Swipe stärker war
+            if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                // Horizontaler Swipe
+                if (xDiff > 30 && snake.dx === 0) { // Rechts geswiped
+                    snake.dx = grid; snake.dy = 0;
+                } else if (xDiff < -30 && snake.dx === 0) { // Links geswiped
+                    snake.dx = -grid; snake.dy = 0;
+                }
+            } else {
+                // Vertikaler Swipe
+                if (yDiff > 30 && snake.dy === 0) { // Runter geswiped
+                    snake.dx = 0; snake.dy = grid;
+                } else if (yDiff < -30 && snake.dy === 0) { // Hoch geswiped
+                    snake.dx = 0; snake.dy = -grid;
+                }
             }
         }
 
-        function clearGrid() {
-            for (let i = 1; i <= 9; i++) {
-                let box = document.getElementById(i);
-                if (box) box.innerText = "";
-            }
-        }
-
-        function catchFrog(clickedId) {
-            if (timeLeft > 0 && clickedId === frogPosition) {
-                score++;
-                document.getElementById("score").innerText = score;
-                document.getElementById(clickedId).innerText = "";
-                frogPosition = null; 
-            }
-        }
+        requestAnimationFrame(loop);
     </script>
 </body>
 </html>
