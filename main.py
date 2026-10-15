@@ -67,6 +67,9 @@ def shooter():
 @app.route('/tictactoe')
 def tictactoe():
     return render_template('tictactoe.html')
+@app.route('/snake')
+def snake():
+    return render_template('snake.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000, debug=True)
