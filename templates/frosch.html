@@ -1,0 +1,63 @@
+let score = 0;
+let timeLeft = 15;
+let frogPosition = null;
+let gameInterval;
+let frogInterval;
+
+function startGame() {
+    // Reset für ein neues Spiel
+    score = 0;
+    timeLeft = 15;
+    document.getElementById("score").innerText = score;
+    document.getElementById("time").innerText = timeLeft;
+    document.getElementById("start-btn").disabled = true;
+
+    // Alle alten Frösche löschen
+    clearGrid();
+
+    // Timer startet (jede Sekunde ein abgezogener Wert)
+    gameInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById("time").innerText = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(gameInterval);
+            clearInterval(frogInterval);
+            clearGrid();
+            alert("Zeit abgelaufen! Deine Punkte: " + score);
+            document.getElementById("start-btn").disabled = false;
+        }
+    }, 1000);
+
+    // Der Frosch springt alle 800 Millisekunden in eine neue Box
+    moveFrog();
+    frogInterval = setInterval(moveFrog, 800);
+}
+
+function moveFrog() {
+    clearGrid();
+    
+    // Zufällige Box zwischen 1 und 9 auswählen
+    let randomId = Math.floor(Math.random() * 9) + 1;
+    let targetBox = document.getElementById(randomId);
+    
+    targetBox.innerText = "🐸";
+    frogPosition = randomId;
+}
+
+function clearGrid() {
+    for (let i = 1; i <= 9; i++) {
+        document.getElementById(i).innerText = "";
+    }
+}
+
+function catchFrog(clickedId) {
+    // Wenn das Spiel läuft und man die richtige Box erwischt
+    if (timeLeft > 0 && clickedId === frogPosition) {
+        score++;
+        document.getElementById("score").innerText = score;
+        // Frosch verschwindet sofort nach dem Treffer
+        document.getElementById(clickedId).innerText = "";
+        frogPosition = null; 
+    }
+}
