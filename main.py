@@ -50,5 +50,10 @@ def racing():
 def shooter():
     return render_template('shooter.html')
 
+# HIER IST DEINE NEUE ROUTE FÜR DAS FROSCH-SPIEL!
+@app.route('/frosch')
+def frosch():
+    return render_template('frosch.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000, debug=True)
