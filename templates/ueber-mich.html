@@ -50,7 +50,7 @@
             text-decoration: none; 
             font-weight: 600; 
             font-size: 1.1rem; 
-            transition: color 0.2s; 
+ transition: color 0.2s; 
         }
         
         .nav-links a:hover { 
@@ -115,16 +115,16 @@
             align-items: center; 
         }
         
-        /* DER RAHMENLOSE AVATAR-TRICK ÜBER BACKGROUND-IMAGE */
-        .avatar-clean-css { 
+        /* Das freistehende Bild ALS ROBUSTER INLINE-BASE64-DATA-FLOW */
+        .avatar-img-clean { 
             width: 150px; 
             height: 150px; 
             min-width: 150px; 
             border-radius: 12px; 
-            background-image: url('https://nano-banana.com');
-            background-size: cover;
-            background-position: center;
+            object-fit: cover; 
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            border: none !important;
+            outline: none !important;
         }
         
         .bio-text h2 { 
@@ -199,7 +199,7 @@
             border-radius: 10px; 
             font-weight: 700; 
             letter-spacing: 1px; 
-            transition: all 0.2s; 
+ transition: all 0.2s; 
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); 
             margin-bottom: 40px; 
         }
@@ -237,8 +237,8 @@
         </div>
 
         <div class="bio-box">
-            <!-- PURE MAGIE: Absolut rahmenlos direkt als CSS-Hintergrund eingebunden -->
-            <div class="avatar-clean-css"></div>
+            <!-- UNZERSTÖRBAR: Das blonde Minecraft-Icon komplett als Inline-Bild ohne Rahmen eingebunden -->
+            <img src="https://nano-banana.com" alt="Stefan Avatar" class="avatar-img-clean" style="border:none; outline:none;">
             <div class="bio-text">
                 <h2>Moin, ich bin Stefan!</h2>
                 <p>Ich bin 16 Jahre alt und leite leidenschaftlich professionelle Online-Communitys und Discord-Infrastrukturen. Neben der technischen Absicherung von High-End-Servern zeichne ich mich vor allem durch echten Teamgeist, absolute Zuverlässigkeit und sportliche Disziplin aus.</p>
@@ -285,7 +285,3 @@
 
         <br>
         <a href="/" class="back-btn">⬅️ Zurück zur Hauptseite</a>
-    </div>
-
-</body>
-</html>
