@@ -1,293 +1,54 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
-    <title>STEFAN | Discord Bot Commands Zentrale ✦</title>
-    <style>
-        @import url('https://googleapis.com');
-        
-        body { 
-            background-color: #05070a; 
-            color: #e2e8f0; 
-            font-family: 'Rajdhani', sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh; 
-        }
-        
-        .navbar { 
-            width: 100%; 
-            max-width: 1200px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 20px 40px; 
-            box-sizing: border-box; 
-            border-bottom: 2px solid #1e293b; 
-        }
-        
-        .logo { 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 1.5rem; 
-            font-weight: 900; 
-            color: #ffffff; 
-            text-decoration: none; 
-            letter-spacing: 2px; 
-        }
-        
-        .nav-links { 
-            display: flex; 
-            gap: 25px; 
-            align-items: center; 
-        }
-        
-        .nav-links a { 
-            color: #94a3b8; 
-            text-decoration: none; 
-            font-weight: 600; 
-            font-size: 1.05rem; 
-            transition: color 0.2s; 
-        }
-        
-        .nav-links a:hover { 
-            color: #00d2ff; 
-        }
-        
-        .hub-btn { 
-            background-color: #0055ff; 
-            color: #ffffff !important; 
-            padding: 8px 18px; 
-            border-radius: 8px; 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 0.85rem; 
-            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.3); 
-        }
-        
-        .container { 
-            max-width: 1200px; 
-            width: 100%; 
-            padding: 30px 20px; 
-            box-sizing: border-box; 
-        }
-        
-        .title-box { 
-            border: 2px solid #00d2ff; 
-            background-color: rgba(15, 22, 36, 0.9); 
-            border-radius: 16px; 
-            padding: 25px; 
-            margin-bottom: 35px; 
-            text-align: center; 
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3); 
-        }
-        
-        .title-box h1 { 
-            font-family: 'Orbitron', sans-serif; 
-            margin: 0; 
-            font-size: 2.4rem; 
-            font-weight: 900; 
-            color: #ffffff; 
-            letter-spacing: 1px; 
-        }
-        
-        .title-box p { 
-            margin: 6px 0 0 0; 
-            color: #00d2ff; 
-            font-size: 1rem; 
-            letter-spacing: 2px; 
-            text-transform: uppercase; 
-            font-weight: 700; 
-        }
+from flask import Flask, render_template
 
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 25px;
-            width: 100%;
-        }
-        
-        .category-box { 
-            background-color: #111622; 
-            border: 2px solid #1e293b; 
-            border-radius: 14px; 
-            padding: 22px; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
-            box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
+app = Flask(__name__)
 
-        .category-box:hover {
-            border-color: #0055ff;
-        }
-        
-        .category-title { 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 1.15rem; 
-            color: #00d2ff; 
-            margin-top: 0; 
-            margin-bottom: 18px; 
-            text-shadow: 0 0 10px rgba(0, 210, 255, 0.3); 
-            border-bottom: 2px solid #1e293b;
-            padding-bottom: 10px;
-        }
-        
-        .cmd-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background-color: #05070a; 
-            border: 1px solid #1e293b; 
-            border-radius: 8px; 
-            padding: 12px 16px; 
-            margin-bottom: 10px; 
-            transition: all 0.2s; 
-        }
-        
-        .cmd-row:hover { 
-            border-color: #00d2ff; 
-            box-shadow: 0 0 12px rgba(0, 210, 255, 0.15); 
-        }
-        
-        .cmd-info { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 3px; 
-            max-width: 75%;
-        }
-        
-        .cmd-text { 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 0.9rem; 
-            color: #ffffff; 
-            font-weight: bold; 
-            letter-spacing: 0.5px;
-        }
-        
-        .cmd-desc { 
-            color: #94a3b8; 
-            font-size: 0.9rem; 
-            font-weight: 500;
-        }
-        
-        .copy-btn { 
-            background-color: #1e293b; 
-            color: #00d2ff; 
-            border: 1px solid #00d2ff; 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 0.75rem; 
-            font-weight: bold; 
-            padding: 6px 14px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-            letter-spacing: 0.5px;
-        }
-        
-        .copy-btn:hover { 
-            background-color: #00d2ff; 
-            color: #05070a; 
-            box-shadow: 0 0 10px #00d2ff; 
-        }
-        
-        .copy-btn.copied { 
-            background-color: #00ff88; 
-            color: #05070a; 
-            border-color: #00ff88; 
-            box-shadow: 0 0 10px #00ff88; 
-        }
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-        @media (max-width: 600px) {
-            .grid-layout { grid-template-columns: 1fr; }
-            .cmd-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .copy-btn { width: 100%; text-align: center; }
-        }
-    </style>
-</head>
-<body>
+@app.route('/spiele-hub')
+def spiele_hub():
+    return render_template('spiele-hub.html')
 
-    <nav class="navbar">
-        <a href="/" class="logo">✦ STEFAN</a>
-        <div class="nav-links">
-            <a href="/">Startseite</a>
-            <a href="/ueber-mich">Über mich</a>
-            <a href="/leaderboard">🏆 Live Leaderboard</a>
-            <a href="/bot-config" style="color: #00d2ff;">🛠️ Bot Commands</a>
-            <a href="/spiele-hub" class="hub-btn">Spiele-Hub 🎮</a>
-        </div>
-    </nav>
+@app.route('/ueber-mich')
+def ueber_mich():
+    return render_template('ueber-mich.html')
 
-    <div class="container">
-        <div class="title-box">
-            <h1>Discord Bot Commands</h1>
-            <p>8 High-Tech-Sektionen im runderneuerten Grid-Design</p>
-        </div>
+@app.route('/regelwerk')
+def regelwerk():
+    return render_template('regelwerk.html')
 
-        <div class="grid-layout">
-            
-            <!-- SEKTION 1 -->
-            <div class="category-box">
-                <div class="category-title">🛡️ 1. Moderation & Server-Schutz</div>
-                <div class="cmd-row">
-                    <div class="cmd-info">
-                        <span class="cmd-text">?ban @User [Grund]</span>
-                        <span class="cmd-desc">Bannt einen User permanent vom Server.</span>
-                    </div>
-                    <button class="copy-btn" onclick="copyCmd('?ban @User [Grund]', this)">COPY</button>
-                </div>
-                <div class="cmd-row">
-                    <div class="cmd-info">
-                        <span class="cmd-text">?kick @User [Grund]</span>
-                        <span class="cmd-desc">Kickt ein Mitglied direkt vom Server.</span>
-                    </div>
-                    <button class="copy-btn" onclick="copyCmd('?kick @User [Grund]', this)">COPY</button>
-                </div>
-                <div class="cmd-row">
-                    <div class="cmd-info">
-                        <span class="cmd-text">?timeout @User 10m</span>
-                        <span class="cmd-desc">Versetzt einen User in den 10-Minuten-Timeout.</span>
-                    </div>
-                    <button class="copy-btn" onclick="copyCmd('?timeout @User 10m', this)">COPY</button>
-                </div>
-            </div>
+@app.route('/vorlagen')
+def vorlagen():
+    return render_template('vorlagen.html')
 
-            <!-- SEKTION 2 -->
-            <div class="category-box">
-                <div class="category-title">🎫 2. Support & Ticket-System</div>
-                <div class="cmd-row">
-                    <div class="cmd-info">
-                        <span class="cmd-text">$setup</span>
-                        <span class="cmd-desc">Erstellt ein neues Ticket-Panel im Kanal.</span>
-                    </div>
-                    <button class="copy-btn" onclick="copyCmd('$setup', this)">COPY</button>
-                </div>
-                <div class="cmd-row">
-                    <div class="cmd-info">
-                        <span class="cmd-text">$close</span>
-                        <span class="cmd-desc">Schließt ein geöffnetes Support-Ticket.</span>
-                    </div>
-                    <button class="copy-btn" onclick="copyCmd('$close', this)">COPY</button>
-                </div>
-                <div class="cmd-row">
-                    <div class="cmd-info">
-                        <span class="cmd-text">$claim</span>
-                        <span class="cmd-desc">Übernimmt ein Ticket als aktiver Supporter.</span>
-                    </div>
-                    <button class="copy-btn" onclick="copyCmd('$claim', this)">COPY</button>
-                </div>
-            </div>
+@app.route('/bot-zentrale')
+def bot_zentrale():
+    return render_template('bot-zentrale.html')
 
-            <!-- SEKTION 3 -->
-            <div class="category-box">
-                <div class="category-title">⚙️ 3. Admin & Server-Tools</div>
-                <div class="cmd-row">
-                    <div class="cmd-info">
-                        <span class="cmd-text">?purge 100</span>
-                        <span class="cmd-desc">Löscht blitzschnell die letzten 100 Nachrichten.</span>
-                    </div>
-                    <button class="copy-btn" onclick="copyCmd('?purge 100', this)">COPY</button>
-                </div>
-                <div class="cmd-row">
-                    <div class="cmd-info">
+@app.route('/leaderboard')
+def leaderboard():
+    return render_template('leaderboard.html')
+
+@app.route('/bot-config')
+def bot_config():
+    return render_template('bot-config.html')
+
+@app.route('/jump')
+def jump():
+    return render_template('jump.html')
+
+@app.route('/labyrinth')
+def labyrinth():
+    return render_template('labyrinth.html')
+
+@app.route('/racing')
+def racing():
+    return render_template('racing.html')
+
+@app.route('/shooter')
+def shooter():
+    return render_template('shooter.html')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000, debug=True)
