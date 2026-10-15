@@ -2,67 +2,170 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STEFANS SPIELE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Frog Catcher! 🐸</title>
     <style>
-        body { background-color: #050811; color: white; font-family: 'Arial', sans-serif; margin: 0; padding: 0; }
-        .title-box { text-align: center; margin: 50px auto; padding: 20px; border: 3px solid #00d2ff; box-shadow: 0 0 20px #00d2ff; width: fit-content; border-radius: 10px; }
-        .title-box h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: 2px; color: #00d2ff; text-shadow: 0 0 12px rgba(0, 210, 255, 0.6); }
-        .title-box p { margin: 5px 0 0; color: #64a3b8; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; }
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto 60px auto; position: relative; z-index: 2; padding: 0 20px; }
-        .game-card { background-color: #111625; border: 2px solid #1a243c; border-radius: 10px; padding: 40px 20px; text-decoration: none; color: #ffffff; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .game-card:hover { transform: translateY(-8px); border-color: #00d2ff; box-shadow: 0 12px 25px rgba(0, 210, 255, 0.3); }
-        
-        /* Hier sorgen wir dafür, dass die Emojis wie deine alten Icons leuchten! */
-        .game-icon { 
-            font-size: 3rem; 
-            margin-bottom: 10px;
-            transition: transform 0.2s; 
-            filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6));
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #050811;
+            color: white;
+            margin: 0;
+            padding: 15px;
+            /* Verhindert sinnloses Markieren beim schnellen Tippen */
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
         }
-        .game-card:hover .game-icon { transform: scale(1.1); }
-        .game-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 0.5px; margin-top: 15px; text-transform: uppercase; }
-        .back-btn { display: inline-block; margin-top: 20px; background-color: #1c293b; color: #00d2ff; border: 2px solid #00d2ff; font-family: 'Orbitron', sans-serif; text-decoration: none; padding: 14px 32px; border-radius: 10px; font-weight: 700; letter-spacing: 1px; transition: all 0.2s; text-align: center; }
-        .back-btn:hover { background-color: #00d2ff; color: #0b0e14; box-shadow: 0 0 25px rgba(0, 210, 255, 0.5); transform: scale(1.03); }
+        h1 { 
+            color: #00d2ff; 
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5); 
+            font-size: 1.8rem;
+            margin-top: 10px;
+        }
+        .stats {
+            font-size: 20px;
+            margin: 15px;
+            color: #64a3b8;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 12px;
+            max-width: 360px;
+            margin: 20px auto;
+            padding: 0 10px;
+        }
+        .box {
+            aspect-ratio: 1 / 1; /* Macht die Boxen immer perfekt quadratisch */
+            background-color: #111625;
+            border: 2px solid #1a243c;
+            border-radius: 15px;
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.1s;
+            /* Verhindert graue Klick-Schleier auf iOS */
+            -webkit-tap-highlight-color: transparent; 
+        }
+        .box:active { background-color: #1c293b; border-color: #00d2ff; }
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            background-color: #1c293b;
+            color: #00d2ff;
+            border: 2px solid #00d2ff;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        button:hover { background-color: #00d2ff; color: #0b0e14; box-shadow: 0 0 15px #00d2ff; }
+        button:disabled { background-color: #111625; border-color: #1a243c; color: #444; cursor: not-allowed; box-shadow: none; }
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #00d2ff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+        }
+        
+        /* Optimierung für kleinere Handys */
+        @media (max-width: 380px) {
+            .box { font-size: 32px; }
+            h1 { font-size: 1.5rem; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="title-box">
-        <h1>STEFANS SPIELE</h1>
-        <p>Premium Game Collection</p>
+    <h1>Frog Catcher! 🐸</h1>
+    
+    <div class="stats">
+        <span>Punkte: <strong id="score" style="color: #00d2ff;">0</strong></span> | 
+        <span>Zeit: <strong id="time" style="color: #00d2ff;">15</strong>s</span>
     </div>
 
-    <div class="games-grid">
-        <a href="/labyrinth" class="game-card">
-            <div class="game-icon">🕹️</div>
-            <span class="game-title">Cyber Rocket</span>
-        </a>
+    <button id="start-btn" onclick="startGame()">Spiel starten</button>
 
-        <a href="/shooter" class="game-card">
-            <div class="game-icon">🚀</div>
-            <span class="game-title">Space Shooter</span>
-        </a>
-
-        <a href="/racing" class="game-card">
-            <div class="game-icon">🏎️</div>
-            <span class="game-title">Turbo Racer</span>
-        </a>
-
-        <a href="/jump" class="game-card">
-            <div class="game-icon">🦘</div>
-            <span class="game-title">Infinite Jump</span>
-        </a>
-
-        <a href="/frosch" class="game-card">
-            <div class="game-icon">🐸</div>
-            <span class="game-title">Frog Catcher</span>
-        </a>
+    <div class="grid">
+        <div class="box" id="1" onclick="catchFrog(1)"></div>
+        <div class="box" id="2" onclick="catchFrog(2)"></div>
+        <div class="box" id="3" onclick="catchFrog(3)"></div>
+        <div class="box" id="4" onclick="catchFrog(4)"></div>
+        <div class="box" id="5" onclick="catchFrog(5)"></div>
+        <div class="box" id="6" onclick="catchFrog(6)"></div>
+        <div class="box" id="7" onclick="catchFrog(7)"></div>
+        <div class="box" id="8" onclick="catchFrog(8)"></div>
+        <div class="box" id="9" onclick="catchFrog(9)"></div>
     </div>
 
-    <center>
-        <a href="/" class="back-btn">⬅ Zurück zur Startseite</a>
-    </center>
+    <a href="/spiele-hub" class="back-link">⬅ Zurück zum Spiele-Hub</a>
 
+    <script>
+        let score = 0;
+        let timeLeft = 15;
+        let frogPosition = null;
+        let gameInterval;
+        let frogInterval;
+
+        function startGame() {
+            score = 0;
+            timeLeft = 15;
+            document.getElementById("score").innerText = score;
+            document.getElementById("time").innerText = timeLeft;
+            document.getElementById("start-btn").disabled = true;
+
+            clearGrid();
+
+            gameInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById("time").innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(gameInterval);
+                    clearInterval(frogInterval);
+                    clearGrid();
+                    alert("Zeit abgelaufen! Deine Punkte: " + score);
+                    document.getElementById("start-btn").disabled = false;
+                }
+            }, 1000);
+
+            moveFrog();
+            frogInterval = setInterval(moveFrog, 750); // Tick schneller fürs Handy!
+        }
+
+        function moveFrog() {
+            clearGrid();
+            let randomId = Math.floor(Math.random() * 9) + 1;
+            let targetBox = document.getElementById(randomId);
+            if (targetBox) {
+                targetBox.innerText = "🐸";
+                frogPosition = randomId;
+            }
+        }
+
+        function clearGrid() {
+            for (let i = 1; i <= 9; i++) {
+                let box = document.getElementById(i);
+                if (box) box.innerText = "";
+            }
+        }
+
+        function catchFrog(clickedId) {
+            if (timeLeft > 0 && clickedId === frogPosition) {
+                score++;
+                document.getElementById("score").innerText = score;
+                let box = document.getElementById(clickedId);
+                if (box) box.innerText = "";
+                frogPosition = null; 
+            }
+        }
+    </script>
 </body>
 </html>
