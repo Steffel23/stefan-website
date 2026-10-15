@@ -1,63 +1,153 @@
-let score = 0;
-let timeLeft = 15;
-let frogPosition = null;
-let gameInterval;
-let frogInterval;
-
-function startGame() {
-    // Reset für ein neues Spiel
-    score = 0;
-    timeLeft = 15;
-    document.getElementById("score").innerText = score;
-    document.getElementById("time").innerText = timeLeft;
-    document.getElementById("start-btn").disabled = true;
-
-    // Alle alten Frösche löschen
-    clearGrid();
-
-    // Timer startet (jede Sekunde ein abgezogener Wert)
-    gameInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById("time").innerText = timeLeft;
-
-        if (timeLeft <= 0) {
-            clearInterval(gameInterval);
-            clearInterval(frogInterval);
-            clearGrid();
-            alert("Zeit abgelaufen! Deine Punkte: " + score);
-            document.getElementById("start-btn").disabled = false;
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frog Catcher! 🐸</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #050811;
+            color: white;
+            margin: 0;
+            padding: 20px;
         }
-    }, 1000);
+        h1 { color: #00d2ff; text-shadow: 0 0 10px rgba(0, 210, 255, 0.5); }
+        .stats {
+            font-size: 24px;
+            margin: 20px;
+            color: #64a3b8;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 120px);
+            grid-gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .box {
+            width: 120px;
+            height: 120px;
+            background-color: #111625;
+            border: 2px solid #1a243c;
+            border-radius: 15px;
+            font-size: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.1s;
+        }
+        .box:active { background-color: #1c293b; border-color: #00d2ff; }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #1c293b;
+            color: #00d2ff;
+            border: 2px solid #00d2ff;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        button:hover { background-color: #00d2ff; color: #0b0e14; box-shadow: 0 0 15px #00d2ff; }
+        button:disabled { background-color: #111625; border-color: #1a243c; color: #444; cursor: not-allowed; box-shadow: none; }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #00d2ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
 
-    // Der Frosch springt alle 800 Millisekunden in eine neue Box
-    moveFrog();
-    frogInterval = setInterval(moveFrog, 800);
-}
-
-function moveFrog() {
-    clearGrid();
+    <h1>Frog Catcher! 🐸</h1>
     
-    // Zufällige Box zwischen 1 und 9 auswählen
-    let randomId = Math.floor(Math.random() * 9) + 1;
-    let targetBox = document.getElementById(randomId);
-    
-    targetBox.innerText = "🐸";
-    frogPosition = randomId;
-}
+    <div class="stats">
+        <span>Punkte: <strong id="score" style="color: #00d2ff;">0</strong></span> | 
+        <span>Zeit: <strong id="time" style="color: #00d2ff;">15</strong>s</span>
+    </div>
 
-function clearGrid() {
-    for (let i = 1; i <= 9; i++) {
-        document.getElementById(i).innerText = "";
-    }
-}
+    <button id="start-btn" onclick="startGame()">Spiel starten</button>
 
-function catchFrog(clickedId) {
-    // Wenn das Spiel läuft und man die richtige Box erwischt
-    if (timeLeft > 0 && clickedId === frogPosition) {
-        score++;
-        document.getElementById("score").innerText = score;
-        // Frosch verschwindet sofort nach dem Treffer
-        document.getElementById(clickedId).innerText = "";
-        frogPosition = null; 
-    }
-}
+    <div class="grid">
+        <div class="box" id="1" onclick="catchFrog(1)"></div>
+        <div class="box" id="2" onclick="catchFrog(2)"></div>
+        <div class="box" id="3" onclick="catchFrog(3)"></div>
+        <div class="box" id="4" onclick="catchFrog(4)"></div>
+        <div class="box" id="5" onclick="catchFrog(5)"></div>
+        <div class="box" id="6" onclick="catchFrog(6)"></div>
+        <div class="box" id="7" onclick="catchFrog(7)"></div>
+        <div class="box" id="8" onclick="catchFrog(8)"></div>
+        <div class="box" id="9" onclick="catchFrog(9)"></div>
+    </div>
+
+    <br>
+    <a href="/spiele-hub" class="back-link">⬅ Zurück zum Spiele-Hub</a>
+
+    <script>
+        let score = 0;
+        let timeLeft = 15;
+        let frogPosition = null;
+        let gameInterval;
+        let frogInterval;
+
+        function startGame() {
+            score = 0;
+            timeLeft = 15;
+            document.getElementById("score").innerText = score;
+            document.getElementById("time").innerText = timeLeft;
+            document.getElementById("start-btn").disabled = true;
+
+            clearGrid();
+
+            gameInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById("time").innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(gameInterval);
+                    clearInterval(frogInterval);
+                    clearGrid();
+                    alert("Zeit abgelaufen! Deine Punkte: " + score);
+                    document.getElementById("start-btn").disabled = false;
+                }
+            }, 1000);
+
+            moveFrog();
+            frogInterval = setInterval(moveFrog, 800);
+        }
+
+        function moveFrog() {
+            clearGrid();
+            let randomId = Math.floor(Math.random() * 9) + 1;
+            let targetBox = document.getElementById(randomId);
+            if (targetBox) {
+                targetBox.innerText = "🐸";
+                frogPosition = randomId;
+            }
+        }
+
+        function clearGrid() {
+            for (let i = 1; i <= 9; i++) {
+                let box = document.getElementById(i);
+                if (box) box.innerText = "";
+            }
+        }
+
+        function catchFrog(clickedId) {
+            if (timeLeft > 0 && clickedId === frogPosition) {
+                score++;
+                document.getElementById("score").innerText = score;
+                document.getElementById(clickedId).innerText = "";
+                frogPosition = null; 
+            }
+        }
+    </script>
+</body>
+</html>
