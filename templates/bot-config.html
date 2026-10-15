@@ -68,7 +68,7 @@
         }
         
         .container { 
-            max-width: 950px; 
+            max-width: 1200px; 
             width: 100%; 
             padding: 30px 20px; 
             box-sizing: border-box; 
@@ -79,7 +79,7 @@
             background-color: rgba(15, 22, 36, 0.9); 
             border-radius: 16px; 
             padding: 20px; 
-            margin-bottom: 30px; 
+            margin-bottom: 35px; 
             text-align: center; 
             box-shadow: 0 0 20px rgba(0, 210, 255, 0.3); 
         }
@@ -101,29 +101,36 @@
             text-transform: uppercase; 
             font-weight: 700; 
         }
+
+        /* DAS NEUE ZWEISPALTIGE CYBER-GRID */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
         
         .category-box { 
             background-color: #111622; 
             border: 2px solid #1e293b; 
             border-radius: 14px; 
-            padding: 25px; 
-            margin-bottom: 25px; 
+            padding: 20px; 
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
         
         .category-title { 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 1.2rem; 
+            font-size: 1.1rem; 
             color: #00d2ff; 
             margin-top: 0; 
-            margin-bottom: 18px; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
+            margin-bottom: 15px; 
             text-shadow: 0 0 10px rgba(0, 210, 255, 0.3); 
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 8px;
         }
         
-        /* Extrem kompakte Command-Zeilen */
         .cmd-row { 
             display: flex; 
             justify-content: space-between; 
@@ -131,8 +138,8 @@
             background-color: #05070a; 
             border: 1px solid #1e293b; 
             border-radius: 8px; 
-            padding: 10px 18px; 
-            margin-bottom: 10px; 
+            padding: 8px 14px; 
+            margin-bottom: 8px; 
             transition: all 0.2s; 
         }
         
@@ -144,21 +151,20 @@
         .cmd-info { 
             display: flex; 
             flex-direction: column; 
-            gap: 2px; 
+            gap: 1px; 
+            max-width: 75%;
         }
         
         .cmd-text { 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 0.95rem; 
+            font-size: 0.85rem; 
             color: #ffffff; 
             font-weight: bold; 
-            letter-spacing: 0.5px; 
         }
         
         .cmd-desc { 
             color: #94a3b8; 
-            font-size: 0.9rem; 
-            font-weight: 500; 
+            font-size: 0.85rem; 
         }
         
         .copy-btn { 
@@ -166,26 +172,29 @@
             color: #00d2ff; 
             border: 1px solid #00d2ff; 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 0.75rem; 
+            font-size: 0.7rem; 
             font-weight: bold; 
-            padding: 6px 16px; 
+            padding: 5px 12px; 
             border-radius: 6px; 
             cursor: pointer; 
             transition: all 0.2s; 
-            letter-spacing: 0.5px; 
         }
         
         .copy-btn:hover { 
             background-color: #00d2ff; 
             color: #05070a; 
-            box-shadow: 0 0 12px #00d2ff; 
+            box-shadow: 0 0 10px #00d2ff; 
         }
         
         .copy-btn.copied { 
             background-color: #00ff88; 
             color: #05070a; 
             border-color: #00ff88; 
-            box-shadow: 0 0 12px #00ff88; 
+            box-shadow: 0 0 10px #00ff88; 
+        }
+
+        @media (max-width: 900px) {
+            .grid-layout { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -205,84 +214,77 @@
     <div class="container">
         <div class="title-box">
             <h1>Discord Bot Commands</h1>
-            <p>Maximale Server-Effizienz mit einem Klick kopieren</p>
+            <p>8 High-Tech-Sektionen im schnellen Grid-Layout</p>
         </div>
 
-        <!-- 1. MODERATION -->
-        <div class="category-box">
-            <div class="category-title">🛡️ Moderation & Server-Schutz (Dyno / MEE6)</div>
+        <div class="grid-layout">
             
-            <div class="cmd-row">
-                <div class="cmd-info">
-                    <span class="cmd-text">?ban @User [Grund]</span>
-                    <span class="cmd-desc">Bannt einen störenden Nutzer permanent vom Discord-Server.</span>
+            <!-- BOX 1: MODERATION -->
+            <div class="category-box">
+                <div class="category-title">🛡️ 1. Moderation & Server-Schutz</div>
+                <div class="cmd-row">
+                    <div class="cmd-info">
+                        <span class="cmd-text">?ban @User [Grund]</span>
+                        <span class="cmd-desc">Bannt einen User permanent vom Server.</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCmd('?ban @User [Grund]', this)">COPY</button>
                 </div>
-                <button class="copy-btn" onclick="copyCmd('?ban @User [Grund]', this)">KOPIEREN</button>
-            </div>
-            
-            <div class="cmd-row">
-                <div class="cmd-info">
-                    <span class="cmd-text">?timeout @User 10m [Grund]</span>
-                    <span class="cmd-desc">Versetzt einen Nutzer für 10 Minuten in den Server-Timeout.</span>
+                <div class="cmd-row">
+                    <div class="cmd-info">
+                        <span class="cmd-text">?kick @User [Grund]</span>
+                        <span class="cmd-desc">Kickt ein Mitglied direkt vom Server.</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCmd('?kick @User [Grund]', this)">COPY</button>
                 </div>
-                <button class="copy-btn" onclick="copyCmd('?timeout @User 10m [Grund]', this)">KOPIEREN</button>
-            </div>
-            
-            <div class="cmd-row">
-                <div class="cmd-info">
-                    <span class="cmd-text">?purge 100</span>
-                    <span class="cmd-desc">Löscht blitzschnell die letzten 100 Nachrichten im aktuellen Kanal.</span>
+                <div class="cmd-row">
+                    <div class="cmd-info">
+                        <span class="cmd-text">?timeout @User 10m</span>
+                        <span class="cmd-desc">Stummschaltung für 10 Minuten.</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCmd('?timeout @User 10m', this)">COPY</button>
                 </div>
-                <button class="copy-btn" onclick="copyCmd('?purge 100', this)">KOPIEREN</button>
-            </div>
-            
-            <div class="cmd-row">
-                <div class="cmd-info">
-                    <span class="cmd-text">?lock</span>
-                    <span class="cmd-desc">Sperrt den aktuellen Kanal sofort für alle normalen User (Raid-Schutz).</span>
-                </div>
-                <button class="copy-btn" onclick="copyCmd('?lock', this)">KOPIEREN</button>
-            </div>
-            
-            <div class="cmd-row">
-                <div class="cmd-info">
-                    <span class="cmd-text">?warn @User [Grund]</span>
-                    <span class="cmd-desc">Erteilt einem Mitglied eine offizielle Verwarnung im System.</span>
-                </div>
-                <button class="copy-btn" onclick="copyCmd('?warn @User [Grund]', this)">KOPIEREN</button>
-            </div>
-        </div>
-
-        <!-- 2. SUPPORT & TICKETS -->
-        <div class="category-box">
-            <div class="category-title">🎫 Support-Ticket-System (Ticket Tool)</div>
-            
-            <div class="cmd-row">
-                <div class="cmd-info">
-                    <span class="cmd-text">$setup</span>
-                    <span class="cmd-desc">Startet das interaktive Setup für ein Ticket-Panel im Kanal.</span>
-                </div>
-                <button class="copy-btn" onclick="copyCmd('$setup', this)">KOPIEREN</button>
-            </div>
-            
-            <div class="cmd-row">
-                <div class="cmd-info">
-                    <span class="cmd-text">$close</span>
-                    <span class="cmd-desc">Schließt ein geöffnetes Support-Ticket nach der Bearbeitung.</span>
-                </div>
-                <button class="copy-btn" onclick="copyCmd('$close', this)">KOPIEREN</button>
-            </div>
-            
-            <div class="cmd-row">
-                <div class="cmd-info">
-                    <span class="cmd-text">$add @User</span>
-                    <span class="cmd-desc">Fügt ein weiteres Team-Mitglied oder einen User zum Ticket hinzu.</span>
-                </div>
-                <button class="copy-btn" onclick="copyCmd('$add @User', this)">KOPIEREN</button>
             </div>
 
-            <div class="cmd-row">
-                <div class="cmd-info">
-                    <span class="cmd-text">$claim</span>
-                    <span class="cmd-desc">Übernimmt das Ticket als Supporter, um es alleine zu bearbeiten.</span>
+            <!-- BOX 2: SUPPORT & TICKETS -->
+            <div class="category-box">
+                <div class="category-title">🎫 2. Support & Ticket-System</div>
+                <div class="cmd-row">
+                    <div class="cmd-info">
+                        <span class="cmd-text">$setup</span>
+                        <span class="cmd-desc">Erstellt ein neues Ticket-Panel im Kanal.</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCmd('$setup', this)">COPY</button>
+                </div>
+                <div class="cmd-row">
+                    <div class="cmd-info">
+                        <span class="cmd-text">$close</span>
+                        <span class="cmd-desc">Schließt ein aktives Support-Ticket.</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCmd('$close', this)">COPY</button>
+                </div>
+                <div class="cmd-row">
+                    <div class="cmd-info">
+                        <span class="cmd-text">$claim</span>
+                        <span class="cmd-desc">Übernimmt das Ticket als Supporter.</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCmd('$claim', this)">COPY</button>
+                </div>
+            </div>
+
+            <!-- BOX 3: MANAGEMENT & SYSTEM -->
+            <div class="category-box">
+                <div class="category-title">⚙️ 3. Admin & Server-Tools</div>
+                <div class="cmd-row">
+                    <div class="cmd-info">
+                        <span class="cmd-text">?purge 100</span>
+                        <span class="cmd-desc">Löscht die letzten 100 Nachrichten.</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCmd('?purge 100', this)">COPY</button>
+                </div>
+                <div class="cmd-row">
+                    <div class="cmd-info">
+                        <span class="cmd-text">?lock</span>
+                        <span class="cmd-desc">Sperrt den Textkanal für normale User.</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCmd('?lock', this)">COPY</button>
                 </div>
