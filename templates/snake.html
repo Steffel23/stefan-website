@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEFANS SPIELE - Snake</title>
+    <style>
+        body {
+            background-color: #030811;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00D2FF;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+        }
+        #game-container {
+            margin: 20px auto;
+            position: relative;
+            width: 400px;
+        }
+        canvas {
+            background-color: #111a2d;
+            border: 2px solid #00D2FF;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+            display: block;
+        }
+        .score-board {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #8f9db1;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #111a2d;
+            color: #00D2FF;
+            border: 2px solid #00D2FF;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #00D2FF;
+            color: #111a2d;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Retro Snake</h1>
+    <div class="score-board">Punkte: <span id="score">0</span></div>
+
+    <div id="game-container">
+        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+    </div>
+
+    <a href="/menu" class="back-btn">Zurück zum Hauptmenü</a>
+
+    <script>
+        const canvas = document.getElementById("snakeCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreElement = document.getElementById("score");
+
+        const grid = 20;
+        let count = 0;
+        let score = 0;
+        
+        let snake = {
+            x: 160,
+            y: 160,
+            dx: grid,
+            dy: 0,
+            cells: [{x: 160, y: 160}, {x: 140, y: 160}],
+            maxCells: 4
+        };
+
+        let apple = { x: 320, y: 320 };
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function resetGame() {
+            snake.x = 160;
+            snake.y = 160;
+            snake.cells = [{x: 160, y: 160}, {x: 140, y: 160}];
+            snake.maxCells = 4;
+            snake.dx = grid;
+            snake.dy = 0;
+            score = 0;
+            scoreElement.textContent = score;
+            apple.x = getRandomInt(0, 20) * grid;
+            apple.y = getRandomInt(0, 20) * grid;
+        }
+
+        function loop() {
+            requestAnimationFrame(loop);
+
+            // Verlangsamt das Spiel auf 15 FPS
+            if (++count < 6) { return; }
+            count = 0;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Schlange bewegen
+            snake.x += snake.dx;
+            snake.y += snake.dy;
+
+            // Wand-Kollision (Spielfeldrand)
+            if (snake.x < 0 || snake.x >= canvas.width || snake.y < 0 || snake.y >= canvas.height) {
+                resetGame();
+            }
+
+            snake.cells.unshift({x: snake.x, y: snake.y});
+
+            if (snake.cells.length > snake.maxCells) {
+                snake.cells.pop();
+            }
+
+            // Apfel zeichnen
+            ctx.fillStyle = '#ff4a4a';
+            ctx.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+
+            // Schlange zeichnen
+            ctx.fillStyle = '#00D2FF';
+            snake.cells.forEach(function(cell, index) {
+                ctx.fillRect(cell.x, cell.y, grid - 1, grid - 1);
+
+                // Apfel gegessen?
+                if (cell.x === apple.x && cell.y === apple.y) {
+                    snake.maxCells++;
+                    score += 10;
+                    scoreElement.textContent = score;
+                    apple.x = getRandomInt(0, 20) * grid;
+                    apple.y = getRandomInt(0, 20) * grid;
+                }
+
+                // Selbst-Kollision prüfen
+                for (let i = index + 1; i < snake.cells.length; i++) {
+                    if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+                        resetGame();
+                    }
+                }
+            });
+        }
+
+        // Steuerung
+        document.addEventListener('keydown', function(e) {
+            if (e.which === 37 && snake.dx === 0) { // Links
+                snake.dx = -grid; snake.dy = 0;
+            } else if (e.which === 38 && snake.dy === 0) { // Hoch
+                snake.dy = -grid; snake.dx = 0;
+            } else if (e.which === 39 && snake.dx === 0) { // Rechts
+                snake.dx = grid; snake.dy = 0;
+            } else if (e.which === 40 && snake.dy === 0) { // Runter
+                snake.dy = grid; snake.dx = 0;
+            }
+        });
+
+        requestAnimationFrame(loop);
+    </script>
+</body>
+</html>
