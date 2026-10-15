@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>STEFANS SPIELE - Snake</title>
     <style>
         body {
@@ -11,16 +11,26 @@
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
+            touch-action: none;
+            overflow: hidden;
         }
         h1 {
             font-family: 'Orbitron', sans-serif;
             color: #00D2FF;
             text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+            margin: 10px 0;
+            font-size: 1.8rem;
+        }
+        .score-board {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #8f9db1;
         }
         #game-container {
-            margin: 20px auto;
+            margin: 10px auto;
             position: relative;
+            max-width: 90vw;
             width: 400px;
         }
         canvas {
@@ -29,15 +39,17 @@
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
             display: block;
+            width: 100%;
+            height: auto;
         }
-        .score-board {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: #8f9db1;
+        .hint-text {
+            font-size: 0.9rem;
+            color: #576574;
+            margin-top: 5px;
         }
         .back-btn {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 15px;
             padding: 10px 20px;
             background-color: #111a2d;
             color: #00D2FF;
@@ -45,6 +57,7 @@
             border-radius: 5px;
             text-decoration: none;
             transition: all 0.3s ease;
+            font-weight: bold;
         }
         .back-btn:hover {
             background-color: #00D2FF;
@@ -61,8 +74,9 @@
     <div id="game-container">
         <canvas id="snakeCanvas" width="400" height="400"></canvas>
     </div>
-
-    <a href="/menu" class="back-btn">Zurück zum Hauptmenü</a>
+    
+    <div class="hint-text">Steuerung: WASD / Pfeiltasten & Wischen am Handy</div>
+    <a href="/spiele-hub" class="back-btn">Zurück zum Spielehub</a>
 
     <script>
         const canvas = document.getElementById("snakeCanvas");
@@ -104,17 +118,14 @@
         function loop() {
             requestAnimationFrame(loop);
 
-            // Verlangsamt das Spiel auf 15 FPS
             if (++count < 6) { return; }
             count = 0;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Schlange bewegen
             snake.x += snake.dx;
             snake.y += snake.dy;
 
-            // Wand-Kollision (Spielfeldrand)
             if (snake.x < 0 || snake.x >= canvas.width || snake.y < 0 || snake.y >= canvas.height) {
                 resetGame();
             }
@@ -125,16 +136,13 @@
                 snake.cells.pop();
             }
 
-            // Apfel zeichnen
             ctx.fillStyle = '#ff4a4a';
             ctx.fillRect(apple.x, apple.y, grid - 1, grid - 1);
 
-            // Schlange zeichnen
             ctx.fillStyle = '#00D2FF';
             snake.cells.forEach(function(cell, index) {
                 ctx.fillRect(cell.x, cell.y, grid - 1, grid - 1);
 
-                // Apfel gegessen?
                 if (cell.x === apple.x && cell.y === apple.y) {
                     snake.maxCells++;
                     score += 10;
@@ -143,7 +151,6 @@
                     apple.y = getRandomInt(0, 20) * grid;
                 }
 
-                // Selbst-Kollision prüfen
                 for (let i = index + 1; i < snake.cells.length; i++) {
                     if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
                         resetGame();
@@ -152,18 +159,50 @@
             });
         }
 
-        // Steuerung
+        // WASD & Pfeiltasten
         document.addEventListener('keydown', function(e) {
-            if (e.which === 37 && snake.dx === 0) { // Links
+            const key = e.key.toLowerCase();
+            if ((e.which === 37 || key === 'a') && snake.dx === 0) {
                 snake.dx = -grid; snake.dy = 0;
-            } else if (e.which === 38 && snake.dy === 0) { // Hoch
+            } else if ((e.which === 38 || key === 'w') && snake.dy === 0) {
                 snake.dy = -grid; snake.dx = 0;
-            } else if (e.which === 39 && snake.dx === 0) { // Rechts
+            } else if ((e.which === 39 || key === 'd') && snake.dx === 0) {
                 snake.dx = grid; snake.dy = 0;
-            } else if (e.which === 40 && snake.dy === 0) { // Runter
+            } else if ((e.which === 40 || key === 's') && snake.dy === 0) {
                 snake.dy = grid; snake.dx = 0;
             }
         });
+
+        // Handy-Wischgesten (Touch)
+        let touchstartX = 0; let touchstartY = 0;
+        let touchendX = 0; let touchendY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchstartX = e.changedTouches[0].screenX;
+            touchstartY = e.changedTouches[0].screenY;
+        }, {passive: false});
+
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault(); 
+        }, {passive: false});
+
+        document.addEventListener('touchend', function(e) {
+            touchendX = e.changedTouches[0].screenX;
+            touchendY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, {passive: false});
+
+        function handleSwipe() {
+            const xDiff = touchendX - touchstartX;
+            const yDiff = touchendY - touchstartY;
+            if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                if (xDiff > 30 && snake.dx === 0) { snake.dx = grid; snake.dy = 0; }
+                else if (xDiff < -30 && snake.dx === 0) { snake.dx = -grid; snake.dy = 0; }
+            } else {
+                if (yDiff > 30 && snake.dy === 0) { snake.dx = 0; snake.dy = grid; }
+                else if (yDiff < -30 && snake.dy === 0) { snake.dx = 0; snake.dy = -grid; }
+            }
+        }
 
         requestAnimationFrame(loop);
     </script>
