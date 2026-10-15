@@ -102,7 +102,6 @@
             font-weight: 700; 
         }
         
-        /* Neue fette Bio-Box mit freistehendem Bild OHNE Rahmen */
         .bio-box { 
             background-color: #111622; 
             border: 2px solid #1e293b; 
@@ -116,13 +115,15 @@
             align-items: center; 
         }
         
-        /* Das freistehende Bild OHNE jeden Rahmen */
-        .avatar-img-clean { 
+        /* DER RAHMENLOSE AVATAR-TRICK ÜBER BACKGROUND-IMAGE */
+        .avatar-clean-css { 
             width: 150px; 
             height: 150px; 
             min-width: 150px; 
             border-radius: 12px; 
-            object-fit: cover; 
+            background-image: url('https://nano-banana.com');
+            background-size: cover;
+            background-position: center;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
         }
         
@@ -140,7 +141,6 @@
             margin: 0; 
         }
         
-        /* Erweitertes 6er Charakter-Grid für absolute Zuverlässigkeit */
         .char-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -237,8 +237,8 @@
         </div>
 
         <div class="bio-box">
-            <!-- DAS BLONDE MINECRAFT ICON ABSOLUT REIN, FREISTEHEND UND OHNE RAHMEN -->
-            <img src="https://nano-banana.com" alt="Stefan Avatar" class="avatar-img-clean">
+            <!-- PURE MAGIE: Absolut rahmenlos direkt als CSS-Hintergrund eingebunden -->
+            <div class="avatar-clean-css"></div>
             <div class="bio-text">
                 <h2>Moin, ich bin Stefan!</h2>
                 <p>Ich bin 16 Jahre alt und leite leidenschaftlich professionelle Online-Communitys und Discord-Infrastrukturen. Neben der technischen Absicherung von High-End-Servern zeichne ich mich vor allem durch echten Teamgeist, absolute Zuverlässigkeit und sportliche Disziplin aus.</p>
@@ -249,7 +249,7 @@
             <div class="char-card">
                 <span class="char-icon">💎</span>
                 <div class="char-title">Absolute Zuverlässigkeit</div>
-                <div class="char-desc">Wenn ich eine Aufgabe übernehme, wird sie zu <strong>100% fehlerfrei erledigt</strong>. Handschlagqualität und Verantwortung stehen bei mir an oberster Stelle.</div>
+                <div class="char-desc">Wenn ich eine Aufgabe übernehme, wird sie zu <strong>100% fehlerfrei erledigt</strong>. Handschlagqualität und Verantwortung stehen bei mir an erster Stelle.</div>
             </div>
 
             <div class="char-card">
@@ -279,8 +279,13 @@
             <div class="char-card">
                 <span class="char-icon">⚽</span>
                 <div class="char-title">Sportliche Disziplin</div>
-                <div class="char-desc">Regelmäßiges Training hält mich fokussiert. Diese **Disziplin** und das Durchhaltevermögen bringe ich vom Sport direkt in dein Management ein.</div>
+                <div class="char-desc">Regelmäßiges Training hält mich fokussiert. Diese **Disziplin** und das Durchhaltevermögen bringe ich vom Sport direkt in mein Management ein.</div>
             </div>
         </div>
 
         <br>
+        <a href="/" class="back-btn">⬅️ Zurück zur Hauptseite</a>
+    </div>
+
+</body>
+</html>
