@@ -78,7 +78,7 @@
             border: 2px solid #00d2ff; 
             background-color: rgba(15, 22, 36, 0.9); 
             border-radius: 16px; 
-            padding: 20px; 
+            padding: 25px; 
             margin-bottom: 35px; 
             text-align: center; 
             box-shadow: 0 0 20px rgba(0, 210, 255, 0.3); 
@@ -87,7 +87,7 @@
         .title-box h1 { 
             font-family: 'Orbitron', sans-serif; 
             margin: 0; 
-            font-size: 2.2rem; 
+            font-size: 2.4rem; 
             font-weight: 900; 
             color: #ffffff; 
             letter-spacing: 1px; 
@@ -96,15 +96,16 @@
         .title-box p { 
             margin: 6px 0 0 0; 
             color: #00d2ff; 
-            font-size: 0.95rem; 
+            font-size: 1rem; 
             letter-spacing: 2px; 
             text-transform: uppercase; 
             font-weight: 700; 
         }
 
+        /* Das neue, extrem stabile Grid-System */
         .grid-layout {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
             gap: 25px;
             width: 100%;
         }
@@ -113,20 +114,25 @@
             background-color: #111622; 
             border: 2px solid #1e293b; 
             border-radius: 14px; 
-            padding: 20px; 
+            padding: 22px; 
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
             box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .category-box:hover {
+            border-color: #0055ff;
         }
         
         .category-title { 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 1.1rem; 
+            font-size: 1.15rem; 
             color: #00d2ff; 
             margin-top: 0; 
-            margin-bottom: 15px; 
+            margin-bottom: 18px; 
             text-shadow: 0 0 10px rgba(0, 210, 255, 0.3); 
-            border-bottom: 1px solid #1e293b;
-            padding-bottom: 8px;
+            border-bottom: 2px solid #1e293b;
+            padding-bottom: 10px;
         }
         
         .cmd-row { 
@@ -136,33 +142,35 @@
             background-color: #05070a; 
             border: 1px solid #1e293b; 
             border-radius: 8px; 
-            padding: 10px 14px; 
+            padding: 12px 16px; 
             margin-bottom: 10px; 
             transition: all 0.2s; 
         }
         
         .cmd-row:hover { 
-            border-color: #0055ff; 
-            box-shadow: 0 0 10px rgba(0, 85, 255, 0.15); 
+            border-color: #00d2ff; 
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.15); 
         }
         
         .cmd-info { 
             display: flex; 
             flex-direction: column; 
-            gap: 2px; 
+            gap: 3px; 
             max-width: 75%;
         }
         
         .cmd-text { 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 0.85rem; 
+            font-size: 0.9rem; 
             color: #ffffff; 
             font-weight: bold; 
+            letter-spacing: 0.5px;
         }
         
         .cmd-desc { 
             color: #94a3b8; 
-            font-size: 0.85rem; 
+            font-size: 0.9rem; 
+            font-weight: 500;
         }
         
         .copy-btn { 
@@ -170,12 +178,13 @@
             color: #00d2ff; 
             border: 1px solid #00d2ff; 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 0.7rem; 
+            font-size: 0.75rem; 
             font-weight: bold; 
-            padding: 6px 12px; 
+            padding: 6px 14px; 
             border-radius: 6px; 
             cursor: pointer; 
             transition: all 0.2s; 
+            letter-spacing: 0.5px;
         }
         
         .copy-btn:hover { 
@@ -191,8 +200,10 @@
             box-shadow: 0 0 10px #00ff88; 
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 600px) {
             .grid-layout { grid-template-columns: 1fr; }
+            .cmd-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .copy-btn { width: 100%; text-align: center; }
         }
     </style>
 </head>
@@ -212,12 +223,12 @@
     <div class="container">
         <div class="title-box">
             <h1>Discord Bot Commands</h1>
-            <p>8 Sektionen im perfekten Grid-Layout</p>
+            <p>8 High-Tech-Sektionen im runderneuerten Grid-Design</p>
         </div>
 
         <div class="grid-layout">
             
-            <!-- BOX 1 -->
+            <!-- SEKTION 1 -->
             <div class="category-box">
                 <div class="category-title">🛡️ 1. Moderation & Server-Schutz</div>
                 <div class="cmd-row">
@@ -237,13 +248,13 @@
                 <div class="cmd-row">
                     <div class="cmd-info">
                         <span class="cmd-text">?timeout @User 10m</span>
-                        <span class="cmd-desc">Stummschaltung für 10 Minuten.</span>
+                        <span class="cmd-desc">Versetzt einen User in den 10-Minuten-Timeout.</span>
                     </div>
                     <button class="copy-btn" onclick="copyCmd('?timeout @User 10m', this)">COPY</button>
                 </div>
             </div>
 
-            <!-- BOX 2 -->
+            <!-- SEKTION 2 -->
             <div class="category-box">
                 <div class="category-title">🎫 2. Support & Ticket-System</div>
                 <div class="cmd-row">
@@ -256,37 +267,26 @@
                 <div class="cmd-row">
                     <div class="cmd-info">
                         <span class="cmd-text">$close</span>
-                        <span class="cmd-desc">Schließt ein aktives Support-Ticket.</span>
+                        <span class="cmd-desc">Schließt ein geöffnetes Support-Ticket.</span>
                     </div>
                     <button class="copy-btn" onclick="copyCmd('$close', this)">COPY</button>
                 </div>
                 <div class="cmd-row">
                     <div class="cmd-info">
                         <span class="cmd-text">$claim</span>
-                        <span class="cmd-desc">Übernimmt das Ticket als Supporter.</span>
+                        <span class="cmd-desc">Übernimmt ein Ticket als aktiver Supporter.</span>
                     </div>
                     <button class="copy-btn" onclick="copyCmd('$claim', this)">COPY</button>
                 </div>
             </div>
 
-            <!-- BOX 3 -->
+            <!-- SEKTION 3 -->
             <div class="category-box">
                 <div class="category-title">⚙️ 3. Admin & Server-Tools</div>
                 <div class="cmd-row">
                     <div class="cmd-info">
                         <span class="cmd-text">?purge 100</span>
-                        <span class="cmd-desc">Löscht die letzten 100 Nachrichten.</span>
+                        <span class="cmd-desc">Löscht blitzschnell die letzten 100 Nachrichten.</span>
                     </div>
                     <button class="copy-btn" onclick="copyCmd('?purge 100', this)">COPY</button>
                 </div>
-                <div class="cmd-row">
-                    <div class="cmd-info">
-                        <span class="cmd-text">?lock</span>
-                        <span class="cmd-desc">Sperrt den Textkanal für normale User.</span>
-                    </div>
-                    <button class="copy-btn" onclick="copyCmd('?lock', this)">COPY</button>
-                </div>
-            </div>
-
-            <!-- BOX 4 -->
-            <div class="category-box">
