@@ -15,10 +15,9 @@
         .game-icon { font-size: 3rem; margin-bottom: 10px; transition: transform 0.2s; filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.5)); }
         .game-card:hover .game-icon { transform: scale(1.1); }
         .game-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: 0.5px; margin-top: 15px; text-transform: uppercase; }
-        .back-btn { display: inline-block; margin-top: 20px; padding: 14px 32px; background-color: #111a2d; border: 2px solid #00D2FF; font-family: 'Orbitron', sans-serif; text-decoration: none; padding: 14px 32px; border-radius: 5px; color: #00D2FF; transition: all 0.3s ease; }
+        .back-btn { display: inline-block; margin-top: 20px; padding: 14px 32px; background-color: #111a2d; border: 2px solid #00D2FF; font-family: 'Orbitron', sans-serif; text-decoration: none; border-radius: 5px; color: #00D2FF; transition: all 0.3s ease; }
         .back-btn:hover { background-color: #00D2FF; color: #030811; box-shadow: 0 0 25px rgba(0, 210, 255, 0.5); transform: scale(1.05); }
         
-        /* CSS für dein neues Retro-Snake Icon */
         .snake-icon {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24' fill='%2300D2FF'%3E%3Cpath d='M23 12c0 2.21-1.79 4-4 4h-4v-2h4c1.1 0 2-.9 2-2s-.9-2-2-2h-6c-1.1 0-2 .9-2 2v4c0 2.21-1.79 4-4 4H3c-1.1 0-2-.9-2-2s-.9-2 2-2h2c1.1 0 2-.9 2-2v-4c0-2.21 1.79-4 4-4h6c2.21 0 4 1.79 4 4zm-4-1c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -67,13 +66,11 @@
             <span class="game-title">Neon Breakout</span>
         </a>
 
-        <!-- HIER IST NUN AUCH TIC TAC TOE FEST INTEGRIERT -->
         <a href="/tictactoe" class="game-card">
             <div class="game-icon">❌</div>
             <span class="game-title">Tic-Tac-Toe</span>
         </a>
 
-        <!-- DEIN NEUES SNAKE SPIEL AN DER RICHTIGEN STELLE -->
         <a href="/snake" class="game-card">
             <div class="game-icon snake-icon"></div>
             <span class="game-title">Retro Snake</span>
