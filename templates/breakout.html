@@ -71,7 +71,7 @@
         let dy = -2.5;
         const ballRadius = 8;
 
-        // Schläger Eigenschaften (Etwas breiter fürs Handy)
+        // Schläger Eigenschaften (90px breit fürs Handy)
         const paddleHeight = 12;
         const paddleWidth = 90; 
         let paddleX = (canvas.width - paddleWidth) / 2;
@@ -98,34 +98,39 @@
             }
         }
 
-        // 🕹️ Steuerung für PC (A / D und Pfeiltasten)
+        // 🕹️ Steuerung für PC
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
         
-        // 📱 Perfekte Steuerung für Handys (Finger-Tracking)
+        // 📱 Steuerung für Handys (Finger-Wischen)
         canvas.addEventListener("touchstart", touchHandler, { passive: false });
         canvas.addEventListener("touchmove", touchHandler, { passive: false });
 
         function keyDownHandler(e) {
-            if(e.key === "Right" || e.key === "ArrowRight" || e.key === "d" || e.key === "D") rightPressed = true;
-            else if(e.key === "Left" || e.key === "ArrowLeft" || e.key === "a" || e.key === "A") leftPressed = true;
+            let keyName = e.key.toLowerCase();
+            if (keyName === "right" || keyName === "arrowright" || keyName === "d") {
+                rightPressed = true;
+            } else if (keyName === "left" || keyName === "arrowleft" || keyName === "a") {
+                leftPressed = true;
+            }
         }
 
         function keyUpHandler(e) {
-            if(e.key === "Right" || e.key === "ArrowRight" || e.key === "d" || e.key === "D") rightPressed = false;
-            else if(e.key === "Left" || e.key === "ArrowLeft" || e.key === "a" || e.key === "A") leftPressed = false;
+            let keyName = e.key.toLowerCase();
+            if (keyName === "right" || keyName === "arrowright" || keyName === "d") {
+                rightPressed = false;
+            } else if (keyName === "left" || keyName === "arrowleft" || keyName === "a") {
+                leftPressed = false;
+            }
         }
 
         function touchHandler(e) {
             if(!gameRunning) return;
-            e.preventDefault(); // Verhindert Scrollen beim Zocken
+            e.preventDefault(); 
             
-            // Berechnet exakt, wo der Finger auf dem Spielfeld ist
             const rect = canvas.getBoundingClientRect();
-            const root = document.documentElement;
             const touch = e.touches[0];
             
-            // Rechnet die Bildschirm-Pixel auf die Spiel-Pixel um
             let relativeX = (touch.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
             
             if(relativeX > 0 && relativeX < canvas.width) {
