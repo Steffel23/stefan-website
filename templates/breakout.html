@@ -14,7 +14,7 @@
             padding: 10px;
             user-select: none;
             -webkit-user-select: none;
-            touch-action: none;
+            touch-action: none; /* Verhindert, dass das Handy die Seite herumbewegt */
         }
         h1 { color: #00d2ff; text-shadow: 0 0 10px rgba(0, 210, 255, 0.5); margin: 5px 0; font-size: 1.8rem; }
         #score-board { font-size: 20px; color: #64a3b8; margin-bottom: 10px; }
@@ -26,18 +26,20 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.1);
             max-width: 100%;
+            touch-action: none;
         }
         button {
-            padding: 10px 25px;
-            font-size: 16px;
+            padding: 12px 30px;
+            font-size: 18px;
             background-color: #1c293b;
             color: #00d2ff;
             border: 2px solid #00d2ff;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: bold;
             transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
         button:hover { background-color: #00d2ff; color: #0b0e14; box-shadow: 0 0 15px #00d2ff; }
         .back-link { display: inline-block; margin-top: 15px; color: #00d2ff; text-decoration: none; font-weight: bold; padding: 10px; }
@@ -65,13 +67,13 @@
         // Ball Eigenschaften
         let x = canvas.width / 2;
         let y = canvas.height - 30;
-        let dx = 2;
-        let dy = -2;
+        let dx = 2.5;
+        let dy = -2.5;
         const ballRadius = 8;
 
-        // Schläger Eigenschaften
-        const paddleHeight = 10;
-        const paddleWidth = 75;
+        // Schläger Eigenschaften (Etwas breiter fürs Handy)
+        const paddleHeight = 12;
+        const paddleWidth = 90; 
         let paddleX = (canvas.width - paddleWidth) / 2;
         let rightPressed = false;
         let leftPressed = false;
@@ -96,25 +98,36 @@
             }
         }
 
-        // Steuerung für PC
+        // 🕹️ Steuerung für PC (A / D und Pfeiltasten)
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
-        // Steuerung für Handy (Touch)
-        canvas.addEventListener("touchmove", touchMoveHandler, { passive: false });
+        
+        // 📱 Perfekte Steuerung für Handys (Finger-Tracking)
+        canvas.addEventListener("touchstart", touchHandler, { passive: false });
+        canvas.addEventListener("touchmove", touchHandler, { passive: false });
 
         function keyDownHandler(e) {
-            if(e.key === "Right" || e.key === "ArrowRight") rightPressed = true;
-            else if(e.key === "Left" || e.key === "ArrowLeft") leftPressed = true;
+            if(e.key === "Right" || e.key === "ArrowRight" || e.key === "d" || e.key === "D") rightPressed = true;
+            else if(e.key === "Left" || e.key === "ArrowLeft" || e.key === "a" || e.key === "A") leftPressed = true;
         }
 
         function keyUpHandler(e) {
-            if(e.key === "Right" || e.key === "ArrowRight") rightPressed = false;
-            else if(e.key === "Left" || e.key === "ArrowLeft") leftPressed = false;
+            if(e.key === "Right" || e.key === "ArrowRight" || e.key === "d" || e.key === "D") rightPressed = false;
+            else if(e.key === "Left" || e.key === "ArrowLeft" || e.key === "a" || e.key === "A") leftPressed = false;
         }
 
-        function touchMoveHandler(e) {
-            e.preventDefault();
-            let relativeX = e.touches[0].clientX - canvas.getBoundingClientRect().left;
+        function touchHandler(e) {
+            if(!gameRunning) return;
+            e.preventDefault(); // Verhindert Scrollen beim Zocken
+            
+            // Berechnet exakt, wo der Finger auf dem Spielfeld ist
+            const rect = canvas.getBoundingClientRect();
+            const root = document.documentElement;
+            const touch = e.touches[0];
+            
+            // Rechnet die Bildschirm-Pixel auf die Spiel-Pixel um
+            let relativeX = (touch.clientX - rect.left) / (rect.right - rect.left) * canvas.width;
+            
             if(relativeX > 0 && relativeX < canvas.width) {
                 paddleX = relativeX - paddleWidth / 2;
             }
@@ -131,8 +144,9 @@
                             score++;
                             document.getElementById("score").innerText = score;
                             if(score === brickRowCount * brickColumnCount) {
-                                alert("Gewonnen, Bro! Mega Leistung!");
+                                alert("Gewonnen, Bro! Mega Leistung! 🎉");
                                 gameRunning = false;
+                                document.getElementById("start-btn").style.display = "inline-block";
                             }
                         }
                     }
@@ -184,7 +198,7 @@
         function draw() {
             if(!gameRunning) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.shadowBlur = 0; // Reset Shadow für Clear
+            ctx.shadowBlur = 0;
             
             drawBricks();
             drawBall();
@@ -201,21 +215,22 @@
                     lives--;
                     document.getElementById("lives").innerText = lives;
                     if(!lives) {
-                        alert("Game Over, Bro!");
+                        alert("Game Over, Bro! 💥");
                         gameRunning = false;
+                        document.getElementById("start-btn").style.display = "inline-block";
                     }
                     else {
                         x = canvas.width/2;
                         y = canvas.height-30;
-                        dx = 2;
-                        dy = -2;
+                        dx = 2.5;
+                        dy = -2.5;
                         paddleX = (canvas.width-paddleWidth)/2;
                     }
                 }
             }
 
-            if(rightPressed && paddleX < canvas.width-paddleWidth) paddleX += 4;
-            else if(leftPressed && paddleX > 0) paddleX -= 4;
+            if(rightPressed && paddleX < canvas.width-paddleWidth) paddleX += 5;
+            else if(leftPressed && paddleX > 0) paddleX -= 5;
 
             x += dx;
             y += dy;
@@ -223,6 +238,7 @@
         }
 
         function resetGame() {
+            document.getElementById("start-btn").style.display = "none";
             score = 0;
             lives = 3;
             document.getElementById("score").innerText = score;
